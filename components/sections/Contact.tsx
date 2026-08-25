@@ -198,7 +198,7 @@ export default function Contact() {
                   {/* Email */}
                   <div className="flex flex-col gap-1">
                     <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Email</p>
-                    <p className="text-sm leading-relaxed truncate" style={{ fontFamily: 'Montserrat, sans-serif' }}>info@ibrahimdobarialaw.com</p>
+                    <p className="text-sm leading-relaxed break-all" style={{ fontFamily: 'Montserrat, sans-serif' }}>info@ibrahimdobarialaw.com</p>
                   </div>
 
                   {/* Hours */}

@@ -435,3 +435,126 @@ h6.text-xs {
   font-size: 12px !important;
   letter-spacing: 0.1em !important;
 }
+
+/* =====================================================================
+   RESPONSIVE LADDER — 320px … 1920px
+   ---------------------------------------------------------------------
+   1920px is the reference design and is deliberately NOT overridden.
+   Every block below is max-width and ordered widest -> narrowest, so a
+   narrow screen inherits the fixes above it and then refines further.
+
+       screen checked -> block it is fixed in
+         1680 -> 1699     1600 -> 1679     1536 -> 1599     1440 -> 1499
+         1400 -> 1439     1366 -> 1399     1280 -> 1299     1024 -> 1199
+          992 -> 1023      801 ->  991      768 ->  800      576 ->  767
+          481 ->  575      390 ->  480      375 ->  389      320 ->  374
+
+   .site-container and .site-section are LOCKED (see the banner near the
+   top of this file) and are never redefined here.
+
+   WHY THESE FIXES EXIST
+   The "Enforce minimum font sizes" rules above promote every
+   text-[9px]…text-[13px] / text-xs class to 14px !important. The mobile
+   layout was authored against 9–11px type, so on small screens that copy
+   renders roughly 55% wider than the design assumed — which is what
+   pushed the hero stats, the eyebrow and the footer links out of their
+   containers. The rules below adapt the LAYOUT to the enforced 14px
+   floor rather than weakening the floor itself.
+   ===================================================================== */
+
+/* A long unbroken string (email address, URL) must never punch out of its
+   column at any width. */
+p,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote,
+figcaption,
+dd,
+dt {
+  overflow-wrap: break-word;
+}
+
+/* 1680px — verified clean, no fix required. */
+/* 1600px — verified clean, no fix required. */
+/* 1536px — verified clean, no fix required. */
+/* 1440px — verified clean, no fix required. */
+/* 1400px — verified clean, no fix required. */
+/* 1366px — verified clean, no fix required. */
+/* 1280px — verified clean, no fix required. */
+
+@media (max-width: 1199px) {
+  /* 1024px — the hero's decorative "Scroll" cue is absolutely positioned at
+     the bottom of a min-h-screen section. From this width down the hero copy
+     grows tall enough to reach that spot, so "Scroll" lands on top of the
+     45+/50+/6 stats row. It is purely decorative, so retire it here rather
+     than reserving vertical space for it on every smaller screen. */
+  .hero-scroll {
+    display: none;
+  }
+
+  /* 1024px — the middle column of the footer's bottom bar gets squeezed and
+     each legal link breaks across two lines ("Privacy / Policy"). Keep every
+     label intact and let the row wrap between links instead. This starts at
+     1024, not 992, so it belongs in this block. */
+  .footer-legal-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 6px;
+  }
+  .footer-legal-links a {
+    white-space: nowrap;
+  }
+}
+
+/* 992px — covered by the 1199px block above, no additional fix required. */
+
+/* 801px — verified clean, no fix required. */
+/* 768px — verified clean, no fix required. */
+/* 576px — verified clean, no fix required. */
+
+@media (max-width: 575px) {
+  /* 481px — the About CTA puts the gold "Our Attorneys" button and the
+     "Founding Partner" pull-quote on one row; below this width the pair has
+     under 20px of slack and reads as jammed together. Stack them. */
+  .about-cta {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    row-gap: 14px;
+  }
+}
+
+/* 390px — verified clean, no fix required. The hero stats still sit on one
+   row here with room to spare; deliberately NOT wrapped, because wrapping
+   them at this width produces a lopsided 2 + 1 layout for no benefit. */
+/* 375px — verified clean, no fix required. */
+
+@media (max-width: 374px) {
+  /* 320px — the narrowest supported screen, and the only one with real
+     overflow.
+
+     1. The stats row overruns .site-container by 15px, which slices
+        "Languages Spoken" against the right edge (body has overflow-x:clip,
+        so it is cut silently with no scrollbar). Halving the gap reclaims
+        24px and brings the row back inside.
+     2. "Legal Excellence Since 1981" at 0.2em tracking is 269px wide in a
+        252px slot, so it wraps to two lines and leaves the gold rule
+        stranded beside it. Tightening the tracking to 0.08em and narrowing
+        the gap gives it 256px of room for a 244px line — back to one line
+        with a little slack, and still visibly letter-spaced. */
+  .hero-stats {
+    gap: 12px;
+    flex-wrap: wrap;
+    row-gap: 14px;
+  }
+  .hero-eyebrow {
+    gap: 8px;
+  }
+  .hero-eyebrow > span:last-child {
+    letter-spacing: 0.08em;
+  }
+}

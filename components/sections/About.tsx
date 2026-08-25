@@ -132,7 +132,7 @@ export default function About() {
             </div>
 
             {/* CTA */}
-            <div className="flex items-center gap-4 sm:gap-6 pt-1 sm:pt-2">
+            <div className="about-cta flex items-center gap-4 sm:gap-6 pt-1 sm:pt-2">
               <Link
                 href="/attorneys"
                 className="group relative overflow-hidden px-5 sm:px-6 py-3 sm:py-3.5 text-[10px] sm:text-[11px] font-semibold tracking-[0.1em] sm:tracking-[0.12em] uppercase transition-all duration-400 inline-block"

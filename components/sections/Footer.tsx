@@ -230,12 +230,12 @@ export default function Footer() {
             style={{ fontFamily: 'Inter, sans-serif' }}>
             Attorney Advertising. Prior results do not guarantee a similar outcome. The information on this website is for general information purposes only.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
+          <div className="footer-legal flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
             <p className="text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px]"
               style={{ fontFamily: 'Inter, sans-serif' }}>
               &copy; {new Date().getFullYear()} Dobaria Law PC. All rights reserved.
             </p>
-            <div className="flex items-center gap-4 sm:gap-5">
+            <div className="footer-legal-links flex items-center gap-4 sm:gap-5">
               {[
                 { label: 'Privacy Policy', href: '/privacy-policy' },
                 { label: 'Terms of Use', href: '/terms' },

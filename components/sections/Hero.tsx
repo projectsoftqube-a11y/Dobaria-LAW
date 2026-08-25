@@ -98,7 +98,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={textVariants}
-            className="flex items-center gap-3"
+            className="hero-eyebrow flex items-center gap-3"
           >
             <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
             <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
@@ -182,8 +182,8 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={textVariants}
-            className="flex items-center gap-6 sm:gap-8 pt-1 sm:pt-2"
-          > 
+            className="hero-stats flex items-center gap-6 sm:gap-8 pt-1 sm:pt-2"
+          >
             {[
               { num: '45+', label: 'Years of Counsel' },
               { num: '50+', label: 'Countries Served' },
@@ -300,7 +300,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="hero-scroll absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <span className="text-[#4B5563] text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase"
           style={{ fontFamily: 'Inter, sans-serif' }}>Scroll</span>
