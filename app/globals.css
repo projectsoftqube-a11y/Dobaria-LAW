@@ -557,4 +557,19 @@ dt {
   .hero-eyebrow > span:last-child {
     letter-spacing: 0.08em;
   }
+
+  /* 3. The "Begin Your Consultation" button sits outside .site-container, so
+        it has no side padding of its own. Its natural width (~328px) exceeds
+        a 320px screen, so it collapses to the full viewport and sits flush
+        against both edges. Give the row a gutter and trim the button's own
+        padding/tracking so it fits inside it. */
+  .process-cta {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .process-cta > a {
+    padding-left: 20px;
+    padding-right: 20px;
+    letter-spacing: 0.08em;
+  }
 }

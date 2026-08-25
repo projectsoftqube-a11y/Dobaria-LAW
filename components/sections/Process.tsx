@@ -163,7 +163,7 @@ export default function Process() {
       </div>
 
       {/* CTA Section */}
-      <div className="flex justify-center mt-20 relative z-10">
+      <div className="process-cta flex justify-center mt-20 relative z-10">
         <Link
           href="/contact"
           className="group relative overflow-hidden flex items-center gap-3 px-10 py-5 text-[14px] font-semibold tracking-[0.15em] uppercase transition-all duration-400 hover:scale-105"
