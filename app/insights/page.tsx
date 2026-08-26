@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, User, ArrowRight, BookOpen } from "lucide-react";
+import { Clock, ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
@@ -32,19 +32,19 @@ export default function InsightsPage() {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "@id": "https://ibrahimdobarialaw.com/insights#blog",
+    "@id": "https://dobarialaw.com/insights#blog",
     name: "Legal Insights — Dobaria Law PC",
-    url: "https://ibrahimdobarialaw.com/insights",
-    publisher: { "@id": "https://ibrahimdobarialaw.com/#organization" },
+    url: "https://dobarialaw.com/insights",
+    publisher: { "@id": "https://dobarialaw.com/#organization" },
     blogPost: blogPosts.map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
-      url: `https://ibrahimdobarialaw.com/insights/${post.slug}`,
+      url: `https://dobarialaw.com/insights/${post.slug}`,
       datePublished: post.date,
       author: {
         "@type": "Person",
         name: post.author,
-        url: `https://ibrahimdobarialaw.com/attorneys/${post.authorSlug}`,
+        url: `https://dobarialaw.com/attorneys/${post.authorSlug}`,
       },
     })),
   };
@@ -55,7 +55,7 @@ export default function InsightsPage() {
     itemListElement: blogPosts.map((post, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `https://ibrahimdobarialaw.com/insights/${post.slug}`,
+      url: `https://dobarialaw.com/insights/${post.slug}`,
       name: post.title,
     })),
   };
@@ -128,29 +128,6 @@ export default function InsightsPage() {
             </p>
           </motion.div>
 
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.18 }}
-            className="mt-14 flex flex-wrap gap-8"
-          >
-            {[
-              { value: `${blogPosts.length}`, label: "Articles published" },
-              { value: "4", label: "Practice areas covered" },
-              { value: "Free", label: "Always free to read" },
-            ].map((s) => (
-              <div key={s.label} className="flex flex-col gap-1">
-                <span
-                  className="text-white text-3xl font-semibold"
-                  style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.02em" }}
-                >
-                  {s.value}
-                </span>
-                <span className="text-gray-500 text-[13px] uppercase tracking-[0.15em]">{s.label}</span>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </section>
 
@@ -245,17 +222,9 @@ export default function InsightsPage() {
 
                         {/* Footer */}
                         <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-full bg-[#EFE7DA] flex items-center justify-center flex-shrink-0">
-                              <User className="w-3 h-3 text-[#C29A3E]" />
-                            </div>
-                            <div>
-                              <p className="text-[#14163A] text-[11px] font-semibold leading-none mb-0.5">{post.author}</p>
-                              <p className="text-gray-400 text-[10px]">
-                                {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-                              </p>
-                            </div>
-                          </div>
+                          <p className="text-gray-400 text-[11px]">
+                            {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                          </p>
                           <span className="flex items-center gap-1.5 text-[#C29A3E] text-[11px] font-bold uppercase tracking-wider group-hover:gap-2.5 transition-all duration-300">
                             Read <ArrowRight className="w-3 h-3" />
                           </span>
@@ -267,52 +236,6 @@ export default function InsightsPage() {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-      </section>
-
-      {/* ── Newsletter ── */}
-      <section className="site-section bg-white border-t border-gray-100">
-        <div className="site-container">
-          <div className="max-w-3xl mx-auto rounded-2xl bg-gradient-to-br from-[#EFE7DA] to-[#E8DDD0] p-10 sm:p-14 text-center relative overflow-hidden">
-            <div
-              className="absolute -right-10 -top-10 text-[#C29A3E]/[0.07] pointer-events-none"
-              aria-hidden
-            >
-              <BookOpen size={280} strokeWidth={0.8} />
-            </div>
-            <div className="relative z-10">
-              <div className="flex items-center justify-center gap-3 mb-5">
-                <span className="w-6 h-[1px] bg-[#C29A3E]" />
-                <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">Newsletter</span>
-                <span className="w-6 h-[1px] bg-[#C29A3E]" />
-              </div>
-              <h2
-                className="text-[#14163A] mb-3"
-                style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "clamp(28px,5vw,44px)", letterSpacing: "0.01em" }}
-              >
-                {content.newsletter.heading}
-              </h2>
-              <p className="text-[#4B5563] text-[15px] leading-relaxed mb-8 max-w-xl mx-auto">
-                {content.newsletter.body}
-              </p>
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-              >
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="flex-1 px-5 py-3.5 bg-white border border-[#D6C9B8] rounded-sm text-sm text-[#14163A] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C29A3E]/30 focus:border-[#C29A3E] transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="px-7 py-3.5 bg-[#1B1E49] hover:bg-[#0B0F17] text-white text-xs font-semibold tracking-widest uppercase rounded-sm transition-colors"
-                >
-                  {content.newsletter.buttonLabel}
-                </button>
-              </form>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -336,7 +259,7 @@ export default function InsightsPage() {
         <div className="relative z-10 site-container text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
             <span className="w-8 h-[1px] bg-[#C29A3E]" />
-            <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">Free Consultation</span>
+            <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">Schedule a Consultation</span>
             <span className="w-8 h-[1px] bg-[#C29A3E]" />
           </div>
           <h2

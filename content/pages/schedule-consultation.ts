@@ -1,8 +1,8 @@
-// content/pages/free-consultation.ts
-export const freeConsultationContent = {
+// content/pages/schedule-consultation.ts
+export const scheduleConsultationContent = {
   hero: {
-    eyebrow: "Free Consultation · No Obligation",
-    h1: "Talk to an Experienced Immigration Attorney — Free Consultation",
+    eyebrow: "Schedule a Consultation",
+    h1: "Talk to an Experienced Immigration Attorney",
     subhead:
       "For 45+ years, Dobaria Law PC has helped individuals, families, and employers across Philadelphia and Montgomery County. Tell us about your situation, and let's discuss how we can help.",
     trustBullets: [
@@ -12,7 +12,7 @@ export const freeConsultationContent = {
     ],
   },
   form: {
-    submitLabel: "Get My Free Consultation",
+    submitLabel: "Request My Consultation",
     microcopy: "We respond within 24 business hours. Your information is confidential and protected by attorney-client privilege.",
     callAlternative: "Prefer to call? 215-362-2478",
   },
@@ -29,12 +29,12 @@ export const freeConsultationContent = {
     steps: [
       { step: 1, title: "Submit", body: "Submit the form (or call 215-362-2478)." },
       { step: 2, title: "Review", body: "We review your matter — an attorney or team member looks at your situation." },
-      { step: 3, title: "Schedule", body: "We respond within 24 business hours to schedule your free consultation." },
+      { step: 3, title: "Schedule", body: "We respond within 24 business hours to schedule your consultation." },
     ]
   },
   faq: [
     {
-      q: "What happens during a free consultation?",
+      q: "What happens during a consultation?",
       a: "You will speak with an attorney (or a senior paralegal for certain matters) to discuss your situation, understand your goals, and get a preliminary assessment of your options.",
     },
     {
@@ -47,8 +47,8 @@ export const freeConsultationContent = {
     },
   ],
   meta: {
-    title: "Free Immigration Consultation | Dobaria Law PC",
+    title: "Schedule an Immigration Consultation | Dobaria Law PC",
     description:
-      "Schedule a free, no-obligation consultation with the experienced immigration attorneys at Dobaria Law PC in Lansdale, PA. Tell us about your case today.",
+      "Schedule a consultation with the experienced immigration attorneys at Dobaria Law PC in Lansdale, PA. Tell us about your case today.",
   },
 } as const;

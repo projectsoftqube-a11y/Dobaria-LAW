@@ -17,7 +17,7 @@ const features = [
   {
     icon: Globe,
     title: 'A Global, Multilingual Practice',
-    description: 'Clients from 50+ countries; six languages spoken in-house. We understand the international dimensions of your matter.',
+    description: 'Clients from 50+ countries; eight languages spoken in-house. We understand the international dimensions of your matter.',
   },
   {
     icon: Zap,

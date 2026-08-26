@@ -7,6 +7,7 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
 import Contact from "@/components/sections/Contact";
+import GlobalReach from "@/components/sections/GlobalReach";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { legalServiceSchema, breadcrumbSchema } from "@/lib/schema";
 
@@ -115,57 +116,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Story Section - 2 Column with Image */}
+      {/* Our Story Section */}
       <section className="py-16 sm:py-20 lg:py-28 bg-white">
         <div className="site-container">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Left Image */}
+          <div className="grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="relative"
-            >
-              <div className="relative aspect-[4/5] rounded-sm overflow-hidden">
-                <Image
-                  src="/images/about-hero.png"
-                  alt="Dobaria Law PC Office"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17]/70 via-transparent to-transparent"></div>
-
-                {/* Bottom Stats */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="text-center">
-                      <p className="font-['Bebas_Neue',sans-serif] text-white text-3xl leading-none">45+</p>
-                      <p className="text-gray-300 text-[13px] mt-1">Years</p>
-                    </div>
-                    <div className="text-center border-x border-white/20">
-                      <p className="font-['Bebas_Neue',sans-serif] text-white text-3xl leading-none">50+</p>
-                      <p className="text-gray-300 text-[13px] mt-1">Countries</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="font-['Bebas_Neue',sans-serif] text-white text-3xl leading-none">6</p>
-                      <p className="text-gray-300 text-[13px] mt-1">Languages</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative gold corners */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-[#C29A3E] pointer-events-none hidden md:block"></div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-[#C29A3E] pointer-events-none hidden md:block"></div>
-            </motion.div>
-
-            {/* Right Content */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              className="max-w-[720px]"
             >
               <div className="flex items-center gap-3 mb-6">
                 <span className="w-8 h-[1px] bg-[#C29A3E]" />
@@ -194,10 +154,32 @@ export default function AboutPage() {
                 </p>
                 <p>
                   Because we represent clients from over fifty countries, clear and accessible communication is the
-                  bedrock of our approach. Our multilingual staff provides services in English, Spanish, German, Arabic,
-                  French, and Korean.
+                  bedrock of our approach. Our multilingual staff provides services in English, Spanish, Gujarati,
+                  Hindi, German, Arabic, French, and Korean.
                 </p>
               </div>
+            </motion.div>
+
+            {/* Brand panel — stands in until the firm supplies its own photos */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="relative hidden lg:block"
+            >
+              <div className="relative w-[340px] xl:w-[400px] aspect-[3/4] rounded-sm overflow-hidden shadow-[0_24px_60px_-20px_rgba(17,24,39,0.25)]">
+                <Image
+                  src="/images/brand-panel-portrait.svg"
+                  alt="Dobaria Law PC"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Decorative gold corners */}
+              <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-[#C29A3E] pointer-events-none" />
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-[#C29A3E] pointer-events-none" />
             </motion.div>
           </div>
         </div>
@@ -243,90 +225,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-[#F8F6F2]">
-        <div className="site-container">
-          <div className="grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-20 items-start">
-
-            {/* Left Sticky */}
-            <div className="lg:sticky lg:top-28">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="w-6 h-[1px] bg-[#C29A3E]" />
-                <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">Milestones</span>
-              </div>
-              <h2
-                className="text-[#1B1E49] leading-snug mb-4"
-                style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "clamp(32px,4vw,52px)", letterSpacing: "-0.01em" }}
-              >
-                Our Journey Through Time
-              </h2>
-              <p className="text-[#6B7280] text-[15px] leading-relaxed mb-6">
-                Over four decades of growth, evolution, and unwavering commitment to excellence.
-              </p>
-              <Link
-                href="/attorneys"
-                className="inline-flex items-center gap-2 text-[#C29A3E] text-xs font-bold uppercase tracking-wider hover:gap-3 transition-all duration-200"
-              >
-                Meet Our Team <ArrowRight size={13} />
-              </Link>
-            </div>
-
-            {/* Right Timeline Cards */}
-            <div className="space-y-8">
-              {[
-                {
-                  year: "1981",
-                  title: "A Solo Practice is Born",
-                  description: "Marcia Binder Ibrahim establishes the practice in Lansdale, Pennsylvania, specializing in family-based immigration, nationality, and local family law."
-                },
-                {
-                  year: "2009",
-                  title: "Expanding Practice Scope",
-                  description: "The firm incorporates corporate transactional law, real estate development, and multi-state title operations into its primary services, meeting the needs of regional business owners."
-                },
-                {
-                  year: "2026",
-                  title: "Dobaria Law PC",
-                  description: "Operating under the joint leadership of Marcia Binder Ibrahim and Vishal J. Dobaria, the firm manages matters nationwide, speaking 6 languages and serving clients from over 50 countries."
-                }
-              ].map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="group relative bg-white border border-gray-100 rounded-lg p-8 hover:border-[#C29A3E]/30 hover:shadow-md transition-all"
-                >
-                  {/* Left border animation */}
-                  <div className="absolute left-0 top-0 h-full w-1 bg-[#C29A3E] scale-y-0 group-hover:scale-y-100 transition-transform duration-400 ease-out origin-bottom rounded-l-lg"></div>
-
-                  {/* Watermark year */}
-                  <div className="absolute top-4 right-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <p className="font-['Bebas_Neue',sans-serif] text-6xl text-[#C29A3E]">{item.year}</p>
-                  </div>
-
-                  <div className="flex items-center gap-4 mb-4">
-                    <span
-                      className="text-[#C29A3E] leading-none"
-                      style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "36px" }}
-                    >
-                      {item.year}
-                    </span>
-                    <div className="flex-1 h-[1px] bg-[#C29A3E]/20"></div>
-                  </div>
-                  <h3 className="text-lg font-semibold text-[#1B1E49] mb-3 group-hover:text-[#C29A3E] transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 text-[16px] leading-relaxed">
-                    {item.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Global reach map + firm stats */}
+      <GlobalReach />
 
       {/* Core Values Section */}
       <section className="relative py-16 sm:py-20 lg:py-28 overflow-hidden bg-gradient-to-br from-[#0B0F17] to-[#1B1E49]">
@@ -398,17 +298,10 @@ export default function AboutPage() {
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="bg-white/[0.05] border border-white/10 rounded-xl p-7 hover:bg-white/[0.08] transition-colors duration-300"
                 >
-                  <span
-                    className="text-[#C29A3E]/30 leading-none block mb-4 select-none"
-                    style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 40 }}
-                    aria-hidden
-                  >
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <div className="w-10 h-10 bg-[#C29A3E]/10 rounded-lg flex items-center justify-center mb-4">
-                    <value.icon size={20} className="text-[#C29A3E]" />
+                  <div className="w-12 h-12 bg-[#C29A3E]/10 rounded-lg flex items-center justify-center mb-5">
+                    <value.icon size={24} className="text-[#C29A3E]" />
                   </div>
-                  <h3 className="text-white text-[17px] font-semibold mb-3 leading-snug">{value.title}</h3>
+                  <h3 className="text-white text-[22px] font-semibold mb-3 leading-snug">{value.title}</h3>
                   <p className="text-gray-400 text-[14px] leading-[1.75]">{value.description}</p>
                 </motion.div>
               ))}

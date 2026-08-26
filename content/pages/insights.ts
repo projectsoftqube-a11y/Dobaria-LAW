@@ -15,11 +15,6 @@ export const insightsContent = {
     { slug: "deportation-defense-guide", title: "Deportation Defense: What to Do If You or a Loved One Faces Removal", category: "Immigration" },
     { slug: "eb5-investor-visa-guide", title: "The EB-5 Investor Visa, Explained", category: "Immigration" },
   ],
-  newsletter: {
-    heading: "Subscribe to our Newsletter",
-    body: "Subscribe for occasional updates on immigration and legal changes that affect our community. No spam — just useful, plain-language guidance.",
-    buttonLabel: "Subscribe",
-  },
   cta: {
     h2: "Have a question about your own matter?",
     primaryCta: {

@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   title: { absolute: 'Legal Practice Areas in Lansdale, PA | Dobaria Law PC' },
   description: practiceAreasHub.meta.description,
   alternates: {
-    canonical: 'https://ibrahimdobarialaw.com/practice-areas',
+    canonical: 'https://dobarialaw.com/practice-areas',
   },
   openGraph: {
     title: 'Legal Practice Areas in Lansdale, PA | Dobaria Law PC',
     description: practiceAreasHub.meta.description,
-    url: 'https://ibrahimdobarialaw.com/practice-areas',
+    url: 'https://dobarialaw.com/practice-areas',
     siteName: 'Dobaria Law PC',
     locale: 'en_US',
     type: 'website',
@@ -112,8 +112,8 @@ export default function PracticeAreasPage() {
             <div className="relative order-2 lg:order-1">
               <div className="relative rounded-xl overflow-hidden aspect-[4/3] shadow-[0_24px_60px_-16px_rgba(17,24,39,0.18)]">
                 <img
-                  src="/images/practice-areas-hero.png"
-                  alt="Dobaria Law PC — Practice Areas"
+                  src="/images/brand-panel-landscape.svg"
+                  alt="Dobaria Law PC"
                   className="w-full h-full object-cover"
                 />
                 {/* Gradient overlay */}
@@ -170,7 +170,7 @@ export default function PracticeAreasPage() {
                   href="/contact"
                   className="inline-flex items-center gap-2 bg-[#C29A3E] hover:bg-[#9C7A26] text-white px-7 py-3.5 rounded-sm text-xs font-semibold tracking-widest uppercase transition-colors"
                 >
-                  Free Consultation <ArrowRight className="w-3.5 h-3.5" />
+                  Schedule a Consultation <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
                 <Link
                   href="/about"
@@ -343,7 +343,7 @@ export default function PracticeAreasPage() {
         <div className="relative z-10 site-container text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
             <span className="w-8 h-[1px] bg-[#C29A3E]" />
-            <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">Free Consultation</span>
+            <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">Schedule a Consultation</span>
             <span className="w-8 h-[1px] bg-[#C29A3E]" />
           </div>
           <h2
@@ -373,15 +373,15 @@ export default function PracticeAreasPage() {
       <Footer />
 
       <JsonLd data={{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }} />
-      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ibrahimdobarialaw.com' }, { '@type': 'ListItem', position: 2, name: 'Practice Areas', item: 'https://ibrahimdobarialaw.com/practice-areas' }] }} />
+      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://dobarialaw.com' }, { '@type': 'ListItem', position: 2, name: 'Practice Areas', item: 'https://dobarialaw.com/practice-areas' }] }} />
       <JsonLd data={{
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
-        '@id': 'https://ibrahimdobarialaw.com/practice-areas#collection',
-        url: 'https://ibrahimdobarialaw.com/practice-areas',
+        '@id': 'https://dobarialaw.com/practice-areas#collection',
+        url: 'https://dobarialaw.com/practice-areas',
         name: 'Legal Practice Areas in Lansdale, PA | Dobaria Law PC',
-        isPartOf: { '@id': 'https://ibrahimdobarialaw.com/#website' },
-        about: { '@id': 'https://ibrahimdobarialaw.com/#organization' },
+        isPartOf: { '@id': 'https://dobarialaw.com/#website' },
+        about: { '@id': 'https://dobarialaw.com/#organization' },
         mainEntity: {
           '@type': 'ItemList',
           itemListElement: groups
@@ -390,7 +390,7 @@ export default function PracticeAreasPage() {
               '@type': 'ListItem',
               position: i + 1,
               name: area.title,
-              url: `https://ibrahimdobarialaw.com${area.href}`,
+              url: `https://dobarialaw.com${area.href}`,
             })),
         },
       }} />

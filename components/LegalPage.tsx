@@ -248,22 +248,27 @@ export default function LegalPage({
                       Dobaria Law PC
                     </h3>
                     <div className="grid sm:grid-cols-3 gap-5">
-                      <div className="flex items-start gap-3">
+                      <a
+                        href="https://www.google.com/maps/search/?api=1&query=2031+N.+Broad+Street+Unit+129+Lansdale+PA+19446"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-start gap-3 group"
+                      >
                         <MapPin size={18} className="text-[#C29A3E] flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-300 text-sm leading-relaxed">
+                        <span className="text-gray-300 text-sm leading-relaxed group-hover:text-white transition-colors">
                           2031 N. Broad Street, Unit 129<br />Lansdale, PA 19446
                         </span>
-                      </div>
+                      </a>
                       <a href="tel:+12153622478" className="flex items-start gap-3 group">
                         <Phone size={18} className="text-[#C29A3E] flex-shrink-0 mt-0.5" />
                         <span className="text-gray-300 text-sm group-hover:text-white transition-colors">
                           215-362-2478
                         </span>
                       </a>
-                      <a href="mailto:info@ibrahimdobarialaw.com" className="flex items-start gap-3 group">
+                      <a href="mailto:info@dobarialaw.com" className="flex items-start gap-3 group">
                         <Mail size={18} className="text-[#C29A3E] flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-300 text-sm group-hover:text-white transition-colors break-all">
-                          info@ibrahimdobarialaw.com
+                        <span className="text-gray-300 text-sm group-hover:text-white transition-colors break-words">
+                          info@dobarialaw.com
                         </span>
                       </a>
                     </div>

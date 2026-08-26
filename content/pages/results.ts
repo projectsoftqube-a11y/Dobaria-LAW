@@ -40,6 +40,6 @@ export const resultsContent = {
   meta: {
     title: "Client Results & Reviews | Dobaria Law PC, PA",
     description:
-      "Read what clients say about Dobaria Law PC and see the kinds of immigration, family & business matters we handle in Lansdale, PA. Free consultation.",
+      "Read what clients say about Dobaria Law PC and see the kinds of immigration, family & business matters we handle in Lansdale, PA. Consultations available.",
   },
 } as const;

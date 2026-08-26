@@ -7,11 +7,11 @@ import LegalPage, { type LegalSection } from "@/components/LegalPage";
 export const metadata: Metadata = {
   title: { absolute: "Privacy Policy | Dobaria Law PC" },
   description: "Privacy Policy for Dobaria Law PC. How we collect, use, and protect your personal information.",
-  alternates: { canonical: "https://ibrahimdobarialaw.com/privacy-policy" },
+  alternates: { canonical: "https://dobarialaw.com/privacy-policy" },
   openGraph: {
     title: "Privacy Policy | Dobaria Law PC",
     description: "Privacy Policy for Dobaria Law PC. How we collect, use, and protect your personal information.",
-    url: "https://ibrahimdobarialaw.com/privacy-policy",
+    url: "https://dobarialaw.com/privacy-policy",
     siteName: "Dobaria Law PC",
     locale: "en_US",
     type: "website",
@@ -75,7 +75,7 @@ const sections: LegalSection[] = [
     content: (
       <p>
         You may request that we update or delete information you&apos;ve submitted by contacting us at{" "}
-        <a href="mailto:info@ibrahimdobarialaw.com">info@ibrahimdobarialaw.com</a>.
+        <a href="mailto:info@dobarialaw.com">info@dobarialaw.com</a>.
       </p>
     ),
   },
@@ -101,7 +101,7 @@ export default function PrivacyPolicyPage() {
     "@type": "WebPage",
     name: "Privacy Policy | Dobaria Law PC",
     description: "How Dobaria Law PC collects, uses, and protects information submitted through this website.",
-    url: "https://ibrahimdobarialaw.com/privacy-policy",
+    url: "https://dobarialaw.com/privacy-policy",
   };
 
   return (

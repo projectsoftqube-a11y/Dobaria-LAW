@@ -93,9 +93,9 @@ export const attorneyBios: AttorneyBio[] = [
       "Practices immigration, real estate, business & family law",
     ],
     practiceFocus: [
+      "Immigration Law",
       "Real Estate Law",
       "Business Law",
-      "Immigration Law",
       "Family Law",
       "Title & Closings (18 states)",
       "Entity Formation & Contracts",

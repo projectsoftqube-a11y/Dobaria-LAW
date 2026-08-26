@@ -59,9 +59,9 @@ const partners = [
     knowsAbout: ["Real Estate Law", "Business Law", "Immigration Law"],
     focus: "Vishal pairs a transactional real estate and business practice with active immigration and family work, which lets the firm advise a client buying a first home, forming a company, and sponsoring a relative as one connected story rather than three separate engagements. His closings and title work span eighteen states, and he keeps clients informed at every step of a transaction.",
     practiceAreas: [
+      { name: "Immigration Law", href: "/practice-areas/immigration-law" },
       { name: "Real Estate Law", href: "/practice-areas/real-estate-law" },
       { name: "Business Law", href: "/practice-areas/business-law" },
-      { name: "Immigration Law", href: "/practice-areas/immigration-law" },
       { name: "International Divorce", href: "/practice-areas/international-divorce" }
     ]
   },
@@ -135,9 +135,9 @@ export default function AttorneysPage() {
                   "@type": "Attorney",
                   name: partner.name.replace(/,?\s*Esq\.$/, ""),
                   jobTitle: partner.title,
-                  url: `https://ibrahimdobarialaw.com/attorneys/${partner.id}`,
-                  image: `https://ibrahimdobarialaw.com${partner.img}`,
-                  worksFor: { "@id": "https://ibrahimdobarialaw.com/#organization" },
+                  url: `https://dobarialaw.com/attorneys/${partner.id}`,
+                  image: `https://dobarialaw.com${partner.img}`,
+                  worksFor: { "@id": "https://dobarialaw.com/#organization" },
                   knowsLanguage: partner.languages,
                   knowsAbout: partner.knowsAbout,
                 },

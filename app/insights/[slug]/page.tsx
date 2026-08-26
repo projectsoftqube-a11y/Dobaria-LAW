@@ -14,13 +14,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: { absolute: post.meta.title },
     description: post.meta.description,
     alternates: {
-      canonical: `https://ibrahimdobarialaw.com/insights/${params.slug}`,
+      canonical: `https://dobarialaw.com/insights/${params.slug}`,
     },
     openGraph: {
       type: "article",
       title: post.meta.title,
       description: post.meta.description,
-      url: `https://ibrahimdobarialaw.com/insights/${params.slug}`,
+      url: `https://dobarialaw.com/insights/${params.slug}`,
       siteName: "Dobaria Law PC",
       publishedTime: post.date,
       modifiedTime: post.dateModified || post.date,

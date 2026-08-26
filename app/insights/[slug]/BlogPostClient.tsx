@@ -309,7 +309,7 @@ export default function BlogPostClient({ post }: Props) {
         <div className="relative z-10 site-container text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
             <span className="w-8 h-[1px] bg-[#C29A3E]" />
-            <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">Free Consultation</span>
+            <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">Schedule a Consultation</span>
             <span className="w-8 h-[1px] bg-[#C29A3E]" />
           </div>
           <h2
@@ -319,7 +319,7 @@ export default function BlogPostClient({ post }: Props) {
             Have a question about your own matter?
           </h2>
           <p className="text-gray-400 text-[15px] mb-10 max-w-lg mx-auto">
-            Schedule a free consultation with our attorneys.
+            Schedule a consultation with our attorneys.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

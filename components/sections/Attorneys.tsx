@@ -8,7 +8,7 @@ const attorneys = [
   {
     name: 'Vishal J. Dobaria, Esq.',
     title: 'Managing Attorney',
-    specialties: ['Real Estate Law', 'Business Law', 'Immigration'],
+    specialties: ['Immigration Law', 'Real Estate Law', 'Business Law'],
     bio: "Vishal J. Dobaria leads the firm's day-to-day practice across immigration, real estate, business, and family law, with over a decade of experience and title work spanning eighteen states.",
     img: '/images/attorneys/vishal.webp',
     bar: 'PA & NJ Bar',
@@ -26,7 +26,7 @@ const attorneys = [
   {
     name: 'Jose M. Lugo, J.D., Ph.D.',
     title: 'Immigration Attorney',
-    specialties: ['Immigration', 'Asylum', 'Deportation Defense'],
+    specialties: ['Immigration Law', 'Asylum', 'Deportation Defense'],
     bio: 'Jose M. Lugo brings a J.D. and a Ph.D. in Political Science to the firm’s immigration practice. Bilingual in English and Spanish, he focuses on visas, green cards, asylum, and citizenship.',
     img: '/images/attorneys/jose.png',
     bar: 'Bilingual EN / ES',
@@ -100,7 +100,7 @@ export default function Attorneys() {
               }}
             >
               {/* Image */}
-              <div className="relative overflow-hidden" style={{ aspectRatio: '4/5' }}>
+              <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
                 <Link href={attorney.href} aria-label={`Read the full bio of ${attorney.name}`} className="block w-full h-full">
                   <img
                     src={attorney.img}
@@ -121,7 +121,7 @@ export default function Attorneys() {
                     <Mail size={16} />
                   </Link>
                   <a
-                    href="tel:215-362-2478"
+                    href="tel:+12153622478"
                     className="w-10 h-10 rounded-sm flex items-center justify-center border border-[rgba(194, 154, 62,0.4)] text-[#DEC067] hover:bg-[#C29A3E] hover:text-white transition-all duration-300"
                   >
                     <Phone size={16} />

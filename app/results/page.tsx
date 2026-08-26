@@ -4,14 +4,14 @@ import ResultsClient from "./ResultsClient";
 export const metadata: Metadata = {
   title: { absolute: "Client Results & Reviews | Dobaria Law PC, PA" },
   description:
-    "Read what clients say about Dobaria Law PC and see the kinds of immigration, family & business matters we handle in Lansdale, PA. Free consultation.",
+    "Read what clients say about Dobaria Law PC and see the kinds of immigration, family & business matters we handle in Lansdale, PA. Consultations available.",
   alternates: {
-    canonical: "https://ibrahimdobarialaw.com/results",
+    canonical: "https://dobarialaw.com/results",
   },
   openGraph: {
     title: "Client Results & Reviews | Dobaria Law PC, PA",
     description: "Read what clients say about Dobaria Law PC and see the kinds of immigration, family & business matters we handle in Lansdale, PA.",
-    url: "https://ibrahimdobarialaw.com/results",
+    url: "https://dobarialaw.com/results",
     siteName: "Dobaria Law PC",
     locale: "en_US",
     type: "website",

@@ -7,11 +7,11 @@ import LegalPage, { type LegalSection } from "@/components/LegalPage";
 export const metadata: Metadata = {
   title: { absolute: "Terms of Use | Dobaria Law PC" },
   description: "Terms of Use for the Dobaria Law PC website.",
-  alternates: { canonical: "https://ibrahimdobarialaw.com/terms" },
+  alternates: { canonical: "https://dobarialaw.com/terms" },
   openGraph: {
     title: "Terms of Use | Dobaria Law PC",
     description: "Terms of Use for the Dobaria Law PC website.",
-    url: "https://ibrahimdobarialaw.com/terms",
+    url: "https://dobarialaw.com/terms",
     siteName: "Dobaria Law PC",
     locale: "en_US",
     type: "website",
@@ -95,7 +95,7 @@ export default function TermsPage() {
     "@type": "WebPage",
     name: "Terms of Use | Dobaria Law PC",
     description: "The terms governing your use of the Dobaria Law PC website.",
-    url: "https://ibrahimdobarialaw.com/terms",
+    url: "https://dobarialaw.com/terms",
   };
 
   return (

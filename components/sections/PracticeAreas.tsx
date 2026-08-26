@@ -196,7 +196,7 @@ export default function PracticeAreas() {
                   </div>
                 </div>
 
-                <Link href={practice.href} className="flex items-center gap-1.5 sm:gap-2 transition-all duration-300"
+                <Link href={practice.href} className="inline-flex items-center gap-1.5 sm:gap-2 py-2.5 sm:py-0 transition-all duration-300"
                   style={{ color: isHovered ? '#DEC067' : '#C29A3E' }}>
                   <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase"
                     style={{ fontFamily: 'Inter, sans-serif' }}>Learn More</span>

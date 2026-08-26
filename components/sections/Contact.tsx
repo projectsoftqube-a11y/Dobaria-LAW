@@ -5,6 +5,12 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import { formatUSPhone } from '@/lib/phone';
+import {
+  EMPTY_ENQUIRY,
+  PRACTICE_OPTIONS,
+  validateEnquiry,
+  toContactPayload,
+} from '@/lib/formValidation';
 
 const contactInfo = [
   {
@@ -20,7 +26,7 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'info@ibrahimdobarialaw.com',
+    value: 'info@dobarialaw.com',
   },
   {
     icon: Clock,
@@ -29,16 +35,10 @@ const contactInfo = [
   },
 ];
 
-const practiceOptions = [
-  'Immigration Law', 'Green Cards & Visas', 'Citizenship & Naturalization',
-  'Deportation Defense', 'Family Law', 'International Divorce',
-  'Business Law', 'Real Estate Law',
-];
 
 export default function Contact() {
   const [form, setForm] = useState({
-    firstName: '', lastName: '', email: '', phone: '',
-    practice: '', message: '',
+    ...EMPTY_ENQUIRY,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -53,14 +53,7 @@ export default function Contact() {
   };
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!form.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!form.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!form.email.trim()) newErrors.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) newErrors.email = "Please enter a valid email";
-    if (!form.message.trim()) newErrors.message = "Message is required";
-
+    const newErrors = validateEnquiry(form);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -75,7 +68,7 @@ export default function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, source: "Contact section" }),
+        body: JSON.stringify(toContactPayload(form, "Contact section")),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -160,11 +153,12 @@ export default function Contact() {
               {/* Background Image */}
               <div className="relative h-[220px] sm:h-[300px] lg:absolute lg:inset-0 lg:h-full">
                 <Image
-                  src="/images/contact-office.webp"
-                  alt="Law firm office location at Lansdale PA"
-                  width={1000}
-                  height={500}
-                  className="w-full h-full object-cover"
+                  src="/images/philadelphia-skyline.webp"
+                  alt="Philadelphia skyline at dusk"
+                  width={941}
+                  height={1672}
+                  priority={false}
+                  className="w-full h-full object-cover object-[center_30%]"
                 />
 
                 {/* Dark Gradient Overlay */}
@@ -184,21 +178,27 @@ export default function Contact() {
                   {/* Address */}
                   <div className="flex flex-col gap-1">
                     <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Office Address</p>
-                    <p className="text-sm leading-relaxed" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=2031+N.+Broad+Street+Unit+129+Lansdale+PA+19446"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm leading-relaxed hover:text-[#C29A3E] transition-colors"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
+                    >
                       2031 N. Broad Street, Unit 129<br />Lansdale, PA 19446
-                    </p>
+                    </a>
                   </div>
 
                   {/* Phone */}
                   <div className="flex flex-col gap-1">
                     <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Phone</p>
-                    <p className="text-sm leading-relaxed" style={{ fontFamily: 'Montserrat, sans-serif' }}>215-362-2478</p>
+                    <a href="tel:+12153622478" className="text-sm leading-relaxed hover:text-[#C29A3E] transition-colors" style={{ fontFamily: 'Montserrat, sans-serif' }}>215-362-2478</a>
                   </div>
 
                   {/* Email */}
                   <div className="flex flex-col gap-1">
                     <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Email</p>
-                    <p className="text-sm leading-relaxed break-all" style={{ fontFamily: 'Montserrat, sans-serif' }}>info@ibrahimdobarialaw.com</p>
+                    <a href="mailto:info@dobarialaw.com" className="text-sm leading-relaxed break-words hover:text-[#C29A3E] transition-colors" style={{ fontFamily: 'Montserrat, sans-serif' }}>info@dobarialaw.com</a>
                   </div>
 
                   {/* Hours */}
@@ -213,7 +213,7 @@ export default function Contact() {
 
                 <div className="pt-4 border-t border-white/10">
                   <p className="text-white/60 text-[11px] leading-relaxed" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    <span className="font-semibold text-[#C29A3E]">Our Promise:</span> We guarantee a response to every inquiry within 24 business hours.
+                    We ensure a timely response to every inquiry.
                   </p>
                 </div>
 
@@ -281,38 +281,40 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1 sm:gap-1.5">
-                  <label className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
-                    style={{ fontFamily: 'Inter, sans-serif' }}>Email Address *</label>
-                  <input
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="john@example.com"
-                    className={`premium-input ${errors.email ? "border-red-500" : ""}`}
-                    style={{ padding: '10px 14px' }}
-                  />
-                  {errors.email && <p className="text-red-500 text-[11px] mt-1">{errors.email}</p>}
-                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1 sm:gap-1.5">
+                    <label className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
+                      style={{ fontFamily: 'Inter, sans-serif' }}>Email Address *</label>
+                    <input
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="john@example.com"
+                      className={`premium-input ${errors.email ? "border-red-500" : ""}`}
+                      style={{ padding: '10px 14px' }}
+                    />
+                    {errors.email && <p className="text-red-500 text-[11px] mt-1">{errors.email}</p>}
+                  </div>
 
-                <div className="flex flex-col gap-1 sm:gap-1.5">
-                  <label className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
-                    style={{ fontFamily: 'Inter, sans-serif' }}>Phone Number</label>
-                  <input
-                    name="phone"
-                    type="tel"
-                    inputMode="tel"
-                    autoComplete="tel"
-                    value={form.phone}
-                    onChange={(e) => setForm(f => ({ ...f, phone: formatUSPhone(e.target.value) }))}
-                    placeholder="(555) 123-4567"
-                    maxLength={14}
-                    className="premium-input"
-                    style={{ padding: '10px 14px' }}
-                  />
-                  {errors.phone && <p className="text-red-500 text-[11px] mt-1">{errors.phone}</p>}
+                  <div className="flex flex-col gap-1 sm:gap-1.5">
+                    <label className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
+                      style={{ fontFamily: 'Inter, sans-serif' }}>Phone Number</label>
+                    <input
+                      name="phone"
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      value={form.phone}
+                      onChange={(e) => setForm(f => ({ ...f, phone: formatUSPhone(e.target.value) }))}
+                      placeholder="(555) 123-4567"
+                      maxLength={14}
+                      className="premium-input"
+                      style={{ padding: '10px 14px' }}
+                    />
+                    {errors.phone && <p className="text-red-500 text-[11px] mt-1">{errors.phone}</p>}
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-1 sm:gap-1.5">
@@ -326,7 +328,7 @@ export default function Contact() {
                     style={{ padding: '10px 14px 10px 14px', paddingRight: '40px', appearance: 'none', cursor: 'pointer', backgroundImage: `url('data:image/svg+xml;utf8,<svg fill="%234B5563" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center', backgroundSize: '20px' }}
                   >
                     <option value="">Select a practice area</option>
-                    {practiceOptions.map(p => <option key={p} value={p}>{p}</option>)}
+                    {PRACTICE_OPTIONS.map(p => <option key={p} value={p}>{p}</option>)}
                   </select>
                 </div>
 

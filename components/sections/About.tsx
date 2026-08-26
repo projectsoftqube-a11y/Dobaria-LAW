@@ -31,12 +31,12 @@ export default function About() {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="relative"
           >
-            <div className="relative z-10">
-              <div className="relative w-full aspect-[3/4] max-w-[420px] rounded-sm overflow-hidden"
+            <div className="relative z-10 w-full max-w-[560px]">
+              <div className="relative w-full aspect-[4/5] rounded-sm overflow-hidden"
                 style={{ boxShadow: '0 32px 64px rgba(17,24,39,0.1), 0 16px 32px rgba(17,24,39,0.06)' }}>
                 <Image
-                  src="/images/about-main.webp"
-                  alt="Attorneys reviewing legal documents in Lansdale office"
+                  src="/images/brand-panel-portrait.svg"
+                  alt="Dobaria Law PC"
                   width={420}
                   height={560}
                   className="w-full h-full object-cover"
@@ -45,12 +45,21 @@ export default function About() {
                   style={{ background: 'linear-gradient(180deg, transparent 50%, rgba(30,42,56,0.4) 100%)' }} />
               </div>
 
+              {/* Years badge */}
+              <div className="absolute top-4 sm:top-8 right-4 sm:-right-6 rounded-sm px-3 sm:px-5 py-3 sm:py-4 z-30"
+                style={{ background: 'linear-gradient(135deg, #C29A3E 0%, #9C7A26 100%)', boxShadow: '0 8px 24px rgba(194, 154, 62,0.3)' }}>
+                <p className="text-white text-2xl sm:text-3xl font-bold leading-none"
+                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}>45+</p>
+                <p className="text-white/80 text-[9px] sm:text-[10px] tracking-[0.12em] sm:tracking-[0.15em] uppercase mt-0.5 sm:mt-1"
+                  style={{ fontFamily: 'Inter, sans-serif' }}>Years</p>
+              </div>
+
               {/* Second image — offset */}
-              <div className="absolute -bottom-6 sm:-bottom-10 -right-4 sm:-right-8 w-28 sm:w-40 h-36 sm:h-52 rounded-sm overflow-hidden border-2 sm:border-4 border-white"
-                style={{ boxShadow: '0 16px 40px rgba(17,24,39,0.12)' }}>
+              <div className="absolute -bottom-6 sm:-bottom-8 -right-4 sm:-right-10 w-28 sm:w-40 h-36 sm:h-52 rounded-sm overflow-hidden border-2 sm:border-4 border-white z-20"
+                style={{ boxShadow: '0 16px 40px rgba(17,24,39,0.18)' }}>
                 <Image
-                  src="/images/practice-areas-hero.png"
-                  alt="Attorney having a consultation with a client"
+                  src="/images/brand-panel-accent.svg"
+                  alt="Dobaria Law PC"
                   width={160}
                   height={208}
                   className="w-full h-full object-cover"
@@ -64,14 +73,7 @@ export default function About() {
             <div className="absolute -top-3 sm:-top-4 left-3 sm:left-4 border border-[#C29A3E]/20 w-full h-full rounded-sm -z-10"
               style={{ transform: 'translate(-6px, -6px)' }} />
 
-            {/* Years badge */}
-            <div className="absolute top-4 sm:top-8 -right-2 sm:-right-5 rounded-sm px-3 sm:px-5 py-3 sm:py-4 z-20"
-              style={{ background: 'linear-gradient(135deg, #C29A3E 0%, #9C7A26 100%)', boxShadow: '0 8px 24px rgba(194, 154, 62,0.3)' }}>
-              <p className="text-white text-2xl sm:text-3xl font-bold leading-none"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}>45+</p>
-              <p className="text-white/80 text-[9px] sm:text-[10px] tracking-[0.12em] sm:tracking-[0.15em] uppercase mt-0.5 sm:mt-1"
-                style={{ fontFamily: 'Inter, sans-serif' }}>Years</p>
-            </div>
+
           </motion.div>
 
           {/* RIGHT — Text */}
@@ -149,12 +151,6 @@ export default function About() {
                   style={{ background: 'linear-gradient(135deg, #1B1E49 0%, #2A2F63 100%)' }} />
               </Link>
 
-              <div className="flex flex-col">
-                <span className="text-[#14163A] text-[12px] sm:text-sm font-semibold"
-                  style={{ fontFamily: 'Inter, sans-serif' }}>Founding Partner</span>
-                <span className="text-[#C29A3E] text-[11px] sm:text-xs italic"
-                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}>&ldquo;We will find a solution.&rdquo; — Marcia Binder Ibrahim</span>
-              </div>
             </div>
           </motion.div>
         </div>

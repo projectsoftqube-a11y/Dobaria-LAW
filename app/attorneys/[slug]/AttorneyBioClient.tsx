@@ -232,8 +232,8 @@ export default function AttorneyBioClient({ attorney }: Props) {
               {/* Education */}
               <div className="bg-white rounded-xl border border-gray-100 p-7 shadow-[0_2px_20px_-8px_rgba(17,24,39,0.07)]">
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="text-[#C29A3E]/20 font-semibold leading-none select-none" style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 40 }} aria-hidden>01</span>
-                  <h3 className="text-[18px] font-serif font-semibold text-[#14163A]">Education</h3>
+                  <span className="w-6 h-[2px] bg-[#C29A3E] flex-shrink-0" aria-hidden />
+                  <h3 className="text-[22px] font-serif font-semibold text-[#14163A]">Education</h3>
                 </div>
                 <ul className="space-y-3">
                   {attorney.education.map((item, idx) => (
@@ -249,8 +249,8 @@ export default function AttorneyBioClient({ attorney }: Props) {
               {attorney.admissions.length > 0 && (
                 <div className="bg-white rounded-xl border border-gray-100 p-7 shadow-[0_2px_20px_-8px_rgba(17,24,39,0.07)]">
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="text-[#C29A3E]/20 font-semibold leading-none select-none" style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 40 }} aria-hidden>02</span>
-                    <h3 className="text-[18px] font-serif font-semibold text-[#14163A]">Bar Admissions</h3>
+                    <span className="w-6 h-[2px] bg-[#C29A3E] flex-shrink-0" aria-hidden />
+                    <h3 className="text-[22px] font-serif font-semibold text-[#14163A]">Bar Admissions</h3>
                   </div>
                   <ul className="space-y-3">
                     {attorney.admissions.map((item, idx) => (
@@ -291,9 +291,7 @@ export default function AttorneyBioClient({ attorney }: Props) {
               <div className="grid sm:grid-cols-2 gap-4">
                 {attorney.memberships.map((membership, idx) => (
                   <div key={idx} className="bg-white/[0.05] border border-white/10 rounded-xl p-6 hover:bg-white/[0.08] transition-colors">
-                    <span className="text-[#C29A3E]/30 leading-none block mb-3 select-none" style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 32 }} aria-hidden>
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
+                    <span className="w-6 h-[2px] bg-[#C29A3E] block mb-4" aria-hidden />
                     <p className="text-gray-300 text-[16px] leading-[1.75]">{membership}</p>
                   </div>
                 ))}
@@ -313,7 +311,7 @@ export default function AttorneyBioClient({ attorney }: Props) {
                 Ready to discuss your matter?
               </h2>
               <p className="text-[#4B5563] text-lg leading-relaxed mb-8">
-                Schedule a free consultation with {attorney.name.split(",")[0]} today. We respond within 24 business hours.
+                Schedule a consultation with {attorney.name.split(",")[0]} today. We respond within 24 business hours.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link

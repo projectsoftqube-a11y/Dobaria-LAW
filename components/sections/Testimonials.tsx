@@ -153,10 +153,13 @@ export default function Testimonials() {
               </blockquote>
 
               <div className="flex items-center gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-[rgba(17,24,39,0.07)]">
-                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-white font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #C29A3E 0%, #9C7A26 100%)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(14px, 2vw, 16px)' }}>
-                  {testimonials[current].author.charAt(0)}
-                </div>
+                <img
+                  src="/images/logo-badge.svg"
+                  alt="Dobaria Law PC"
+                  width={44}
+                  height={44}
+                  className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg flex-shrink-0"
+                />
                 <div>
                   <p className="text-[#14163A] font-semibold text-[12px] sm:text-sm"
                     style={{ fontFamily: 'Inter, sans-serif' }}>{testimonials[current].author}</p>

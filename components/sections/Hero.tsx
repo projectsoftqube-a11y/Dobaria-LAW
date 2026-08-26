@@ -140,7 +140,7 @@ export default function Hero() {
             className="text-[#4B5563] leading-[1.75] sm:leading-[1.8] max-w-[480px]"
             style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2.5vw, 16px)' }}
           >
-            Dobaria Law PC (formerly known as Ibrahim &amp; Dobaria Law LLC) delivers strategic legal counsel for individuals, families, entrepreneurs, and employers navigating immigration, family, business, and real estate matters. From our Lansdale office, we proudly serve clients throughout Montgomery County, the Greater Philadelphia region, and across the United States for immigration matters.
+            Dobaria Law PC delivers strategic legal counsel for individuals, families, entrepreneurs, and employers navigating immigration, family, business, and real estate matters. From our Lansdale office, we proudly serve clients throughout Montgomery County, the Greater Philadelphia region, and across the United States for immigration matters.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -187,7 +187,7 @@ export default function Hero() {
             {[
               { num: '45+', label: 'Years of Counsel' },
               { num: '50+', label: 'Countries Served' },
-              { num: '6', label: 'Languages Spoken' },
+              { num: '8', label: 'Languages Spoken' },
             ].map((item) => (
               <div key={item.label} className="flex flex-col gap-0.5">
                 <span className="text-[#14163A] font-semibold text-2xl sm:text-xl"

@@ -58,7 +58,7 @@ const heroBadges = ["45+ Years of Counsel", "AILA Member 28+ Years", "Admitted i
 const whyUsPoints = [
   { title: "45+ Years, One Focus", body: "Founded in 1981, our firm brings more than four decades of concentrated experience to every matter — the depth that lets us tell you early what a case will realistically require." },
   { title: "Cross-Practice Perspective", body: "Because we practice immigration alongside family, business, and real estate law, we catch the connections other firms miss — and protect clients from problems that cross practice lines." },
-  { title: "Genuinely Multilingual", body: "Six languages are spoken in-house — English, Spanish, German, Arabic, French, and Korean — so you are understood in your own words. Se habla español." },
+  { title: "Genuinely Multilingual", body: "Eight languages are spoken in-house — English, Spanish, Gujarati, Hindi, German, Arabic, French, and Korean — so you are understood in your own words. Se habla español." },
   { title: "A Boutique, Not a Mill", body: "You work directly with attorneys who know your case by name, with clear, plain-language counsel and steady communication at every step." },
 ];
 
@@ -266,7 +266,7 @@ export default function PracticeAreaClient({ data }: { data: PracticeData }) {
                         href="/contact"
                         className="inline-flex items-center gap-2 bg-[#C29A3E] hover:bg-[#9C7A26] text-white px-5 py-3 rounded-sm text-base font-semibold tracking-widest uppercase transition-colors w-full justify-center"
                       >
-                        Free Consultation <ArrowRight size={13} />
+                        Schedule a Consultation <ArrowRight size={13} />
                       </Link>
                     </div>
                   </div>

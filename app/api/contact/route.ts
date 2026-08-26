@@ -18,6 +18,63 @@ interface ContactPayload {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/**
+ * Push the inquiry to Clio Grow as an Inbox Lead so a client profile is
+ * created without anyone re-keying it.
+ *
+ * Configured with CLIO_GROW_INBOX_TOKEN (from Clio Grow →
+ * Settings → Inbox → Web Form). When the token is absent this is a no-op, so
+ * the form keeps working before the integration is switched on.
+ *
+ * Never throws: a Clio outage must not cost the firm the lead, which still
+ * arrives by email regardless.
+ */
+async function sendToClioGrow(lead: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  message: string;
+  source: string;
+}): Promise<void> {
+  const token = process.env.CLIO_GROW_INBOX_TOKEN;
+  if (!token) return;
+
+  const endpoint =
+    process.env.CLIO_GROW_INBOX_URL ||
+    "https://grow.clio.com/inbox_leads";
+
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        inbox_lead: {
+          from_first: lead.firstName,
+          from_last: lead.lastName,
+          from_email: lead.email,
+          from_phone: lead.phone,
+          from_message: lead.message,
+          referring_url: lead.source,
+          from_source: "Website — dobarialaw.com",
+        },
+        inbox_lead_token: token,
+      }),
+      signal: AbortSignal.timeout(8000),
+    });
+
+    if (!res.ok) {
+      console.error(
+        "Clio Grow: lead push failed.",
+        res.status,
+        await res.text().catch(() => "")
+      );
+    }
+  } catch (err) {
+    console.error("Clio Grow: lead push errored.", err);
+  }
+}
+
 function esc(s: string): string {
   return s
     .replace(/&/g, "&amp;")
@@ -48,7 +105,16 @@ export async function POST(req: Request) {
   if (!lastName) errors.lastName = "Last name is required.";
   if (!email) errors.email = "Email is required.";
   else if (!EMAIL_RE.test(email)) errors.email = "Please enter a valid email.";
-  if (!message) errors.message = "Message is required.";
+  if (!practice) errors.practice = "Please select a matter type.";
+  if (!message) errors.message = "Please describe your matter.";
+  else if (message.length < 10) errors.message = "Please add a little more detail.";
+
+  // Phone is optional, but reject a partial number so the firm never gets an
+  // un-callable lead.
+  if (phone) {
+    const digits = phone.replace(/[^0-9]/g, "").replace(/^1/, "");
+    if (digits.length !== 10) errors.phone = "Please enter a complete 10-digit phone number.";
+  }
 
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ errors }, { status: 422 });
@@ -112,6 +178,18 @@ export async function POST(req: Request) {
       text,
       html,
     });
+
+    // Mirror the lead into Clio Grow. Awaited so it completes before the
+    // serverless function is frozen, but its failure never fails the request.
+    await sendToClioGrow({
+      firstName,
+      lastName,
+      email,
+      phone: prettyPhone === "Not provided" ? "" : prettyPhone,
+      message,
+      source,
+    });
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("Contact form: failed to send email.", err);

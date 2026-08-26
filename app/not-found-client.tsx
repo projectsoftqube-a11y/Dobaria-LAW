@@ -15,7 +15,7 @@ const popularLinks = [
   { label: "Family Law", href: "/practice-areas/family-law", hint: "Divorce, custody & support", icon: Users },
   { label: "Our Attorneys", href: "/attorneys", hint: "Meet the team behind your case", icon: UserSquare2 },
   { label: "Client Results", href: "/results", hint: "Outcomes we've secured", icon: Award },
-  { label: "Free Consultation", href: "/free-consultation", hint: "Talk to us — no cost", icon: CalendarCheck },
+  { label: "Schedule a Consultation", href: "/schedule-consultation", hint: "Talk to us — no cost", icon: CalendarCheck },
 ];
 
 export default function NotFoundClient() {

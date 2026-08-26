@@ -28,7 +28,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
             ) : (
               <Link
                 href={item.href}
-                className="hover:text-[var(--gold)] transition-colors"
+                className="inline-flex items-center py-1.5 hover:text-[var(--gold)] transition-colors"
               >
                 {item.name}
               </Link>

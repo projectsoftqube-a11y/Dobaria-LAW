@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   description:
     "Meet the attorneys of Dobaria Law PC — Marcia Binder Ibrahim and Vishal J. Dobaria. 45+ years of immigration, family, business & real estate counsel.",
   alternates: {
-    canonical: "https://ibrahimdobarialaw.com/attorneys",
+    canonical: "https://dobarialaw.com/attorneys",
   },
   openGraph: {
     title: "Our Attorneys | Dobaria Law PC, Lansdale PA",
     description: "Meet the attorneys of Dobaria Law PC — Marcia Binder Ibrahim and Vishal J. Dobaria. 45+ years of immigration, family, business & real estate counsel.",
-    url: "https://ibrahimdobarialaw.com/attorneys",
+    url: "https://dobarialaw.com/attorneys",
     siteName: "Dobaria Law PC",
     locale: "en_US",
     type: "website",

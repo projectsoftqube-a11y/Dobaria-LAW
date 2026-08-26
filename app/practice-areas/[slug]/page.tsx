@@ -82,10 +82,10 @@ const practiceAreasData: Record<string, PracticeData> = {
     ],
     h1: "Immigration Lawyers Serving Philadelphia & Lansdale, PA",
     faqs: [
-      { q: "How much does an immigration lawyer cost?", a: "Fees depend on the complexity of your matter. We explain the fee structure clearly at your initial consultation, which is free." },
+      { q: "How much does an immigration lawyer cost?", a: "Fees depend on the complexity of your matter. We explain the fee structure clearly at your initial consultation." },
       { q: "What does an immigration lawyer do?", a: "We assess your eligibility, prepare and file petitions with the documentation adjudicators expect, and represent you before USCIS or the immigration courts when needed." },
       { q: "Do I need a lawyer for a green card?", a: "Not always, but experienced counsel helps most when there are prior issues, deadlines, or complex facts. We'll tell you honestly at the consultation." },
-      { q: "Do you offer a free consultation?", a: "Yes. The initial consultation is free, and we respond to every inquiry within 24 business hours." },
+      { q: "Do you offer a consultation?", a: "Yes. You can schedule an initial consultation with us, and we ensure a timely response to every inquiry." },
       { q: "Do you work with clients outside Lansdale?", a: "Yes — Montgomery County, Philadelphia, and nationwide for immigration. We're licensed in PA, NJ, and NY." },
       { q: "How long does an immigration case take?", a: "It depends on the case type and current USCIS processing times; we give you realistic timelines up front." }
     ],
@@ -104,7 +104,7 @@ const practiceAreasData: Record<string, PracticeData> = {
     overview: [
       "Securing a green card or temporary visa is often the first and most critical step in achieving your goals in the United States. We assist individuals, families, and employers in navigating the complex pathways to permanent residency and temporary work authorization.",
       "From H-1B specialty occupation visas and L-1 intracompany transfers to marriage-based and family-sponsored green cards, our team prepares every petition with meticulous attention to detail. We ensure that your application stands up to the rigorous standards of U.S. Citizenship and Immigration Services (USCIS).",
-      "Because immigration decisions rarely stand alone, we also weigh how a petition interacts with your family, business, and long-term plans in the United States. We serve clients across Lansdale, Montgomery County, and Philadelphia, and represent green card and visa applicants nationwide and at consulates abroad — keeping you informed in plain language at every stage, in any of the six languages we speak in-house."
+      "Because immigration decisions rarely stand alone, we also weigh how a petition interacts with your family, business, and long-term plans in the United States. We serve clients across Lansdale, Montgomery County, and Philadelphia, and represent green card and visa applicants nationwide and at consulates abroad — keeping you informed in plain language at every stage, in any of the eight languages we speak in-house."
     ],
     servicesTitle: "Visa & Green Card Pathways We Handle",
     services: [
@@ -188,7 +188,7 @@ const practiceAreasData: Record<string, PracticeData> = {
     overview: [
       "Becoming a United States citizen is a profound milestone that brings significant rights and responsibilities. While the naturalization process is straightforward for many, complex issues regarding continuous residence, physical presence, taxation, and past legal matters can arise.",
       "We guide lawful permanent residents through the N-400 naturalization process, representing them from the initial application through the naturalization interview and oath ceremony. We also assist with derivative citizenship claims for children born abroad to U.S. citizens.",
-      "For applicants worried about a gap in residence, a past tax question, or an old record, the value of experienced counsel is knowing what will and will not become an issue before you file. We review your history carefully, prepare you for the civics and English components, and stand beside you at the interview — serving clients throughout Lansdale, Montgomery County, and Philadelphia in six languages."
+      "For applicants worried about a gap in residence, a past tax question, or an old record, the value of experienced counsel is knowing what will and will not become an issue before you file. We review your history carefully, prepare you for the civics and English components, and stand beside you at the interview — serving clients throughout Lansdale, Montgomery County, and Philadelphia in eight languages."
     ],
     servicesTitle: "Naturalization & Citizenship Services",
     services: [
@@ -251,7 +251,7 @@ const practiceAreasData: Record<string, PracticeData> = {
       { q: "Do I have to take a test?", a: "Most applicants take an English and a civics test. We help you prepare and explain any exemptions." },
       { q: "Can a criminal record affect my application?", a: "It can. Talk to us before filing — good moral character is assessed carefully, and some issues are manageable." },
       { q: "Does the U.S. allow dual citizenship?", a: "The U.S. generally permits it; whether your home country does is a separate question we can discuss." },
-      { q: "How much does it cost?", a: "Government filing fees plus our fee, which we explain clearly at your free consultation." }
+      { q: "How much does it cost?", a: "Government filing fees plus our fee, which we explain clearly at your consultation." }
     ],
     relatedPages: [
       { label: "Immigration Law", href: "/practice-areas/immigration-law" },
@@ -409,7 +409,7 @@ const practiceAreasData: Record<string, PracticeData> = {
       { q: "How is property divided?", a: "Pennsylvania follows equitable distribution — a fair, not necessarily equal, division. We work to protect your interests." },
       { q: "Do you handle high-conflict cases?", a: "Yes, and we also work to reduce conflict where possible, which often serves families and children better." },
       { q: "What if my spouse or I am not a U.S. citizen?", a: "Immigration status can interact with divorce and custody. Our immigration background lets us handle these carefully." },
-      { q: "How much will it cost?", a: "It depends on the complexity and level of dispute. We discuss fees openly at your free consultation." }
+      { q: "How much will it cost?", a: "It depends on the complexity and level of dispute. We discuss fees openly at your consultation." }
     ],
     relatedPages: [
       { label: "International Divorce", href: "/practice-areas/international-divorce" },
@@ -568,7 +568,7 @@ const practiceAreasData: Record<string, PracticeData> = {
       { q: "Can you review or draft our contracts?", a: "Yes — from client agreements to vendor and partnership contracts." },
       { q: "Do you help businesses that hire foreign workers?", a: "Yes; our immigration practice supports employer sponsorship and compliance." },
       { q: "Do you provide ongoing counsel?", a: "Yes — many clients keep us on as their go-to advisor." },
-      { q: "How do you charge?", a: "Depending on the matter, flat or hourly; we explain fees clearly at your free consultation." }
+      { q: "How do you charge?", a: "Depending on the matter, flat or hourly; we explain fees clearly at your consultation." }
     ],
     relatedPages: [
       { label: "Real Estate Law", href: "/practice-areas/real-estate-law" },
@@ -648,7 +648,7 @@ const practiceAreasData: Record<string, PracticeData> = {
       { q: "Do you handle commercial real estate?", a: "Yes — purchases, sales, and leases for business and investment property." },
       { q: "Can you help with a property in another state?", a: "Often yes — our title experience spans eighteen states." },
       { q: "Do you represent both buyers and sellers?", a: "Yes, though not on the same transaction. We'll clarify your representation up front." },
-      { q: "How much do you charge for a closing?", a: "It depends on the transaction; we explain fees clearly at your free consultation." }
+      { q: "How much do you charge for a closing?", a: "It depends on the transaction; we explain fees clearly at your consultation." }
     ],
     relatedPages: [
       { label: "Business Law", href: "/practice-areas/business-law" },
@@ -674,35 +674,35 @@ export async function generateStaticParams() {
 const metaMap: Record<string, { title: string; description: string }> = {
   "immigration-law": {
     title: "Immigration Lawyer in Philadelphia & Lansdale, PA",
-    description: "Experienced immigration attorneys serving Philadelphia, Montgomery County & nationwide. Green cards, visas, citizenship & removal defense. Free consultation.",
+    description: "Experienced immigration attorneys serving Philadelphia, Montgomery County & nationwide. Green cards, visas, citizenship & removal defense. Consultations available.",
   },
   "green-cards-visas": {
     title: "Green Card & Visa Lawyers | H-1B, EB-5, Family | Lansdale PA",
-    description: "Green card & visa attorneys in Lansdale, PA. Family & employment green cards, H-1B, L-1, O-1, EB-5, adjustment of status & consular processing. Free consultation.",
+    description: "Green card & visa attorneys in Lansdale, PA. Family & employment green cards, H-1B, L-1, O-1, EB-5, adjustment of status & consular processing. Consultations available.",
   },
   "citizenship-naturalization": {
     title: "Naturalization & Citizenship Lawyer | Lansdale, PA",
-    description: "Naturalization & citizenship attorneys in Lansdale, PA. N-400 applications, eligibility, the citizenship test & complex cases. 45+ years. Free consultation.",
+    description: "Naturalization & citizenship attorneys in Lansdale, PA. N-400 applications, eligibility, the citizenship test & complex cases. 45+ years. Consultations available.",
   },
   "deportation-defense": {
     title: "Deportation & Removal Defense Lawyers in Pennsylvania",
-    description: "Facing removal proceedings? Our deportation defense attorneys represent clients before the immigration courts & the BIA. 45+ years. Free, confidential consultation.",
+    description: "Facing removal proceedings? Our deportation defense attorneys represent clients before the immigration courts & the BIA. 45+ years. Confidential consultation.",
   },
   "family-law": {
     title: "Family Law & Divorce Attorneys in Montgomery County, PA",
-    description: "Divorce, custody, support & prenuptial agreements in Montgomery County & Lansdale, PA. Discreet, steady family law counsel. Free consultation. 45+ years.",
+    description: "Divorce, custody, support & prenuptial agreements in Montgomery County & Lansdale, PA. Discreet, steady family law counsel. Consultations available. 45+ years.",
   },
   "international-divorce": {
     title: "International Divorce & Cross-Border Custody Lawyers | PA",
-    description: "Cross-border divorce & international custody attorneys. Hague Convention cases, dual citizenship, foreign assets. Immigration + family law under one roof. Free consult.",
+    description: "Cross-border divorce & international custody attorneys. Hague Convention cases, dual citizenship, foreign assets. Immigration + family law under one roof.",
   },
   "business-law": {
     title: "Business & LLC Formation Attorneys in Pennsylvania",
-    description: "Business law counsel in Lansdale, PA: LLC & entity formation, contracts, and commercial transactions for closely held businesses. 45+ years. Free consultation.",
+    description: "Business law counsel in Lansdale, PA: LLC & entity formation, contracts, and commercial transactions for closely held businesses. 45+ years. Consultations available.",
   },
   "real-estate-law": {
     title: "Real Estate Closing & Title Attorneys | Montgomery County PA",
-    description: "Real estate attorneys for residential & commercial closings, title work, and multi-state transactions. Title experience across 18 states. Free consultation. 45+ yrs.",
+    description: "Real estate attorneys for residential & commercial closings, title work, and multi-state transactions. Title experience across 18 states. Consultations available. 45+ yrs.",
   },
 };
 
@@ -713,12 +713,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: { absolute: meta.title },
     description: meta.description,
     alternates: {
-      canonical: `https://ibrahimdobarialaw.com/practice-areas/${params.slug}`,
+      canonical: `https://dobarialaw.com/practice-areas/${params.slug}`,
     },
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: `https://ibrahimdobarialaw.com/practice-areas/${params.slug}`,
+      url: `https://dobarialaw.com/practice-areas/${params.slug}`,
       siteName: "Dobaria Law PC",
       locale: "en_US",
       type: "website",

@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     q: 'What is the cost of an initial consultation?',
-    a: 'We offer a complimentary 30-minute initial consultation for most practice areas. This allows us to understand your situation and provide preliminary guidance before any financial commitment.',
+    a: 'We offer an initial consultation for most practice areas, and we will confirm the fee when you reach out. It allows us to understand your situation and provide preliminary guidance on your options.',
   },
   {
     q: 'Do you work with clients outside of the local area?',

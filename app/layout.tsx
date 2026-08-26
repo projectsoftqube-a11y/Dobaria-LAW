@@ -2,19 +2,19 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ibrahimdobarialaw.com'),
+  metadataBase: new URL('https://dobarialaw.com'),
   title: {
     default: 'Dobaria Law PC | Immigration & Family Lawyers in Lansdale, PA',
     template: 'Dobaria Law PC | %s',
   },
-  description: 'Trusted immigration, family, business & real estate counsel serving Philadelphia & Montgomery County for 45+ years. Free consultation. Se habla español.',
+  description: 'Trusted immigration, family, business & real estate counsel serving Philadelphia & Montgomery County for 45+ years. Consultations available. Se habla español.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     siteName: 'Dobaria Law PC',
     title: 'Dobaria Law PC | Immigration & Family Lawyers in Lansdale, PA',
     description: 'Trusted immigration, family, business & real estate counsel serving Philadelphia & Montgomery County for 45+ years.',
-    url: 'https://ibrahimdobarialaw.com',
+    url: 'https://dobarialaw.com',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Dobaria Law PC' }],
   },
   twitter: {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: 'https://ibrahimdobarialaw.com',
+    canonical: 'https://dobarialaw.com',
   },
 };
 

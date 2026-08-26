@@ -27,11 +27,11 @@ export function getLegalServiceSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "LegalService",
-    "@id": "https://ibrahimdobarialaw.com/#firm",
+    "@id": "https://dobarialaw.com/#firm",
     name: "Dobaria Law PC",
-    url: "https://ibrahimdobarialaw.com/",
+    url: "https://dobarialaw.com/",
     telephone: "+1-215-362-2478",
-    email: "info@ibrahimdobarialaw.com",
+    email: "info@dobarialaw.com",
     foundingDate: "1981",
     priceRange: "$$",
     address: {
@@ -91,7 +91,7 @@ export function getBreadcrumbSchema(
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `https://ibrahimdobarialaw.com${item.href}`,
+      item: `https://dobarialaw.com${item.href}`,
     })),
   };
 }
@@ -115,8 +115,8 @@ export function getAttorneySchema(attorney: {
       "@type": "LegalService",
       name: "Dobaria Law PC",
     },
-    url: `https://ibrahimdobarialaw.com${attorney.url}`,
-    image: `https://ibrahimdobarialaw.com${attorney.image}`,
+    url: `https://dobarialaw.com${attorney.url}`,
+    image: `https://dobarialaw.com${attorney.image}`,
     knowsLanguage: attorney.languages,
     alumniOf: attorney.alumniOf,
     memberOf: attorney.memberOf,
@@ -139,18 +139,18 @@ export function getBlogPostSchema(post: {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
-    url: `https://ibrahimdobarialaw.com${post.url}`,
-    mainEntityOfPage: `https://ibrahimdobarialaw.com${post.url}`,
+    url: `https://dobarialaw.com${post.url}`,
+    mainEntityOfPage: `https://dobarialaw.com${post.url}`,
     datePublished: post.datePublished,
     dateModified: post.dateModified || post.datePublished,
-    ...(post.image ? { image: `https://ibrahimdobarialaw.com${post.image}` } : {}),
+    ...(post.image ? { image: `https://dobarialaw.com${post.image}` } : {}),
     author: {
       "@type": "Attorney",
       name: post.author,
-      url: `https://ibrahimdobarialaw.com${post.authorUrl}`,
+      url: `https://dobarialaw.com${post.authorUrl}`,
     },
     publisher: {
-      "@id": "https://ibrahimdobarialaw.com/#organization",
+      "@id": "https://dobarialaw.com/#organization",
     },
   };
 }

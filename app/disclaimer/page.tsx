@@ -7,11 +7,11 @@ import LegalPage, { type LegalSection } from "@/components/LegalPage";
 export const metadata: Metadata = {
   title: { absolute: "Disclaimer | Dobaria Law PC" },
   description: "Legal disclaimer and attorney advertising notice for Dobaria Law PC.",
-  alternates: { canonical: "https://ibrahimdobarialaw.com/disclaimer" },
+  alternates: { canonical: "https://dobarialaw.com/disclaimer" },
   openGraph: {
     title: "Disclaimer | Dobaria Law PC",
     description: "Legal disclaimer and attorney advertising notice for Dobaria Law PC.",
-    url: "https://ibrahimdobarialaw.com/disclaimer",
+    url: "https://dobarialaw.com/disclaimer",
     siteName: "Dobaria Law PC",
     locale: "en_US",
     type: "website",
@@ -68,7 +68,7 @@ export default function DisclaimerPage() {
     "@type": "WebPage",
     name: "Disclaimer | Dobaria Law PC",
     description: "Legal disclaimer for the Dobaria Law PC website, including attorney advertising and no-legal-advice notices.",
-    url: "https://ibrahimdobarialaw.com/disclaimer",
+    url: "https://dobarialaw.com/disclaimer",
   };
 
   return (

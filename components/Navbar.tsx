@@ -256,7 +256,7 @@ export default function Navbar() {
           {/* Right Actions */}
           <div className="hidden xl:flex items-center gap-8">
             <a
-              href="tel:215-362-2478"
+              href="tel:+12153622478"
               className="flex items-center gap-2 text-sm font-semibold text-[#1B1E49] hover:text-[#C29A3E] transition-colors duration-300"
             >
               <Phone size={16} className="text-[#1B1E49] fill-[#1B1E49] stroke-[2]" />
@@ -410,7 +410,7 @@ export default function Navbar() {
               })}
 
               <a
-                href="tel:215-362-2478"
+                href="tel:+12153622478"
                 className="flex items-center gap-3 text-lg font-semibold text-[#1B1E49] border-b border-[rgba(17,24,39,0.06)] pb-4 mt-2"
               >
                 <Phone size={18} className="text-[#1B1E49] fill-[#1B1E49] stroke-[2]" />

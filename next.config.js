@@ -16,6 +16,13 @@ const nextConfig = {
         destination: "/practice-areas/citizenship-naturalization",
         permanent: true,
       },
+      {
+        // The firm does not offer free consultations; the page moved to a
+        // neutral URL. Keep this redirect so existing links keep resolving.
+        source: "/free-consultation",
+        destination: "/schedule-consultation",
+        permanent: true,
+      },
     ];
   },
 };

@@ -22,12 +22,12 @@ export default function WhyChooseUsClient() {
   const webPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://ibrahimdobarialaw.com/why-choose-us#webpage",
-    url: "https://ibrahimdobarialaw.com/why-choose-us",
+    "@id": "https://dobarialaw.com/why-choose-us#webpage",
+    url: "https://dobarialaw.com/why-choose-us",
     name: content.meta.title,
     description: content.meta.description,
-    about: { "@id": "https://ibrahimdobarialaw.com/#organization" },
-    isPartOf: { "@id": "https://ibrahimdobarialaw.com/#website" },
+    about: { "@id": "https://dobarialaw.com/#organization" },
+    isPartOf: { "@id": "https://dobarialaw.com/#website" },
   };
 
   const icons = [Shield, Award, Globe, BookOpen, MessageSquare, Users];
@@ -147,8 +147,8 @@ export default function WhyChooseUsClient() {
             >
               <div className="relative aspect-[4/5] rounded-sm overflow-hidden">
                 <Image
-                  src="/images/about-main.webp"
-                  alt="Dobaria Law PC office"
+                  src="/images/brand-panel-portrait.svg"
+                  alt="Dobaria Law PC"
                   fill
                   className="object-cover"
                 />
@@ -209,7 +209,7 @@ export default function WhyChooseUsClient() {
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 text-[#C29A3E] flex-shrink-0" />
-                  <span className="text-[16px] text-[#1B1E49] font-medium">Free consultation</span>
+                  <span className="text-[16px] text-[#1B1E49] font-medium">Consultation</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 text-[#C29A3E] flex-shrink-0" />
@@ -217,7 +217,7 @@ export default function WhyChooseUsClient() {
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 text-[#C29A3E] flex-shrink-0" />
-                  <span className="text-[16px] text-[#1B1E49] font-medium">6 languages spoken</span>
+                  <span className="text-[16px] text-[#1B1E49] font-medium">8 languages spoken</span>
                 </div>
               </div>
             </motion.div>
@@ -409,7 +409,7 @@ export default function WhyChooseUsClient() {
               </h2>
 
               <p className="text-gray-400 text-[15px] leading-relaxed mb-8">
-                Our promise is simple: honest counsel, clear communication, and meticulous preparation at every step.
+                Our approach is simple: honest counsel, clear communication, and meticulous preparation at every step.
               </p>
 
               <Link
@@ -555,7 +555,7 @@ export default function WhyChooseUsClient() {
               {content.cta.h2}
             </h2>
             <p className="text-gray-400 text-[16px] max-w-2xl mx-auto mb-10">
-              Ready to experience the difference a boutique firm can make? Schedule your free consultation today.
+              Ready to experience the difference a boutique firm can make? Schedule your consultation today.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">

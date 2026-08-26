@@ -4,37 +4,29 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, CheckCircle, Shield, Globe, Users, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { freeConsultationContent as content } from "@/content/pages/free-consultation";
+import { scheduleConsultationContent as content } from "@/content/pages/schedule-consultation";
 import { JsonLd, getLegalServiceSchema, getBreadcrumbSchema } from "@/components/JsonLd";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { formatUSPhone } from "@/lib/phone";
+import {
+  EMPTY_ENQUIRY,
+  PRACTICE_OPTIONS,
+  validateEnquiry,
+  toContactPayload,
+} from "@/lib/formValidation";
 
-export default function FreeConsultationClient() {
+export default function ScheduleConsultationClient() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ ...EMPTY_ENQUIRY });
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Please enter a valid email";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    if (!formData.message.trim()) newErrors.message = "Message is required";
-
+    const newErrors = validateEnquiry(formData);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -49,7 +41,7 @@ export default function FreeConsultationClient() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, source: "Free Consultation" }),
+        body: JSON.stringify(toContactPayload(formData, "Schedule a Consultation")),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -58,7 +50,7 @@ export default function FreeConsultationClient() {
         return;
       }
       setSubmitted(true);
-      setFormData({ firstName: "", lastName: "", email: "", phone: "", message: "" });
+      setFormData({ ...EMPTY_ENQUIRY });
     } catch {
       setSubmitError("We couldn't send your message. Please call the office or try again.");
     } finally {
@@ -68,7 +60,7 @@ export default function FreeConsultationClient() {
 
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: "Home", href: "/" },
-    { name: "Free Consultation", href: "/free-consultation" },
+    { name: "Schedule a Consultation", href: "/schedule-consultation" },
   ]);
 
   return (
@@ -105,7 +97,7 @@ export default function FreeConsultationClient() {
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
-              { name: "Free Consultation", href: "/free-consultation" },
+              { name: "Schedule a Consultation", href: "/schedule-consultation" },
             ]}
           />
 
@@ -195,7 +187,7 @@ export default function FreeConsultationClient() {
                     onSubmit={handleSubmit}
                     className="space-y-5"
                   >
-                    <h2 className="text-xl font-semibold text-white mb-6">Get Your Free Consultation</h2>
+                    <h2 className="text-xl font-semibold text-white mb-6">Get Your Schedule a Consultation</h2>
                     
                     <div className="grid grid-cols-2 gap-4">
                       <div>
@@ -236,6 +228,7 @@ export default function FreeConsultationClient() {
                       </div>
                     </div>
 
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
                         Email *
@@ -275,6 +268,29 @@ export default function FreeConsultationClient() {
                         placeholder="(555) 123-4567"
                       />
                       {errors.phone && <p className="text-red-500 text-[13px] mt-1.5">{errors.phone}</p>}
+                    </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                        Matter Type *
+                      </label>
+                      <select
+                        value={formData.practice}
+                        onChange={(e) => {
+                          setFormData({ ...formData, practice: e.target.value });
+                          if (errors.practice) setErrors({ ...errors, practice: "" });
+                        }}
+                        className={`w-full px-4 py-3 bg-white/[0.05] border rounded-sm text-white text-[16px] focus:outline-none focus:ring-1 transition-all cursor-pointer ${
+                          errors.practice ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-white/10 focus:border-[#C29A3E] focus:ring-[#C29A3E]"
+                        }`}
+                      >
+                        <option value="" className="bg-[#1B1E49]">Choose a practice area</option>
+                        {PRACTICE_OPTIONS.map((opt) => (
+                          <option key={opt} value={opt} className="bg-[#1B1E49]">{opt}</option>
+                        ))}
+                      </select>
+                      {errors.practice && <p className="text-red-500 text-[13px] mt-1.5">{errors.practice}</p>}
                     </div>
 
                     <div>
@@ -461,7 +477,7 @@ export default function FreeConsultationClient() {
                 Common Questions
               </h2>
               <p className="text-[#6B7280] text-[15px] leading-relaxed mb-6">
-                Answers to questions clients ask us most about scheduling a free consultation.
+                Answers to questions clients ask us most about scheduling a consultation.
               </p>
               <Link
                 href="/contact"
@@ -519,7 +535,7 @@ export default function FreeConsultationClient() {
               Ready to Get Started?
             </h2>
             <p className="text-gray-400 text-[16px] max-w-2xl mx-auto mb-10">
-              Schedule your free consultation today. There&apos;s no obligation, and we&apos;ll provide honest, straightforward advice about your legal matter.
+              Schedule your consultation today. We&apos;ll provide honest, straightforward advice about your legal matter.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">

@@ -14,7 +14,7 @@ export interface Metric {
 const defaultMetrics: Metric[] = [
   { value: 45, suffix: '+', label: 'Years of Trusted Counsel', description: 'Serving clients since 1981' },
   { value: 50, suffix: '+', label: 'Countries Served', description: 'Clients from around the world' },
-  { value: 6, suffix: '', label: 'Languages Spoken', description: 'Multilingual legal team' },
+  { value: 8, suffix: '', label: 'Languages Spoken', description: 'Multilingual legal team' },
   { value: 3, suffix: '', label: 'States Admitted', description: 'PA · NJ · NY' },
 ];
 

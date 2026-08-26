@@ -14,12 +14,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: { absolute: attorney.meta.title },
     description: attorney.meta.description,
     alternates: {
-      canonical: `https://ibrahimdobarialaw.com/attorneys/${params.slug}`,
+      canonical: `https://dobarialaw.com/attorneys/${params.slug}`,
     },
     openGraph: {
       title: attorney.meta.title,
       description: attorney.meta.description,
-      url: `https://ibrahimdobarialaw.com/attorneys/${params.slug}`,
+      url: `https://dobarialaw.com/attorneys/${params.slug}`,
       siteName: "Dobaria Law PC",
       locale: "en_US",
       type: "website",

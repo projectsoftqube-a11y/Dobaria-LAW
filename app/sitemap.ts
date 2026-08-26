@@ -1,7 +1,7 @@
 // app/sitemap.ts
 import type { MetadataRoute } from "next";
 
-const BASE = "https://ibrahimdobarialaw.com";
+const BASE = "https://dobarialaw.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/attorneys/vishal-j-dobaria", priority: 0.7, changeFrequency: "yearly" },
     { path: "/attorneys/jose-m-lugo", priority: 0.7, changeFrequency: "yearly" },
     { path: "/contact", priority: 0.9, changeFrequency: "yearly" },
-    { path: "/free-consultation", priority: 0.8, changeFrequency: "yearly" },
+    { path: "/schedule-consultation", priority: 0.8, changeFrequency: "yearly" },
     { path: "/about", priority: 0.6, changeFrequency: "yearly" },
     { path: "/results", priority: 0.6, changeFrequency: "monthly" },
     { path: "/why-choose-us", priority: 0.6, changeFrequency: "yearly" },
