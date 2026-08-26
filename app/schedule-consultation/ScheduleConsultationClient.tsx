@@ -16,6 +16,7 @@ import {
   PRACTICE_OPTIONS,
   validateEnquiry,
   toContactPayload,
+  focusFirstError,
 } from "@/lib/formValidation";
 
 export default function ScheduleConsultationClient() {
@@ -25,16 +26,22 @@ export default function ScheduleConsultationClient() {
   const [submitError, setSubmitError] = useState("");
   const [formData, setFormData] = useState({ ...EMPTY_ENQUIRY });
 
+  /** Validate, publish the messages, and hand them back for focus handling. */
   const validateForm = () => {
     const newErrors = validateEnquiry(formData);
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return newErrors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError("");
-    if (!validateForm()) return;
+
+    const found = validateForm();
+    if (Object.keys(found).length > 0) {
+      focusFirstError(found, "consult");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -45,7 +52,10 @@ export default function ScheduleConsultationClient() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        if (data.errors) setErrors(data.errors);
+        if (data.errors) {
+          setErrors(data.errors);
+          focusFirstError(data.errors, "consult");
+        }
         setSubmitError(data.error || "Something went wrong. Please try again.");
         return;
       }
@@ -185,17 +195,22 @@ export default function ScheduleConsultationClient() {
                   <form
                     id="form"
                     onSubmit={handleSubmit}
+                    noValidate
                     className="space-y-5"
                   >
                     <h2 className="text-xl font-semibold text-white mb-6">Get Your Schedule a Consultation</h2>
                     
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                        <label htmlFor="consult-firstName" className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
                           First Name *
                         </label>
                         <input
                           type="text"
+                          id="consult-firstName"
+                          name="firstName"
+                          aria-invalid={!!errors.firstName}
+                          aria-describedby={errors.firstName ? "consult-firstName-error" : undefined}
                           value={formData.firstName}
                           onChange={(e) => {
                             setFormData({ ...formData, firstName: e.target.value });
@@ -206,14 +221,18 @@ export default function ScheduleConsultationClient() {
                           }`}
                           placeholder="John"
                         />
-                        {errors.firstName && <p className="text-red-500 text-[13px] mt-1.5">{errors.firstName}</p>}
+                        {errors.firstName && <p id="consult-firstName-error" role="alert" className="text-red-500 text-[13px] mt-1.5">{errors.firstName}</p>}
                       </div>
                       <div>
-                        <label className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                        <label htmlFor="consult-lastName" className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
                           Last Name *
                         </label>
                         <input
                           type="text"
+                          id="consult-lastName"
+                          name="lastName"
+                          aria-invalid={!!errors.lastName}
+                          aria-describedby={errors.lastName ? "consult-lastName-error" : undefined}
                           value={formData.lastName}
                           onChange={(e) => {
                             setFormData({ ...formData, lastName: e.target.value });
@@ -224,17 +243,21 @@ export default function ScheduleConsultationClient() {
                           }`}
                           placeholder="Doe"
                         />
-                        {errors.lastName && <p className="text-red-500 text-[13px] mt-1.5">{errors.lastName}</p>}
+                        {errors.lastName && <p id="consult-lastName-error" role="alert" className="text-red-500 text-[13px] mt-1.5">{errors.lastName}</p>}
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                      <label htmlFor="consult-email" className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
                         Email *
                       </label>
                       <input
                         type="email"
+                        id="consult-email"
+                        name="email"
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? "consult-email-error" : undefined}
                         value={formData.email}
                         onChange={(e) => {
                           setFormData({ ...formData, email: e.target.value });
@@ -245,17 +268,21 @@ export default function ScheduleConsultationClient() {
                         }`}
                         placeholder="john@example.com"
                       />
-                      {errors.email && <p className="text-red-500 text-[13px] mt-1.5">{errors.email}</p>}
+                      {errors.email && <p id="consult-email-error" role="alert" className="text-red-500 text-[13px] mt-1.5">{errors.email}</p>}
                     </div>
 
                     <div>
-                      <label className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
-                        Phone *
+                      <label htmlFor="consult-phone" className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                        Phone
                       </label>
                       <input
                         type="tel"
                         inputMode="tel"
                         autoComplete="tel"
+                        id="consult-phone"
+                        name="phone"
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? "consult-phone-error" : undefined}
                         value={formData.phone}
                         onChange={(e) => {
                           setFormData((f) => ({ ...f, phone: formatUSPhone(e.target.value) }));
@@ -267,15 +294,19 @@ export default function ScheduleConsultationClient() {
                         }`}
                         placeholder="(555) 123-4567"
                       />
-                      {errors.phone && <p className="text-red-500 text-[13px] mt-1.5">{errors.phone}</p>}
+                      {errors.phone && <p id="consult-phone-error" role="alert" className="text-red-500 text-[13px] mt-1.5">{errors.phone}</p>}
                     </div>
                     </div>
 
                     <div>
-                      <label className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                      <label htmlFor="consult-practice" className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
                         Matter Type *
                       </label>
                       <select
+                        id="consult-practice"
+                        name="practice"
+                        aria-invalid={!!errors.practice}
+                        aria-describedby={errors.practice ? "consult-practice-error" : undefined}
                         value={formData.practice}
                         onChange={(e) => {
                           setFormData({ ...formData, practice: e.target.value });
@@ -290,14 +321,18 @@ export default function ScheduleConsultationClient() {
                           <option key={opt} value={opt} className="bg-[#1B1E49]">{opt}</option>
                         ))}
                       </select>
-                      {errors.practice && <p className="text-red-500 text-[13px] mt-1.5">{errors.practice}</p>}
+                      {errors.practice && <p id="consult-practice-error" role="alert" className="text-red-500 text-[13px] mt-1.5">{errors.practice}</p>}
                     </div>
 
                     <div>
-                      <label className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                      <label htmlFor="consult-message" className="block text-[13px] font-semibold uppercase tracking-wider text-gray-300 mb-2">
                         How can we help? *
                       </label>
                       <textarea
+                        id="consult-message"
+                        name="message"
+                        aria-invalid={!!errors.message}
+                        aria-describedby={errors.message ? "consult-message-error" : undefined}
                         value={formData.message}
                         onChange={(e) => {
                           setFormData({ ...formData, message: e.target.value });
@@ -309,11 +344,23 @@ export default function ScheduleConsultationClient() {
                         }`}
                         placeholder="Describe your legal matter..."
                       />
-                      {errors.message && <p className="text-red-500 text-[13px] mt-1.5">{errors.message}</p>}
+                      {errors.message && <p id="consult-message-error" role="alert" className="text-red-500 text-[13px] mt-1.5">{errors.message}</p>}
                     </div>
 
+                    {/* Honeypot — hidden from people, filled in by bots. */}
+                    <input
+                      type="text"
+                      name="company"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="hidden"
+                    />
+
                     {submitError && (
-                      <p className="text-red-500 text-[13px] text-center">{submitError}</p>
+                      <p role="alert" className="text-red-500 text-[13px] text-center">{submitError}</p>
                     )}
 
                     <button

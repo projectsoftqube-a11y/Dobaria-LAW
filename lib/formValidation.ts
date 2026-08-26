@@ -12,6 +12,12 @@ export interface EnquiryForm {
   phone: string;
   practice: string;
   message: string;
+  /**
+   * Honeypot. Hidden from real users, so anything in here came from a bot.
+   * Never validated and never shown — the server silently discards the
+   * submission when it is filled.
+   */
+  company: string;
 }
 
 /** The shape every enquiry form starts in. */
@@ -22,6 +28,7 @@ export const EMPTY_ENQUIRY: EnquiryForm = {
   phone: "",
   practice: "",
   message: "",
+  company: "",
 };
 
 /** Practice areas offered in the "matter type" selector. */
@@ -35,6 +42,16 @@ export const PRACTICE_OPTIONS = [
   "Business Law",
   "Real Estate Law",
   "Other",
+] as const;
+
+/** Visible fields, in the order they appear in every form. */
+export const FIELD_ORDER = [
+  "firstName",
+  "lastName",
+  "email",
+  "phone",
+  "practice",
+  "message",
 ] as const;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,6 +85,23 @@ export function validateEnquiry(form: EnquiryForm): Record<string, string> {
   return errors;
 }
 
+/**
+ * Move focus to the first field that failed, so a validation error is never
+ * announced somewhere off-screen. Each form passes its own id prefix because
+ * the contact section can share a page with other content using the same
+ * field names.
+ */
+export function focusFirstError(errors: Record<string, string>, idPrefix: string): void {
+  const first = FIELD_ORDER.find((field) => errors[field]);
+  if (!first) return;
+
+  const el = document.getElementById(`${idPrefix}-${first}`);
+  if (!el) return;
+
+  el.focus({ preventScroll: true });
+  el.scrollIntoView({ block: "center", behavior: "smooth" });
+}
+
 /** Build the request body the /api/contact route expects. */
 export function toContactPayload(form: EnquiryForm, source: string) {
   return {
@@ -77,6 +111,7 @@ export function toContactPayload(form: EnquiryForm, source: string) {
     phone: form.phone.trim(),
     practice: form.practice.trim(),
     message: form.message.trim(),
+    company: form.company,
     source,
   };
 }

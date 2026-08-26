@@ -14,6 +14,7 @@ import {
   PRACTICE_OPTIONS,
   validateEnquiry,
   toContactPayload,
+  focusFirstError,
 } from "@/lib/formValidation";
 
 const contactFaqs = [
@@ -44,16 +45,22 @@ export default function ContactPage() {
   };
 
 
+  /** Validate, publish the messages, and hand them back for focus handling. */
   const validateForm = () => {
     const newErrors = validateEnquiry(form);
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return newErrors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError("");
-    if (!validateForm()) return;
+
+    const found = validateForm();
+    if (Object.keys(found).length > 0) {
+      focusFirstError(found, "contact-page");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -64,11 +71,15 @@ export default function ContactPage() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        if (data.errors) setErrors(data.errors);
+        if (data.errors) {
+          setErrors(data.errors);
+          focusFirstError(data.errors, "contact-page");
+        }
         setSubmitError(data.error || "Something went wrong. Please try again.");
         return;
       }
       setSubmitted(true);
+      setForm({ ...EMPTY_ENQUIRY });
     } catch {
       setSubmitError("We couldn't send your message. Please call the office or try again.");
     } finally {
@@ -335,16 +346,19 @@ export default function ContactPage() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
                     <h2 className="text-[#1B1E49] text-xl font-semibold mb-2">Send us a Message</h2>
                     
                     <div className="grid grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                        <label htmlFor="contact-page-firstName" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
                           First Name *
                         </label>
                         <input
+                          id="contact-page-firstName"
                           name="firstName"
+                          aria-invalid={!!errors.firstName}
+                          aria-describedby={errors.firstName ? "contact-page-firstName-error" : undefined}
                           type="text"
                           value={form.firstName}
                           onChange={handleChange}
@@ -353,14 +367,17 @@ export default function ContactPage() {
                             errors.firstName ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
                           } focus:outline-none`}
                         />
-                        {errors.firstName && <p className="text-red-500 text-[12px]">{errors.firstName}</p>}
+                        {errors.firstName && <p id="contact-page-firstName-error" role="alert" className="text-red-500 text-[12px]">{errors.firstName}</p>}
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                        <label htmlFor="contact-page-lastName" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
                           Last Name *
                         </label>
                         <input
+                          id="contact-page-lastName"
                           name="lastName"
+                          aria-invalid={!!errors.lastName}
+                          aria-describedby={errors.lastName ? "contact-page-lastName-error" : undefined}
                           type="text"
                           value={form.lastName}
                           onChange={handleChange}
@@ -369,17 +386,20 @@ export default function ContactPage() {
                             errors.lastName ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
                           } focus:outline-none`}
                         />
-                        {errors.lastName && <p className="text-red-500 text-[12px]">{errors.lastName}</p>}
+                        {errors.lastName && <p id="contact-page-lastName-error" role="alert" className="text-red-500 text-[12px]">{errors.lastName}</p>}
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                        <label htmlFor="contact-page-email" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
                           Email *
                         </label>
                         <input
+                          id="contact-page-email"
                           name="email"
+                          aria-invalid={!!errors.email}
+                          aria-describedby={errors.email ? "contact-page-email-error" : undefined}
                           type="email"
                           value={form.email}
                           onChange={handleChange}
@@ -388,15 +408,18 @@ export default function ContactPage() {
                             errors.email ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
                           } focus:outline-none`}
                         />
-                        {errors.email && <p className="text-red-500 text-[12px]">{errors.email}</p>}
+                        {errors.email && <p id="contact-page-email-error" role="alert" className="text-red-500 text-[12px]">{errors.email}</p>}
                       </div>
 
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                        <label htmlFor="contact-page-phone" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
                           Phone Number
                         </label>
                         <input
+                          id="contact-page-phone"
                           name="phone"
+                          aria-invalid={!!errors.phone}
+                          aria-describedby={errors.phone ? "contact-page-phone-error" : undefined}
                           type="tel"
                           inputMode="tel"
                           autoComplete="tel"
@@ -411,16 +434,19 @@ export default function ContactPage() {
                             errors.phone ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
                           } focus:outline-none`}
                         />
-                        {errors.phone && <p className="text-red-500 text-[12px]">{errors.phone}</p>}
+                        {errors.phone && <p id="contact-page-phone-error" role="alert" className="text-red-500 text-[12px]">{errors.phone}</p>}
                       </div>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                      <label htmlFor="contact-page-practice" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
                         Matter Type *
                       </label>
                       <select
+                        id="contact-page-practice"
                         name="practice"
+                        aria-invalid={!!errors.practice}
+                        aria-describedby={errors.practice ? "contact-page-practice-error" : undefined}
                         value={form.practice}
                         onChange={handleChange}
                         className={`w-full px-4 py-3 pr-10 text-sm rounded-sm font-sans transition-all border cursor-pointer appearance-none bg-no-repeat ${
@@ -433,15 +459,18 @@ export default function ContactPage() {
                           <option key={opt} value={opt}>{opt}</option>
                         ))}
                       </select>
-                      {errors.practice && <p className="text-red-500 text-[12px]">{errors.practice}</p>}
+                      {errors.practice && <p id="contact-page-practice-error" role="alert" className="text-red-500 text-[12px]">{errors.practice}</p>}
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                      <label htmlFor="contact-page-message" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
                         Message *
                       </label>
                       <textarea
+                        id="contact-page-message"
                         name="message"
+                        aria-invalid={!!errors.message}
+                        aria-describedby={errors.message ? "contact-page-message-error" : undefined}
                         value={form.message}
                         onChange={handleChange}
                         rows={4}
@@ -450,11 +479,23 @@ export default function ContactPage() {
                           errors.message ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
                         } focus:outline-none`}
                       />
-                      {errors.message && <p className="text-red-500 text-[12px]">{errors.message}</p>}
+                      {errors.message && <p id="contact-page-message-error" role="alert" className="text-red-500 text-[12px]">{errors.message}</p>}
                     </div>
 
+                    {/* Honeypot — hidden from people, filled in by bots. */}
+                    <input
+                      type="text"
+                      name="company"
+                      value={form.company}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="hidden"
+                    />
+
                     {submitError && (
-                      <p className="text-red-600 text-[13px]">{submitError}</p>
+                      <p role="alert" className="text-red-600 text-[13px]">{submitError}</p>
                     )}
 
                     <button

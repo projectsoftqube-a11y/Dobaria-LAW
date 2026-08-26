@@ -13,10 +13,49 @@ interface ContactPayload {
   phone?: string;
   practice?: string;
   message?: string;
+  company?: string; // honeypot — always empty for a real person
   source?: string; // which form it came from
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// ---- Rate limiting ----
+// A small in-memory sliding window. It lives per serverless instance rather
+// than in shared storage, so it is not an airtight quota — it is there to stop
+// one script hammering the firm's inbox, which it does well enough without
+// adding a database.
+const RATE_LIMIT_MAX = 5; // submissions ...
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // ... per 10 minutes, per IP.
+const hits = new Map<string, number[]>();
+
+function clientIp(req: Request): string {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return req.headers.get("x-real-ip") || "unknown";
+}
+
+/** True when this IP has already used up its allowance. */
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+
+  if (recent.length >= RATE_LIMIT_MAX) {
+    hits.set(ip, recent);
+    return true;
+  }
+
+  recent.push(now);
+  hits.set(ip, recent);
+
+  // Keep the map from growing without bound on a long-lived instance.
+  if (hits.size > 500) {
+    for (const [key, times] of hits) {
+      if (times.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) hits.delete(key);
+    }
+  }
+
+  return false;
+}
 
 /**
  * Push the inquiry to Clio Grow as an Inbox Lead so a client profile is
@@ -89,6 +128,23 @@ export async function POST(req: Request) {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  }
+
+  // ---- Honeypot ----
+  // The field is hidden from real users, so a value here means a bot filled the
+  // form in. Answer with the same success shape a person gets: telling a
+  // scraper it was detected only invites another attempt with the field left
+  // blank. Nothing is emailed.
+  if ((body.company || "").trim()) {
+    return NextResponse.json({ ok: true });
+  }
+
+  // ---- Rate limiting ----
+  if (isRateLimited(clientIp(req))) {
+    return NextResponse.json(
+      { error: "Too many submissions. Please wait a few minutes or call the office." },
+      { status: 429 }
+    );
   }
 
   const firstName = (body.firstName || "").trim();
