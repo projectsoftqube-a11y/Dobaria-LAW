@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { Clock, ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -195,6 +196,17 @@ export default function InsightsPage() {
                       href={`/insights/${post.slug}`}
                       className="flex flex-col h-full bg-white rounded-xl border border-gray-100 overflow-hidden shadow-[0_2px_20px_-8px_rgba(17,24,39,0.08)] hover:shadow-[0_16px_48px_-12px_rgba(17,24,39,0.13)] hover:-translate-y-0.5 transition-all duration-500"
                     >
+                      {/* Hero image */}
+                      <div className="relative w-full aspect-[16/9] overflow-hidden bg-[#F8F6F2]">
+                        <Image
+                          src={post.heroImage}
+                          alt={post.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                        />
+                      </div>
+
                       {/* Top accent bar */}
                       <div className="h-[3px] bg-gradient-to-r from-[#C29A3E] to-[#9C7A26] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
 

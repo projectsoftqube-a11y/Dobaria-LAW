@@ -89,7 +89,7 @@ export default function Hero() {
         ))}
       </div>
 
-      <div className="relative z-10 site-container pt-24 sm:pt-28 pb-12 sm:pb-16 grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
+      <div className="relative z-10 site-container pt-28 pb-12 sm:pb-16 grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
 
         {/* LEFT — Text content */}
         <div className="flex flex-col gap-5 sm:gap-8">
@@ -176,27 +176,6 @@ export default function Hero() {
             </Link>
           </motion.div>
 
-          {/* Trust indicators */}
-          <motion.div
-            custom={6}
-            initial="hidden"
-            animate="visible"
-            variants={textVariants}
-            className="hero-stats flex items-center gap-6 sm:gap-8 pt-1 sm:pt-2"
-          >
-            {[
-              { num: '45+', label: 'Years of Counsel' },
-              { num: '50+', label: 'Countries Served' },
-              { num: '8', label: 'Languages Spoken' },
-            ].map((item) => (
-              <div key={item.label} className="flex flex-col gap-0.5">
-                <span className="text-[#14163A] font-semibold text-2xl sm:text-xl"
-                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{item.num}</span>
-                <span className="text-[#4B5563] text-[9px] sm:text-[11px] tracking-[0.06em] sm:tracking-[0.08em] uppercase"
-                  style={{ fontFamily: 'Inter, sans-serif' }}>{item.label}</span>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         {/* RIGHT — Visual composition */}

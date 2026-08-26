@@ -39,9 +39,17 @@ export const legalServiceSchema = {
     { "@type": "City", name: "Philadelphia" },
     { "@type": "Country", name: "United States" },
   ],
-  knowsLanguage: ["en", "es", "de", "ar", "fr", "ko"],
-  availableLanguage: ["English", "Spanish", "German", "Arabic", "French", "Korean"],
-  sameAs: [],
+  knowsLanguage: ["en", "es", "gu", "hi", "de", "ar", "fr", "ko"],
+  availableLanguage: [
+    "English", "Spanish", "Gujarati", "Hindi",
+    "German", "Arabic", "French", "Korean",
+  ],
+  // Public profiles Google can link to the firm. Add Instagram and X here
+  // once those accounts exist.
+  sameAs: [
+    "https://www.linkedin.com/company/ibrahim-dobaria-law-pllc",
+    "https://www.facebook.com/p/Law-Office-of-Marcia-Binder-Ibrahim-100043954827038/",
+  ],
 };
 
 export const organizationSchema = {

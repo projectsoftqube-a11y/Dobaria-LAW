@@ -134,11 +134,20 @@ export async function POST(req: Request) {
 
   const prettyPhone = phone || "Not provided";
 
+  const port = Number(SMTP_PORT) || 587;
+
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
-    port: Number(SMTP_PORT) || 587,
-    secure: SMTP_SECURE === "true",
+    port,
+    // Port 465 uses implicit TLS; 587 connects in the clear and upgrades via
+    // STARTTLS, which is what Microsoft 365 requires.
+    secure: SMTP_SECURE === "true" || port === 465,
+    requireTLS: port === 587,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    tls: { minVersion: "TLSv1.2" },
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000,
   });
 
   const subject = `New inquiry from ${firstName} ${lastName}${practice ? ` — ${practice}` : ""}`;
@@ -192,7 +201,22 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("Contact form: failed to send email.", err);
+    const e = err as { code?: string; responseCode?: number; message?: string };
+
+    // 535 / EAUTH from Microsoft 365 nearly always means SMTP AUTH is disabled
+    // for the mailbox, or a normal password was used instead of an app
+    // password. Log it distinctly so it is not mistaken for a network blip.
+    if (e.code === "EAUTH" || e.responseCode === 535) {
+      console.error(
+        "Contact form: SMTP authentication rejected. For Microsoft 365, confirm " +
+          "SMTP AUTH is enabled for this mailbox and that SMTP_PASS is an app " +
+          "password, not the account password.",
+        e.message
+      );
+    } else {
+      console.error("Contact form: failed to send email.", err);
+    }
+
     return NextResponse.json(
       { error: "We couldn't send your message. Please call the office or try again later." },
       { status: 502 }

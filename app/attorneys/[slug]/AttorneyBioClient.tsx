@@ -7,7 +7,6 @@ import Image from "next/image";
 import type { AttorneyBio } from "@/content/attorneys";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
-import LenisProvider from "@/components/LenisProvider";
 import { JsonLd, getAttorneySchema, getBreadcrumbSchema } from "@/components/JsonLd";
 
 interface Props {
@@ -33,7 +32,7 @@ export default function AttorneyBioClient({ attorney }: Props) {
   ]);
 
   return (
-    <LenisProvider>
+    <>
       <JsonLd data={[schema, breadcrumbSchema]} />
       <main className="min-h-screen bg-[#F8F6F2]">
         <Navbar />
@@ -333,6 +332,6 @@ export default function AttorneyBioClient({ attorney }: Props) {
 
         <Footer />
       </main>
-    </LenisProvider>
+    </>
   );
 }

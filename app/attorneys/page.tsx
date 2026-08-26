@@ -7,7 +7,6 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
 import Contact from "@/components/sections/Contact";
-import LenisProvider from "@/components/LenisProvider";
 import { breadcrumbSchema } from "@/lib/schema";
 
 const partners = [
@@ -119,7 +118,6 @@ export default function AttorneysPage() {
   };
 
   return (
-    <LenisProvider>
       <main className="min-h-screen bg-[#F8F6F2]">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Attorneys", path: "/attorneys" }])) }} />
         <script
@@ -390,6 +388,5 @@ export default function AttorneysPage() {
         {/* Footer Section */}
         <Footer />
       </main>
-    </LenisProvider>
   );
 }

@@ -7,7 +7,6 @@ import { ArrowUpRight, Home, Phone, Compass, Scale, Plane, IdCard, Users, UserSq
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
-import LenisProvider from "@/components/LenisProvider";
 
 const popularLinks = [
   { label: "Immigration Law", href: "/practice-areas/immigration-law", hint: "Petitions, visas & consular processing", icon: Plane },
@@ -32,7 +31,7 @@ export default function NotFoundClient() {
   }, []);
 
   return (
-    <LenisProvider>
+    <>
       <Navbar />
 
       <main className="relative overflow-hidden bg-gradient-to-b from-[#0B0F17] via-[#111531] to-[#1A2140] min-h-screen flex items-center">
@@ -222,6 +221,6 @@ export default function NotFoundClient() {
       </main>
 
       <Footer />
-    </LenisProvider>
+    </>
   );
 }

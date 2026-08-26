@@ -307,7 +307,10 @@ export default function Contact() {
                       inputMode="tel"
                       autoComplete="tel"
                       value={form.phone}
-                      onChange={(e) => setForm(f => ({ ...f, phone: formatUSPhone(e.target.value) }))}
+                      onChange={(e) => {
+                        setForm(f => ({ ...f, phone: formatUSPhone(e.target.value) }));
+                        if (errors.phone) setErrors(er => ({ ...er, phone: "" }));
+                      }}
                       placeholder="(555) 123-4567"
                       maxLength={14}
                       className="premium-input"
@@ -324,12 +327,13 @@ export default function Contact() {
                     name="practice"
                     value={form.practice}
                     onChange={handleChange}
-                    className="premium-input"
+                    className={`premium-input ${errors.practice ? "border-red-500" : ""}`}
                     style={{ padding: '10px 14px 10px 14px', paddingRight: '40px', appearance: 'none', cursor: 'pointer', backgroundImage: `url('data:image/svg+xml;utf8,<svg fill="%234B5563" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center', backgroundSize: '20px' }}
                   >
                     <option value="">Select a practice area</option>
                     {PRACTICE_OPTIONS.map(p => <option key={p} value={p}>{p}</option>)}
                   </select>
+                  {errors.practice && <p className="text-red-500 text-[11px] mt-1">{errors.practice}</p>}
                 </div>
 
                 <div className="flex flex-col gap-1 sm:gap-1.5">

@@ -18,7 +18,6 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
 import Contact from "@/components/sections/Contact";
-import LenisProvider from "@/components/LenisProvider";
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from "@/lib/schema";
 import {
   Accordion,
@@ -103,7 +102,6 @@ export default function PracticeAreaClient({ data }: { data: PracticeData }) {
   const stats = categoryStats[data.category] || categoryStats["Immigration & Citizenship"];
 
   return (
-    <LenisProvider>
       <main className="min-h-screen bg-[#F8F6F2]">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(svcSchema) }} />
         {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
@@ -498,6 +496,5 @@ export default function PracticeAreaClient({ data }: { data: PracticeData }) {
         {/* Footer Section */}
         <Footer />
       </main>
-    </LenisProvider>
   );
 }

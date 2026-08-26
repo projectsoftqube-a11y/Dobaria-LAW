@@ -54,7 +54,10 @@ export function getLegalServiceSchema() {
       "Pennsylvania",
       "New Jersey",
     ],
-    knowsLanguage: ["English", "Spanish", "German", "Arabic", "French", "Korean"],
+    knowsLanguage: [
+      "English", "Spanish", "Gujarati", "Hindi",
+      "German", "Arabic", "French", "Korean",
+    ],
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",

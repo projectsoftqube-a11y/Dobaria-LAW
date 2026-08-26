@@ -101,10 +101,10 @@ export default function Footer() {
 
       {/* Main footer */}
       <div className="site-container py-10 sm:py-12 lg:py-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
 
           {/* Brand */}
-          <div className="flex flex-col gap-4 sm:gap-6 col-span-2 lg:col-span-1">
+          <div className="flex flex-col gap-4 sm:gap-6 sm:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center" aria-label="Dobaria Law PC — Home">
               <Image
                 src="/images/logo-light.svg"
@@ -155,7 +155,7 @@ export default function Footer() {
           </div>
 
           {/* Get in touch */}
-          <div className="col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <h4 className="text-white text-[10px] sm:text-[11px] font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-4 sm:mb-5"
               style={{ fontFamily: 'Inter, sans-serif' }}>Get In Touch</h4>
 
@@ -205,11 +205,11 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-[rgba(255,255,255,0.06)]">
         <div className="site-container py-4 sm:py-5">
-          <p className="text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px] text-center mb-3 max-w-3xl mx-auto leading-relaxed"
+          <p className="text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px] text-left sm:text-center mb-3 max-w-3xl sm:mx-auto leading-relaxed"
             style={{ fontFamily: 'Inter, sans-serif' }}>
             Attorney Advertising. Prior results do not guarantee a similar outcome. The information on this website is for general information purposes only.
           </p>
-          <div className="footer-legal flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
+          <div className="footer-legal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
             <p className="text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px]"
               style={{ fontFamily: 'Inter, sans-serif' }}>
               &copy; {new Date().getFullYear()} Dobaria Law PC. All rights reserved.
@@ -229,7 +229,7 @@ export default function Footer() {
               ))}
             </div>
             <p className="text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px]">
-              Design and developed by <a href="https://softqubes.com" target="_blank" rel="noopener noreferrer" className="text-[#C29A3E] hover:underline">Softqubes Technologies</a>
+              Design and developed by <a href="https://softqubes.com" target="_blank" rel="noopener noreferrer" className="inline-block py-1.5 text-[#C29A3E] hover:underline">Softqubes Technologies</a>
             </p>
           </div>
         </div>

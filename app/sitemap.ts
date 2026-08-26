@@ -1,5 +1,6 @@
 // app/sitemap.ts
 import type { MetadataRoute } from "next";
+import { blogPosts } from "@/content/insights";
 
 const BASE = "https://dobarialaw.com";
 
@@ -36,14 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/disclaimer", priority: 0.2, changeFrequency: "yearly" },
   ];
 
-  const posts = [
-    "h1b-2026-cap-season",
-    "green-card-process-timeline",
-    "international-custody-cases",
-    "forming-an-llc-in-pa",
-    "deportation-defense-guide",
-    "eb5-investor-visa-guide",
-  ];
+  const posts = blogPosts.map((p) => p.slug);
 
   return [
     ...staticRoutes.map((r) => ({

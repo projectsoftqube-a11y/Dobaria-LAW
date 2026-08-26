@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Phone, MapPin, Clock, Globe, ArrowRight, CheckCircle, Mail as MailIcon } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
-import LenisProvider from "@/components/LenisProvider";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { legalServiceSchema, breadcrumbSchema, faqPageSchema } from "@/lib/schema";
@@ -78,7 +77,6 @@ export default function ContactPage() {
   };
 
   return (
-    <LenisProvider>
       <main className="min-h-screen bg-[#F8F6F2]">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }])) }} />
@@ -403,11 +401,17 @@ export default function ContactPage() {
                           inputMode="tel"
                           autoComplete="tel"
                           value={form.phone}
-                          onChange={(e) => setForm((f) => ({ ...f, phone: formatUSPhone(e.target.value) }))}
+                          onChange={(e) => {
+                            setForm((f) => ({ ...f, phone: formatUSPhone(e.target.value) }));
+                            if (errors.phone) setErrors((er) => ({ ...er, phone: "" }));
+                          }}
                           placeholder="(555) 123-4567"
                           maxLength={14}
-                          className="w-full px-4 py-3 text-sm rounded-sm font-sans transition-all border border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E] focus:outline-none"
+                          className={`w-full px-4 py-3 text-sm rounded-sm font-sans transition-all border ${
+                            errors.phone ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
+                          } focus:outline-none`}
                         />
+                        {errors.phone && <p className="text-red-500 text-[12px]">{errors.phone}</p>}
                       </div>
                     </div>
 
@@ -535,6 +539,5 @@ export default function ContactPage() {
 
       <Footer />
     </main>
-    </LenisProvider>
   );
 }

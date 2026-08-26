@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Minus, Plus } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -22,19 +22,34 @@ AccordionItem.displayName = 'AccordionItem';
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+    /** "boxed" swaps the chevron for a square +/- toggle button. */
+    variant?: 'default' | 'boxed';
+  }
+>(({ className, children, variant = 'default', ...props }, ref) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        'flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180',
+        variant === 'boxed'
+          ? 'group flex flex-1 items-center justify-between gap-4 py-5 text-left font-medium transition-all'
+          : 'flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180',
         className
       )}
       {...props}
     >
       {children}
-      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+      {variant === 'boxed' ? (
+        <span
+          aria-hidden
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-gray-200 bg-gray-50 text-[#1B1E49] transition-colors group-hover:border-[#C29A3E]/40 group-data-[state=open]:border-transparent group-data-[state=open]:bg-[#C29A3E] group-data-[state=open]:text-white"
+        >
+          <Plus className="h-4 w-4 group-data-[state=open]:hidden" />
+          <Minus className="hidden h-4 w-4 group-data-[state=open]:block" />
+        </span>
+      ) : (
+        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+      )}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));

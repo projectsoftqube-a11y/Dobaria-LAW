@@ -13,7 +13,6 @@ import Testimonials from '@/components/sections/Testimonials';
 import FAQ from '@/components/sections/FAQ';
 import Contact from '@/components/sections/Contact';
 import Footer from '@/components/sections/Footer';
-import LenisProvider from '@/components/LenisProvider';
 import { legalServiceSchema, organizationSchema, webSiteSchema, faqPageSchema } from '@/lib/schema';
 
 const homepageFaqs = [
@@ -29,7 +28,6 @@ const homepageFaqs = [
 
 export default function Home() {
   return (
-    <LenisProvider>
       <main>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
@@ -49,6 +47,5 @@ export default function Home() {
         <Contact />
         <Footer />
       </main>
-    </LenisProvider>
   );
 }

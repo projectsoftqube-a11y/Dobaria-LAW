@@ -18,7 +18,7 @@ const STATS = [
 
 export default function GlobalReach() {
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white to-[#F8F6F2] relative overflow-hidden">
+    <section className="hidden sm:block py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white to-[#F8F6F2] relative overflow-hidden">
       {/* Subtle grid texture, tuned for the light ground */}
       <div
         className="absolute inset-0 opacity-[0.04]"

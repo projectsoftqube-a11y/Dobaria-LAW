@@ -526,6 +526,29 @@ dt {
     align-items: flex-start;
     row-gap: 14px;
   }
+
+  /* Bottom-bar legal links: left-aligned on phones so they sit flush with the
+     copyright and disclaimer text rather than floating centred. */
+  .footer-legal-links {
+    justify-content: flex-start;
+  }
+
+  /* "Legal Excellence Since 1981" at 0.2em tracking overruns the container
+     from roughly 480px down and is silently clipped (body uses overflow-x:
+     clip). Tighten the tracking and shrink the rule so the label fits on one
+     line; allow a wrap as a fallback rather than losing characters. */
+  .hero-eyebrow {
+    gap: 8px;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  .hero-eyebrow > span:first-child {
+    width: 18px;
+  }
+  .hero-eyebrow > span:last-child {
+    letter-spacing: 0.1em;
+    min-width: 0;
+  }
 }
 
 /* 390px — verified clean, no fix required. The hero stats still sit on one

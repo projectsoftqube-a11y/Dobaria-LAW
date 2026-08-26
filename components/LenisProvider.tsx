@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -17,6 +19,9 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     });
 
     lenisRef.current = lenis;
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
     // @ts-ignore
     window.lenis = lenis;
     function raf(time: number) {
@@ -48,6 +53,16 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
       document.removeEventListener('click', handleClick);
     };
   }, []);
+
+  // A new route should always start at the top. Lenis keeps its own scroll
+  // offset across navigations, so reset both it and the window.
+  useEffect(() => {
+    const lenis = lenisRef.current;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true, force: true });
+    }
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return <>{children}</>;
 }
