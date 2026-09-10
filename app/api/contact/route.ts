@@ -114,6 +114,107 @@ async function sendToClioGrow(lead: {
   }
 }
 
+/**
+ * Pull the bare address out of a "Name <a@b.com>" header value. Graph wants
+ * the mailbox on its own, whereas SMTP is happy with the display form.
+ */
+function bareAddress(value: string): string {
+  const match = value.match(/<([^>]+)>/);
+  return (match ? match[1] : value).trim();
+}
+
+// Client-credentials tokens are valid for roughly an hour. Caching one saves a
+// round trip to Entra on every submission, and survives as long as the
+// serverless instance does.
+let cachedToken: { value: string; expiresAt: number } | null = null;
+
+/** Fetch (or reuse) an app-only Graph token for this tenant. */
+async function graphToken(): Promise<string> {
+  if (cachedToken && Date.now() < cachedToken.expiresAt) return cachedToken.value;
+
+  const res = await fetch(
+    `https://login.microsoftonline.com/${process.env.MS_TENANT_ID}/oauth2/v2.0/token`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        client_id: process.env.MS_CLIENT_ID || "",
+        client_secret: process.env.MS_CLIENT_SECRET || "",
+        scope: "https://graph.microsoft.com/.default",
+        grant_type: "client_credentials",
+      }),
+      signal: AbortSignal.timeout(10000),
+    }
+  );
+
+  const data = (await res.json().catch(() => ({}))) as {
+    access_token?: string;
+    expires_in?: number;
+    error_description?: string;
+  };
+
+  if (!res.ok || !data.access_token) {
+    throw new Error(`Graph token request failed: ${data.error_description || res.status}`);
+  }
+
+  // Expire the cache a minute early so a token is never used on its last legs.
+  cachedToken = {
+    value: data.access_token,
+    expiresAt: Date.now() + ((data.expires_in || 3600) - 60) * 1000,
+  };
+  return cachedToken.value;
+}
+
+/**
+ * Send through Microsoft Graph rather than SMTP.
+ *
+ * Used when MS_TENANT_ID / MS_CLIENT_ID / MS_CLIENT_SECRET are set. This path
+ * needs no mailbox password and no Exchange licence on the sending address,
+ * so it works for a shared mailbox that cannot sign in — and it is unaffected
+ * by Microsoft retiring SMTP basic authentication.
+ */
+async function sendViaGraph(mail: {
+  sender: string;
+  to: string;
+  replyTo: string;
+  subject: string;
+  html: string;
+}): Promise<void> {
+  const token = await graphToken();
+
+  const recipients = mail.to
+    .split(",")
+    .map((a) => a.trim())
+    .filter(Boolean)
+    .map((address) => ({ emailAddress: { address } }));
+
+  const res = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(mail.sender)}/sendMail`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: {
+          subject: mail.subject,
+          body: { contentType: "HTML", content: mail.html },
+          toRecipients: recipients,
+          // So replying in the inbox goes to the enquirer, not to ourselves.
+          replyTo: [{ emailAddress: { address: mail.replyTo } }],
+        },
+        saveToSentItems: true,
+      }),
+      signal: AbortSignal.timeout(15000),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error(`Graph sendMail failed: ${res.status} ${await res.text().catch(() => "")}`);
+  }
+}
+
 function esc(s: string): string {
   return s
     .replace(/&/g, "&amp;")
@@ -176,12 +277,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ errors }, { status: 422 });
   }
 
-  // ---- SMTP config guard ----
-  const { SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS, MAIL_FROM, MAIL_TO } =
-    process.env;
+  // ---- Transport selection ----
+  // Graph wins when it is configured, because it needs no mailbox password and
+  // no licence on the sending address. SMTP stays as the fallback so an
+  // existing deployment keeps working untouched.
+  const {
+    SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS,
+    MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET,
+    MAIL_FROM, MAIL_TO,
+  } = process.env;
 
-  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !MAIL_TO) {
-    console.error("Contact form: SMTP is not configured (missing env vars).");
+  const useGraph = Boolean(MS_TENANT_ID && MS_CLIENT_ID && MS_CLIENT_SECRET);
+  const smtpReady = Boolean(SMTP_HOST && SMTP_USER && SMTP_PASS);
+
+  if (!MAIL_TO || (!useGraph && !smtpReady)) {
+    console.error("Contact form: no mail transport is configured (missing env vars).");
     return NextResponse.json(
       { error: "Email service is not configured yet. Please call the office or try again later." },
       { status: 503 }
@@ -189,22 +299,6 @@ export async function POST(req: Request) {
   }
 
   const prettyPhone = phone || "Not provided";
-
-  const port = Number(SMTP_PORT) || 587;
-
-  const transporter = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port,
-    // Port 465 uses implicit TLS; 587 connects in the clear and upgrades via
-    // STARTTLS, which is what Microsoft 365 requires.
-    secure: SMTP_SECURE === "true" || port === 465,
-    requireTLS: port === 587,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-    tls: { minVersion: "TLSv1.2" },
-    connectionTimeout: 15000,
-    greetingTimeout: 15000,
-    socketTimeout: 20000,
-  });
 
   const subject = `New inquiry from ${firstName} ${lastName}${practice ? ` — ${practice}` : ""}`;
 
@@ -235,14 +329,42 @@ export async function POST(req: Request) {
     </div>`;
 
   try {
-    await transporter.sendMail({
-      from: MAIL_FROM || SMTP_USER,
-      to: MAIL_TO,
-      replyTo: email,
-      subject,
-      text,
-      html,
-    });
+    if (useGraph) {
+      // Graph sends *as* this mailbox, so it must be the shared mailbox the
+      // firm actually reads — not whichever identity happens to authenticate.
+      await sendViaGraph({
+        sender: bareAddress(MAIL_FROM || MAIL_TO),
+        to: MAIL_TO,
+        replyTo: email,
+        subject,
+        html,
+      });
+    } else {
+      const port = Number(SMTP_PORT) || 587;
+
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port,
+        // Port 465 uses implicit TLS; 587 connects in the clear and upgrades
+        // via STARTTLS, which is what Microsoft 365 requires.
+        secure: SMTP_SECURE === "true" || port === 465,
+        requireTLS: port === 587,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+        tls: { minVersion: "TLSv1.2" },
+        connectionTimeout: 15000,
+        greetingTimeout: 15000,
+        socketTimeout: 20000,
+      });
+
+      await transporter.sendMail({
+        from: MAIL_FROM || SMTP_USER,
+        to: MAIL_TO,
+        replyTo: email,
+        subject,
+        text,
+        html,
+      });
+    }
 
     // Mirror the lead into Clio Grow. Awaited so it completes before the
     // serverless function is frozen, but its failure never fails the request.

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test:smtp": "node scripts/test-smtp.js"
+    "test:smtp": "node scripts/test-smtp.js",
+    "test:graph": "node scripts/test-graph.js"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.0",
