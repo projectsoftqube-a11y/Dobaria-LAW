@@ -162,7 +162,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2 sm:gap-3">
               {[
                 { icon: Phone, text: '215-362-2478', href: 'tel:+12153622478' },
-                { icon: Mail, text: 'info@dobarialaw.com', href: 'mailto:info@dobarialaw.com' },
+                { icon: Mail, text: 'notice@dobarialaw.com', href: 'mailto:notice@dobarialaw.com' },
                 { icon: MapPin, text: '2031 N. Broad Street, Unit 129, Lansdale, PA 19446', href: 'https://www.google.com/maps/search/?api=1&query=2031+N.+Broad+Street+Unit+129+Lansdale+PA+19446', external: true },
               ].map(item => (
                 <a key={item.text} href={item.href}

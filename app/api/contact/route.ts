@@ -175,6 +175,7 @@ async function graphToken(): Promise<string> {
  */
 async function sendViaGraph(mail: {
   sender: string;
+  fromName: string;
   to: string;
   replyTo: string;
   subject: string;
@@ -198,6 +199,10 @@ async function sendViaGraph(mail: {
       },
       body: JSON.stringify({
         message: {
+          // The address must stay a mailbox we are permitted to send as -
+          // Exchange rejects anything else as spoofing. Only the display name
+          // carries the enquirer, so the inbox shows who wrote in.
+          from: { emailAddress: { address: mail.sender, name: mail.fromName } },
           subject: mail.subject,
           body: { contentType: "HTML", content: mail.html },
           toRecipients: recipients,
@@ -302,6 +307,11 @@ export async function POST(req: Request) {
 
   const subject = `New inquiry from ${firstName} ${lastName}${practice ? ` — ${practice}` : ""}`;
 
+  // Shown as the sender in the firm's inbox. The address behind it stays a
+  // mailbox we own; this just puts the enquirer's name in front of it so a new
+  // lead is identifiable without opening the message.
+  const fromName = `${firstName} ${lastName} (via Dobaria Law Website)`;
+
   const text = [
     `New inquiry via ${source}`,
     ``,
@@ -334,6 +344,7 @@ export async function POST(req: Request) {
       // firm actually reads — not whichever identity happens to authenticate.
       await sendViaGraph({
         sender: bareAddress(MAIL_FROM || MAIL_TO),
+        fromName,
         to: MAIL_TO,
         replyTo: email,
         subject,
@@ -357,7 +368,7 @@ export async function POST(req: Request) {
       });
 
       await transporter.sendMail({
-        from: MAIL_FROM || SMTP_USER,
+        from: { name: fromName, address: bareAddress(MAIL_FROM || SMTP_USER || "") },
         to: MAIL_TO,
         replyTo: email,
         subject,

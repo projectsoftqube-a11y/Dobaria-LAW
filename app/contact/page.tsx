@@ -268,7 +268,7 @@ export default function ContactPage() {
                     </a>
 
                     <a
-                      href="mailto:info@dobarialaw.com"
+                      href="mailto:notice@dobarialaw.com"
                       className="group flex items-start gap-4 px-7 py-5 sm:px-8 border-t sm:border-t-0 border-gray-100 hover:bg-[#F8F6F2] transition-colors"
                     >
                       <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#C29A3E]/10">
@@ -277,7 +277,7 @@ export default function ContactPage() {
                       <span className="flex flex-col min-w-0">
                         <span className="text-[#6B7280] text-[11px] font-semibold tracking-wider uppercase mb-1">Email</span>
                         <span className="text-[#14163A] text-[15px] font-semibold break-words group-hover:text-[#C29A3E] transition-colors">
-                          info@dobarialaw.com
+                          notice@dobarialaw.com
                         </span>
                       </span>
                     </a>

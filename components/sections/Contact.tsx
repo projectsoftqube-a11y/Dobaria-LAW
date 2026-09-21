@@ -27,7 +27,7 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'info@dobarialaw.com',
+    value: 'notice@dobarialaw.com',
   },
   {
     icon: Clock,
@@ -209,7 +209,7 @@ export default function Contact() {
                   {/* Email */}
                   <div className="flex flex-col gap-1">
                     <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Email</p>
-                    <a href="mailto:info@dobarialaw.com" className="text-sm leading-relaxed break-words hover:text-[#C29A3E] transition-colors" style={{ fontFamily: 'Montserrat, sans-serif' }}>info@dobarialaw.com</a>
+                    <a href="mailto:notice@dobarialaw.com" className="text-sm leading-relaxed break-words hover:text-[#C29A3E] transition-colors" style={{ fontFamily: 'Montserrat, sans-serif' }}>notice@dobarialaw.com</a>
                   </div>
 
                   {/* Hours */}

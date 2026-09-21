@@ -9,7 +9,7 @@ export const legalServiceSchema = {
   name: "Dobaria Law PC",
   url: SITE,
   telephone: "+1-215-362-2478",
-  email: "info@dobarialaw.com",
+  email: "notice@dobarialaw.com",
   foundingDate: "1981",
   priceRange: "$$",
   address: {
@@ -60,7 +60,7 @@ export const organizationSchema = {
   url: SITE,
   logo: `${SITE}/og/default.png`,
   telephone: "+1-215-362-2478",
-  email: "info@dobarialaw.com",
+  email: "notice@dobarialaw.com",
   foundingDate: "1981",
   address: {
     "@type": "PostalAddress",

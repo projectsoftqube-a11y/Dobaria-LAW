@@ -265,10 +265,10 @@ export default function LegalPage({
                           215-362-2478
                         </span>
                       </a>
-                      <a href="mailto:info@dobarialaw.com" className="flex items-start gap-3 group">
+                      <a href="mailto:notice@dobarialaw.com" className="flex items-start gap-3 group">
                         <Mail size={18} className="text-[#C29A3E] flex-shrink-0 mt-0.5" />
                         <span className="text-gray-300 text-sm group-hover:text-white transition-colors break-words">
-                          info@dobarialaw.com
+                          notice@dobarialaw.com
                         </span>
                       </a>
                     </div>

@@ -31,7 +31,7 @@ export function getLegalServiceSchema() {
     name: "Dobaria Law PC",
     url: "https://dobarialaw.com/",
     telephone: "+1-215-362-2478",
-    email: "info@dobarialaw.com",
+    email: "notice@dobarialaw.com",
     foundingDate: "1981",
     priceRange: "$$",
     address: {
