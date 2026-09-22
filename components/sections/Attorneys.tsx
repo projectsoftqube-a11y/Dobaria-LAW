@@ -2,39 +2,42 @@
 
 import { motion } from 'framer-motion';
 import { Linkedin, Mail, Phone, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/navigation';
 
+// Names and images stay here; role, bio, bar and specialties come from
+// messages, keyed by slug so they match the navbar and the bio pages.
 const attorneys = [
   {
     name: 'Vishal J. Dobaria, Esq.',
-    title: 'Managing Attorney',
-    specialties: ['Immigration Law', 'Real Estate Law', 'Business Law'],
-    bio: "Vishal J. Dobaria leads the firm's day-to-day practice across immigration, real estate, business, and family law, with over a decade of experience and title work spanning eighteen states.",
+    slug: 'vishal-j-dobaria',
+    bioKey: 'vishalBio',
+    barKey: 'vishalBar',
+    specialtyKeys: ['specImmigration', 'specRealEstate', 'specBusiness'],
     img: '/images/attorneys/vishal.webp',
-    bar: 'PA & NJ Bar',
-    href: '/attorneys/vishal-j-dobaria',
   },
   {
     name: 'Marcia Binder Ibrahim, Esq.',
-    title: 'Founding Member & Of Counsel',
-    specialties: ['Immigration Law', 'Family Law', 'Federal Appeals'],
-    bio: 'Marcia Binder Ibrahim is a founding member of the firm with 35+ years in U.S. immigration and family law, admitted before the U.S. Supreme Court and an AILA member for 28 years.',
+    slug: 'marcia-binder-ibrahim',
+    bioKey: 'marciaBio',
+    barKey: 'marciaBar',
+    specialtyKeys: ['specImmigration', 'specFamily', 'specAppeals'],
     img: '/images/attorneys/marcia.webp',
-    bar: 'U.S. Supreme Court',
-    href: '/attorneys/marcia-binder-ibrahim',
   },
   {
     name: 'Jose M. Lugo, J.D., Ph.D.',
-    title: 'Immigration Attorney',
-    specialties: ['Immigration Law', 'Asylum', 'Deportation Defense'],
-    bio: 'Jose M. Lugo brings a J.D. and a Ph.D. in Political Science to the firm’s immigration practice. Bilingual in English and Spanish, he focuses on visas, green cards, asylum, and citizenship.',
+    slug: 'jose-m-lugo',
+    bioKey: 'joseBio',
+    barKey: 'joseBar',
+    specialtyKeys: ['specImmigration', 'specAsylum', 'specDeportation'],
     img: '/images/attorneys/jose.png',
-    bar: 'Bilingual EN / ES',
-    href: '/attorneys/jose-m-lugo',
   },
 ];
 
+
 export default function Attorneys() {
+  const t = useTranslations('attorneysSection');
+  const tRole = useTranslations('attorneyRoles');
   return (
     <section id="attorneys" className="site-section relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #F8F6F2 100%)' }}>
@@ -51,7 +54,7 @@ export default function Attorneys() {
           >
             <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
             <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-              style={{ fontFamily: 'Inter, sans-serif' }}>Our Team</span>
+              style={{ fontFamily: 'Inter, sans-serif' }}>{t('eyebrow')}</span>
           </motion.div>
 
           <motion.h2
@@ -66,7 +69,7 @@ export default function Attorneys() {
               letterSpacing: '-0.02em',
             }}
           >
-            Meet Our <em className="not-italic text-[#C29A3E]">Attorneys</em>
+            {t('headingBefore')} <em className="not-italic text-[#C29A3E]">{t('headingAccent')}</em>
           </motion.h2>
 
           <motion.p
@@ -77,8 +80,7 @@ export default function Attorneys() {
             className="text-[#4B5563] leading-[1.75] sm:leading-[1.8]"
             style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(13px, 2vw, 15px)' }}
           >
-            Our attorneys bring deep legal expertise, unwavering integrity, and decades of
-            combined legal guidance to every client matter.
+            {t('intro')}
           </motion.p>
         </div>
 
@@ -86,7 +88,7 @@ export default function Attorneys() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
           {attorneys.map((attorney, i) => (
             <motion.div
-              key={attorney.name}
+              key={attorney.slug}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -101,7 +103,7 @@ export default function Attorneys() {
             >
               {/* Image */}
               <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                <Link href={attorney.href} aria-label={`Read the full bio of ${attorney.name}`} className="block w-full h-full">
+                <Link href={`/attorneys/${attorney.slug}`} aria-label={t('readBioAria', { name: attorney.name })} className="block w-full h-full">
                   <img
                     src={attorney.img}
                     alt={attorney.name}
@@ -135,7 +137,7 @@ export default function Attorneys() {
                     color: '#FFF',
                     fontFamily: 'Inter, sans-serif',
                   }}>
-                  {attorney.bar}
+                  {t(attorney.barKey)}
                 </div>
               </div>
 
@@ -144,23 +146,23 @@ export default function Attorneys() {
                 <div>
                   <h3 className="text-[#14163A] font-semibold leading-tight text-xl sm:text-2xl"
                     style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                    <Link href={attorney.href} className="hover:text-[#C29A3E] transition-colors duration-200">
+                    <Link href={`/attorneys/${attorney.slug}`} className="hover:text-[#C29A3E] transition-colors duration-200">
                       {attorney.name}
                     </Link>
                   </h3>
                   <p className="text-[#C29A3E] text-xs font-semibold tracking-wider uppercase mt-0.5"
                     style={{ fontFamily: 'Inter, sans-serif' }}>
-                    {attorney.title}
+                    {tRole(attorney.slug)}
                   </p>
                 </div>
 
                 <p className="text-[#4B5563] text-sm leading-relaxed"
                   style={{ fontFamily: 'Inter, sans-serif' }}>
-                  {attorney.bio}
+                  {t(attorney.bioKey)}
                 </p>
 
                 <div className="flex flex-wrap gap-1 sm:gap-1.5 pt-0.5 sm:pt-1">
-                  {attorney.specialties.map(s => (
+                  {attorney.specialtyKeys.map(s => (
                     <span key={s} className="px-1.5 sm:px-2 py-0.5 text-[10px] tracking-wider rounded-sm uppercase font-semibold"
                       style={{
                         fontFamily: 'Inter, sans-serif',
@@ -168,13 +170,13 @@ export default function Attorneys() {
                         color: '#9C7A26',
                         border: '1px solid rgba(194, 154, 62,0.15)',
                       }}>
-                      {s}
+                      {t(s)}
                     </span>
                   ))}
                 </div>
 
-                <Link href={attorney.href} className="flex items-center gap-1.5 mt-auto pt-2 text-[#1B1E49] hover:text-[#C29A3E] transition-colors duration-200">
-                  <span className="text-xs font-bold uppercase tracking-wider">Read Full Bio</span>
+                <Link href={`/attorneys/${attorney.slug}`} className="flex items-center gap-1.5 mt-auto pt-2 text-[#1B1E49] hover:text-[#C29A3E] transition-colors duration-200">
+                  <span className="text-xs font-bold uppercase tracking-wider">{t('readFullBio')}</span>
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-200" />
                 </Link>
               </div>

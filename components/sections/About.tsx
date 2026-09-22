@@ -2,17 +2,15 @@
 
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/navigation';
 import Image from 'next/image';
 
-const commitments = [
-  'A client-centered approach in every matter',
-  'Clear, honest communication at each step',
-  'Deep experience across immigration, family & business law',
-  'Counsel that considers the full context of your situation',
-];
+const commitmentKeys = ['c1', 'c2', 'c3', 'c4'];
+
 
 export default function About() {
+  const t = useTranslations('aboutSection');
   return (
     <section id="about" className="site-section relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #F8F6F2 100%)' }}>
@@ -51,7 +49,7 @@ export default function About() {
                 <p className="text-white text-2xl sm:text-3xl font-bold leading-none"
                   style={{ fontFamily: "'Bebas Neue', sans-serif" }}>45+</p>
                 <p className="text-white/80 text-[9px] sm:text-[10px] tracking-[0.12em] sm:tracking-[0.15em] uppercase mt-0.5 sm:mt-1"
-                  style={{ fontFamily: 'Inter, sans-serif' }}>Years</p>
+                  style={{ fontFamily: 'Inter, sans-serif' }}>{t('years')}</p>
               </div>
 
               {/* Second image — offset */}
@@ -88,7 +86,7 @@ export default function About() {
               <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
                 <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
                 <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-                  style={{ fontFamily: 'Inter, sans-serif' }}>About the Firm</span>
+                  style={{ fontFamily: 'Inter, sans-serif' }}>{t('eyebrow')}</span>
               </div>
 
               <h2 className="text-[#14163A] leading-[1.1] font-semibold mb-4 sm:mb-6"
@@ -97,29 +95,25 @@ export default function About() {
                   fontSize: 'clamp(30px, 6vw, 54px)',
                   letterSpacing: '-0.02em',
                 }}>
-                More Than Counsel —<br />
-                <em className="not-italic" style={{ color: '#C29A3E' }}>A Steady Partner Since 1981</em>
+                {t('headingBefore')}<br />
+                <em className="not-italic" style={{ color: '#C29A3E' }}>{t('headingAccent')}</em>
               </h2>
 
               <p className="text-[#4B5563] leading-[1.75] sm:leading-[1.85] mb-3 sm:mb-5"
                 style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(14px, 2vw, 15px)' }}>
-                Dobaria Law PC was founded in Lansdale in 1981. For more than four decades, we have
-                represented individuals, families, and employers in the matters that shape their lives — from
-                immigration and naturalization to family, business, and real estate law.
+                {t('para1')}
               </p>
               <p className="text-[#4B5563] leading-[1.75] sm:leading-[1.85]"
                 style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(13px, 2vw, 15px)' }}>
-                Our approach is precise, transparent, and built around the people we represent. We take the time
-                to understand the full context of a situation before we recommend a path, and we keep our clients
-                informed in plain language at every step.
+                {t('para2')}
               </p>
             </div>
 
             {/* Commitments */}
             <div className="flex flex-col gap-2.5 sm:gap-3">
-              {commitments.map((item, i) => (
+              {commitmentKeys.map((key, i) => (
                 <motion.div
-                  key={item}
+                  key={key}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -128,7 +122,7 @@ export default function About() {
                 >
                   <CheckCircle2 size={14} className="text-[#C29A3E] mt-0.5 flex-shrink-0" />
                   <span className="text-[#4B5563] text-[12px] sm:text-sm leading-relaxed"
-                    style={{ fontFamily: 'Inter, sans-serif' }}>{item}</span>
+                    style={{ fontFamily: 'Inter, sans-serif' }}>{t(key)}</span>
                 </motion.div>
               ))}
             </div>
@@ -146,7 +140,7 @@ export default function About() {
                   boxShadow: '0 8px 24px rgba(194, 154, 62,0.25)',
                 }}
               >
-                <span className="relative z-10">Our Attorneys</span>
+                <span className="relative z-10">{t('ourAttorneys')}</span>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{ background: 'linear-gradient(135deg, #1B1E49 0%, #2A2F63 100%)' }} />
               </Link>

@@ -1,41 +1,20 @@
 'use client';
 
 import { useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const stories = [
-  {
-    category: 'Immigration Law',
-    title: 'Family Reunification Across Borders',
-    result: 'Green card secured after prior removal order',
-    detail: 'Our attorneys navigated a complex immigration case involving prior removal orders, ultimately securing lawful permanent resident status and reuniting a family.',
-    tag: 'Immigration',
-  },
-  {
-    category: 'Immigration Law',
-    title: 'Long-Term Resident Naturalization',
-    result: 'Naturalization completed with complex travel history',
-    detail: 'We guided a long-time lawful permanent resident through the naturalization process despite a complex travel history and prior administrative issues.',
-    tag: 'Citizenship',
-  },
-  {
-    category: 'Family Law',
-    title: 'Cross-Border Custody Resolution',
-    result: 'Custody matter resolved across two jurisdictions',
-    detail: 'Our team handled a cross-border custody dispute involving two countries, protecting parental rights while navigating both family and immigration law.',
-    tag: 'Family Law',
-  },
-  {
-    category: 'Real Estate Law',
-    title: 'Multi-State Commercial Closing',
-    result: 'Commercial closing and title review completed',
-    detail: 'We managed a multi-state commercial real estate closing and title review, coordinating with multiple parties to ensure a clean transfer of ownership.',
-    tag: 'Real Estate',
-  },
+  { key: 's1' },
+  { key: 's2' },
+  { key: 's3' },
+  { key: 's4' },
 ];
 
+
 export default function SuccessStories() {
+  const t = useTranslations('successStories');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -74,7 +53,7 @@ export default function SuccessStories() {
             >
               <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
               <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-                style={{ fontFamily: 'Inter, sans-serif' }}>Client Success</span>
+                style={{ fontFamily: 'Inter, sans-serif' }}>{t('eyebrow')}</span>
             </motion.div>
 
             <motion.h2
@@ -90,7 +69,7 @@ export default function SuccessStories() {
                 color: '#FFFFFF',
               }}
             >
-              Results That <em className="not-italic text-[#C29A3E]">Define Us</em>
+              {t('headingBefore')} <em className="not-italic text-[#C29A3E]">{t('headingAccent')}</em>
             </motion.h2>
           </div>
 
@@ -110,7 +89,7 @@ export default function SuccessStories() {
         <div ref={scrollRef} className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-4 -mx-5 sm:mx-0 px-5 sm:px-0">
           {stories.map((story, i) => (
             <motion.div
-              key={story.title}
+              key={t(`${story.key}Title`)}
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -135,7 +114,7 @@ export default function SuccessStories() {
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-[8px] sm:text-[9px] font-semibold tracking-[0.1em] uppercase text-[#C29A3E]"
-                  style={{ fontFamily: 'Inter, sans-serif' }}>{story.category}</span>
+                  style={{ fontFamily: 'Inter, sans-serif' }}>{t(`${story.key}Category`)}</span>
                 <span className="flex-shrink-0 px-2 py-0.5 text-[8px] sm:text-[9px] font-semibold tracking-[0.05em] uppercase rounded-full"
                   style={{
                     fontFamily: 'Inter, sans-serif',
@@ -143,30 +122,30 @@ export default function SuccessStories() {
                     color: '#DEC067',
                     border: '1px solid rgba(194, 154, 62,0.2)',
                   }}>
-                  {story.tag}
+                  {t(`${story.key}Tag`)}
                 </span>
               </div>
 
               <h3 className="font-semibold leading-snug text-white"
                 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(19px, 3vw, 24px)' }}>
-                {story.title}
+                {t(`${story.key}Title`)}
               </h3>
 
               <div className="py-3 sm:py-4 border-t border-b border-[rgba(255,255,255,0.08)]">
                 <p className="text-[#DEC067] font-medium text-[12px] sm:text-sm leading-relaxed"
                   style={{ fontFamily: 'Inter, sans-serif' }}>
-                  {story.result}
+                  {t(`${story.key}Result`)}
                 </p>
               </div>
 
               <p className="text-[rgba(255,255,255,0.5)] text-[11px] sm:text-[13px] leading-[1.7] sm:leading-[1.75]"
                 style={{ fontFamily: 'Inter, sans-serif' }}>
-                {story.detail}
+                {t(`${story.key}Detail`)}
               </p>
 
               <div className="flex items-center gap-1.5 sm:gap-2 mt-auto text-[#C29A3E] group-hover:gap-2 sm:group-hover:gap-3 transition-all duration-300">
                 <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase"
-                  style={{ fontFamily: 'Inter, sans-serif' }}>Read Case Study</span>
+                  style={{ fontFamily: 'Inter, sans-serif' }}>{t('readCaseStudy')}</span>
                 <ArrowRight size={12} />
               </div>
             </motion.div>

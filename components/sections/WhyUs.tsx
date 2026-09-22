@@ -2,41 +2,19 @@
 
 import { motion } from 'framer-motion';
 import { Target, MessageSquare, Zap, Globe, Star, BookOpen } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const features = [
-  {
-    icon: Target,
-    title: 'Personalized Legal Strategy',
-    description: 'Counsel built around your situation, not a template. We invest time to understand your unique circumstances and goals.',
-  },
-  {
-    icon: MessageSquare,
-    title: 'Transparent Communication',
-    description: 'Plain-language updates and honest assessments throughout. We keep you informed and eliminate legal jargon.',
-  },
-  {
-    icon: Globe,
-    title: 'A Global, Multilingual Practice',
-    description: 'Clients from 50+ countries; eight languages spoken in-house. We understand the international dimensions of your matter.',
-  },
-  {
-    icon: Zap,
-    title: 'Cross-Practice Insight',
-    description: 'Immigration, family, and business law that genuinely intersect. We catch connections others miss.',
-  },
-  {
-    icon: Star,
-    title: 'Four Decades of Continuity',
-    description: 'A firm that has served this community since 1981. Deep roots, proven experience, and lasting relationships.',
-  },
-  {
-    icon: BookOpen,
-    title: 'Credentialed Counsel',
-    description: 'Admitted before the U.S. Supreme Court; AILA members for 28+ years. Credentials backed by decades of real-world results.',
-  },
+  { icon: Target, key: 'f1' },
+  { icon: MessageSquare, key: 'f2' },
+  { icon: Globe, key: 'f3' },
+  { icon: Zap, key: 'f4' },
+  { icon: Star, key: 'f5' },
+  { icon: BookOpen, key: 'f6' },
 ];
 
 export default function WhyUs() {
+  const t = useTranslations('whyUs');
   return (
     <section id="why-us" className="site-section relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #F8F6F2 0%, #FFFFFF 100%)' }}>
@@ -59,7 +37,7 @@ export default function WhyUs() {
             >
               <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
               <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-                style={{ fontFamily: 'Inter, sans-serif' }}>Why Dobaria Law PC</span>
+                style={{ fontFamily: 'Inter, sans-serif' }}>{t('eyebrow')}</span>
             </motion.div>
 
             <motion.h2
@@ -74,7 +52,7 @@ export default function WhyUs() {
                 letterSpacing: '-0.02em',
               }}
             >
-              The Difference Is <em className="not-italic text-[#C29A3E]">How We Work</em>
+              {t('headingBefore')} <em className="not-italic text-[#C29A3E]">{t('headingAccent')}</em>
             </motion.h2>
           </div>
 
@@ -86,8 +64,7 @@ export default function WhyUs() {
             className="text-[#4B5563] leading-[1.75] sm:leading-[1.8] lg:max-w-[380px]"
             style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 16px)' }}
           >
-            What sets us apart is not merely what we do, but how we do it — with intelligence,
-            dedication, and an unwavering commitment to the people we serve.
+            {t('intro')}
           </motion.p>
         </div>
 
@@ -97,7 +74,7 @@ export default function WhyUs() {
             const Icon = feature.icon;
             return (
               <motion.div
-                key={feature.title}
+                key={t(`${feature.key}Title`)}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -138,11 +115,11 @@ export default function WhyUs() {
                   <div>
                     <h3 className="text-[#14163A] font-semibold mb-2 sm:mb-3 leading-snug"
                       style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(17px, 2.5vw, 20px)' }}>
-                      {feature.title}
+                      {t(`${feature.key}Title`)}
                     </h3>
                     <p className="text-[#4B5563] leading-[1.65] sm:leading-[1.75]"
                       style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(12px, 1.5vw, 13px)' }}>
-                      {feature.description}
+                      {t(`${feature.key}Desc`)}
                     </p>
                   </div>
                 </div>

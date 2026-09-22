@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 /**
  * Global reach band.
@@ -11,12 +12,13 @@ import { motion } from 'framer-motion';
  */
 
 const STATS = [
-  { value: '45+', label: 'Years of Counsel' },
-  { value: '50+', label: 'Countries Served' },
-  { value: '8', label: 'Languages Spoken' },
+  { value: '45+', key: 'statYears' },
+  { value: '50+', key: 'statCountries' },
+  { value: '8', key: 'statLanguages' },
 ];
 
 export default function GlobalReach() {
+  const t = useTranslations('globalReach');
   return (
     <section className="hidden sm:block py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white to-[#F8F6F2] relative overflow-hidden">
       {/* Subtle grid texture, tuned for the light ground */}
@@ -33,7 +35,7 @@ export default function GlobalReach() {
         <div className="flex items-center gap-4 mb-6">
           <span className="w-8 h-[1px] bg-[#C29A3E]" />
           <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">
-            Global Reach
+            {t('eyebrow')}
           </span>
           <div className="flex-1 h-[1px] bg-[#1B1E49]/10" />
         </div>
@@ -47,12 +49,10 @@ export default function GlobalReach() {
               letterSpacing: '-0.01em',
             }}
           >
-            Clients From Around the World
+            {t('heading')}
           </h2>
           <p className="text-[#4B5563] text-[16px] leading-[1.85]">
-            From our Lansdale office we have represented individuals, families, and employers
-            with ties to more than fifty countries — and we keep every client informed in a
-            language they are comfortable with.
+            {t('body')}
           </p>
         </div>
 
@@ -63,9 +63,9 @@ export default function GlobalReach() {
           transition={{ duration: 0.6 }}
           className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8"
         >
-          {STATS.map(({ value, label }) => (
+          {STATS.map(({ value, key }) => (
             <div
-              key={label}
+              key={key}
               className="rounded-xl border border-gray-200 bg-white px-6 py-8 text-center shadow-[0_4px_30px_-14px_rgba(17,24,39,0.12)]"
             >
               <p
@@ -75,7 +75,7 @@ export default function GlobalReach() {
                 {value}
               </p>
               <p className="text-[#6B7280] text-[12px] sm:text-[13px] tracking-[0.14em] uppercase mt-3">
-                {label}
+                {t(key)}
               </p>
             </div>
           ))}

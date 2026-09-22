@@ -1,5 +1,8 @@
 // content/pages/results.ts
-export const resultsContent = {
+//
+// Locale-keyed page content. Components read `resultsContent[locale]`.
+
+const en = {
   hero: {
     eyebrow: "Client Voices",
     h1: "What Our Clients Say",
@@ -15,9 +18,7 @@ export const resultsContent = {
       { quote: "Our case was extremely difficult, but Marcia never gave up. She fought for my husband, helped with our immigration matters, expedited my citizenship, and stood by us every step of the way. We are incredibly grateful and highly recommend her.", name: "Jackie", matterType: "Immigration Law" },
       { quote: "When I was facing deportation, Marcia told me, 'I don't like to lose.' She fought my difficult case, helped me avoid deportation, and later guided me through becoming a U.S. citizen. Hiring her firm was worth every penny.", name: "Daniel", matterType: "Deportation Defense" },
     ],
-    platformLinks: {
-      google: "#"
-    }
+    platformLinks: { google: "#" },
   },
   representativeMatters: {
     h2: "Representative Matters",
@@ -27,19 +28,58 @@ export const resultsContent = {
       { title: "Cross-Border Custody", description: "Matter resolved involving two jurisdictions." },
       { title: "Commercial Real Estate", description: "Multi-state closing and title review." },
     ],
-    disclaimer: "Prior results do not guarantee a similar outcome. Every case is different."
+    disclaimer: "Prior results do not guarantee a similar outcome. Every case is different.",
   },
   cta: {
     h2: "Ready to talk about your matter?",
-    primaryCta: {
-      label: "Schedule a Consultation",
-      href: "/contact"
-    },
-    support: "Or call 215-362-2478"
+    primaryCta: { label: "Schedule a Consultation", href: "/contact" },
+    support: "Or call 215-362-2478",
   },
   meta: {
     title: "Client Results & Reviews | Dobaria Law PC, PA",
     description:
       "Read what clients say about Dobaria Law PC and see the kinds of immigration, family & business matters we handle in Lansdale, PA. Consultations available.",
   },
-} as const;
+};
+
+const es: typeof en = {
+  hero: {
+    eyebrow: "Voces de Nuestros Clientes",
+    h1: "Lo Que Dicen Nuestros Clientes",
+    subhead:
+      "Durante más de 45 años, nuestros clientes nos han confiado los asuntos que más les importan. Esto es lo que algunos han compartido, y el tipo de casos que atendemos.",
+  },
+  testimonials: {
+    items: [
+      { quote: "Desde el principio fue un placer trabajar con Marcia. Nunca tuve dudas de que podría cumplir lo que prometía, y así fue: mi maravillosa esposa de Ecuador.", name: "David", matterType: "Ley de Inmigración" },
+      { quote: "No puedo recomendar lo suficiente a esta firma. Marcia me explicó con detalle cada paso de mi proceso de divorcio, me mantuvo informado durante todo el trámite y brindó un servicio personalizado que superó mis expectativas. Marcia y su equipo fueron amables, profesionales e increíblemente serviciales.", name: "Alex", matterType: "Derecho Familiar" },
+      { quote: "Me mudé de Canadá a Estados Unidos y batallé con mi proceso migratorio durante tres años sin ayuda legal. Después de contratar a Marcia, recibí mi Green Card en solo siete meses. Sabía exactamente lo que hacía, fue amable y responsable, y la recomendaría sin dudarlo.", name: "Rita", matterType: "Ley de Inmigración" },
+      { quote: "Después de más de diez años trabajando con varias firmas de inmigración, me dijeron que mi caso no tenía solución. Marcia y su equipo nunca se rindieron, me guiaron en cada paso y trabajaron incansablemente hasta resolver con éxito el caso migratorio de mi familia. No podría estar más contento con el resultado.", name: "Shyrel", matterType: "Ley de Inmigración" },
+      { quote: "Nuestro caso era sumamente difícil, pero Marcia nunca se rindió. Luchó por mi esposo, nos ayudó con nuestros asuntos migratorios, agilizó mi ciudadanía y nos acompañó en cada paso del camino. Estamos enormemente agradecidos y la recomendamos ampliamente.", name: "Jackie", matterType: "Ley de Inmigración" },
+      { quote: "Cuando enfrentaba la deportación, Marcia me dijo: «No me gusta perder». Peleó mi caso difícil, me ayudó a evitar la deportación y después me guio para convertirme en ciudadano estadounidense. Contratar a su firma valió cada centavo.", name: "Daniel", matterType: "Defensa contra la Deportación" },
+    ],
+    platformLinks: { google: "#" },
+  },
+  representativeMatters: {
+    h2: "Casos Representativos",
+    items: [
+      { title: "Green Card por Familia", description: "Obtenida para un cliente que tenía una orden de remoción previa." },
+      { title: "Naturalización", description: "Completada para un residente permanente legal de muchos años con un historial de viajes complejo." },
+      { title: "Custodia Transfronteriza", description: "Asunto resuelto entre dos jurisdicciones." },
+      { title: "Bienes Raíces Comerciales", description: "Cierre multiestatal y revisión de título." },
+    ],
+    disclaimer: "Los resultados anteriores no garantizan un resultado similar. Cada caso es distinto.",
+  },
+  cta: {
+    h2: "¿Listo para hablar sobre su asunto?",
+    primaryCta: { label: "Agendar una Consulta", href: "/contact" },
+    support: "O llame al 215-362-2478",
+  },
+  meta: {
+    title: "Resultados y Reseñas de Clientes | Dobaria Law PC, PA",
+    description:
+      "Lea lo que dicen nuestros clientes sobre Dobaria Law PC y conozca los asuntos migratorios, familiares y corporativos que atendemos en Lansdale, PA. Consultas disponibles.",
+  },
+};
+
+export const resultsContent = { en, es };

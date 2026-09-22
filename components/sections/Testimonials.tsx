@@ -1,49 +1,24 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
+// Client names and ratings stay; the quotes live in messages.
 const testimonials = [
-  {
-    quote: "From the beginning it was a pleasure working with Marcia. I never had any doubts that she could deliver what she promised, and that was my wonderful wife from Ecuador.",
-    author: 'David',
-    practice: 'Immigration Law',
-    rating: 5,
-  },
-  {
-    quote: "I can't recommend the firm enough. Marcia explained every step of my divorce proceedings in detail, kept me informed throughout the process, and provided personalized service that went above and beyond. Marcia and her staff were gracious, professional, and incredibly helpful.",
-    author: 'Alex',
-    practice: 'Family Law',
-    rating: 5,
-  },
-  {
-    quote: "I moved from Canada to the United States and struggled with my immigration process for three years without legal help. After hiring Marcia, I received my Green Card in just seven months. She knew exactly what she was doing, was friendly, responsible, and I would absolutely recommend her.",
-    author: 'Rita',
-    practice: 'Immigration Law',
-    rating: 5,
-  },
-  {
-    quote: "After spending over ten years working with multiple immigration firms, I was told my case was hopeless. Marcia and her team never gave up, guided me through every step, and worked tirelessly until my family's immigration case was successfully resolved. I couldn't be happier with the outcome.",
-    author: 'Shyrel',
-    practice: 'Immigration Law',
-    rating: 5,
-  },
-  {
-    quote: "Our case was extremely difficult, but Marcia never gave up. She fought for my husband, helped with our immigration matters, expedited my citizenship, and stood by us every step of the way. We are incredibly grateful and highly recommend her.",
-    author: 'Jackie',
-    practice: 'Immigration Law',
-    rating: 5,
-  },
-  {
-    quote: "When I was facing deportation, Marcia told me, 'I don't like to lose.' She fought my difficult case, helped me avoid deportation, and later guided me through becoming a U.S. citizen. Hiring her firm was worth every penny.",
-    author: 'Daniel',
-    practice: 'Deportation Defense',
-    rating: 5,
-  },
+  { key: 't1', author: 'David', practiceSlug: 'immigration-law', rating: 5 },
+  { key: 't2', author: 'Alex', practiceSlug: 'family-law', rating: 5 },
+  { key: 't3', author: 'Rita', practiceSlug: 'immigration-law', rating: 5 },
+  { key: 't4', author: 'Shyrel', practiceSlug: 'immigration-law', rating: 5 },
+  { key: 't5', author: 'Jackie', practiceSlug: 'immigration-law', rating: 5 },
+  { key: 't6', author: 'Daniel', practiceSlug: 'deportation-defense', rating: 5 },
 ];
 
+
 export default function Testimonials() {
+  const t = useTranslations('testimonials');
+  const tArea = useTranslations('practiceAreas');
   const [current, setCurrent] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -79,7 +54,7 @@ export default function Testimonials() {
           >
             <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
             <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-              style={{ fontFamily: 'Inter, sans-serif' }}>Client Voices</span>
+              style={{ fontFamily: 'Inter, sans-serif' }}>{t('eyebrow')}</span>
             <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
           </motion.div>
 
@@ -95,7 +70,7 @@ export default function Testimonials() {
               letterSpacing: '-0.02em',
             }}
           >
-            What Our Clients <em className="not-italic text-[#C29A3E]">Say</em>
+            {t('headingBefore')} <em className="not-italic text-[#C29A3E]">{t('headingAccent')}</em>
           </motion.h2>
         </div>
 
@@ -140,7 +115,7 @@ export default function Testimonials() {
                   color: '#9C7A26',
                   border: '1px solid rgba(194, 154, 62,0.15)',
                 }}>
-                {testimonials[current].practice}
+                {tArea(`${testimonials[current].practiceSlug}.label`)}
               </span>
 
               <blockquote className="text-[#14163A] leading-[1.65] sm:leading-[1.75] mb-5 sm:mb-8"
@@ -149,7 +124,7 @@ export default function Testimonials() {
                   fontSize: 'clamp(18px, 3vw, 26px)',
                   fontStyle: 'italic',
                 }}>
-                &ldquo;{testimonials[current].quote}&rdquo;
+                &ldquo;{t(`${testimonials[current].key}Quote`)}&rdquo;
               </blockquote>
 
               <div className="flex items-center gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-[rgba(17,24,39,0.07)]">
@@ -165,7 +140,7 @@ export default function Testimonials() {
                     style={{ fontFamily: 'Inter, sans-serif' }}>{testimonials[current].author}</p>
                   <p className="text-[#4B5563] text-[10px] sm:text-xs"
                     style={{ fontFamily: 'Inter, sans-serif' }}>
-                    Verified Client · {testimonials[current].practice}
+                    {t('verifiedClient')} · {tArea(`${testimonials[current].practiceSlug}.label`)}
                   </p>
                 </div>
               </div>

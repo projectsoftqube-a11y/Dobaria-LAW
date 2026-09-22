@@ -20,7 +20,10 @@ export interface BlogPost {
   relatedLinks?: { label: string; href: string }[];
 }
 
-export const blogPosts: BlogPost[] = [
+// English is the source of record. The Spanish array below mirrors it exactly —
+// same slugs, dates, images and links — with the prose translated. Keeping the
+// slug identical means /insights/x and /es/insights/x are the same article.
+const en: BlogPost[] = [
   {
     slug: "marriage-based-green-card-interview",
     title: "Marriage-Based Green Card Interview: What the Appointment Actually Involves",
@@ -1136,3 +1139,25 @@ Preparation for this stage is straightforward but important: know what you filed
     ],
   },
 ];
+
+// Spanish translations, applied over the English structure at build time.
+// Anything without a translation falls back to the English field, so a partially
+// translated article still renders rather than showing an empty page.
+import { blogTranslationsEs } from "./es";
+
+const es: BlogPost[] = en.map((post) => {
+  const tr = blogTranslationsEs[post.slug];
+  if (!tr) return post;
+  return {
+    ...post,
+    title: tr.title ?? post.title,
+    excerpt: tr.excerpt ?? post.excerpt,
+    readTime: tr.readTime ?? post.readTime,
+    meta: tr.meta ?? post.meta,
+    content: tr.content ?? post.content,
+    faqs: tr.faqs ?? post.faqs,
+    relatedLinks: tr.relatedLinks ?? post.relatedLinks,
+  };
+});
+
+export const blogPosts = { en, es };

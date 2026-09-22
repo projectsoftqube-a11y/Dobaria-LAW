@@ -1,45 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 
-const faqs = [
-  {
-    q: 'What types of cases does Dobaria Law PC handle?',
-    a: 'Immigration, green cards & visas, citizenship & naturalization, deportation defense, family law, international divorce, business law, and real estate law.',
-  },
-  {
-    q: 'How do I schedule an initial consultation?',
-    a: 'You can schedule a consultation by completing our online contact form, calling our office directly, or sending us an email. We respond within 24 hours and offer flexible scheduling.',
-  },
-  {
-    q: 'What is the cost of an initial consultation?',
-    a: 'We offer an initial consultation for most practice areas, and we will confirm the fee when you reach out. It allows us to understand your situation and provide preliminary guidance on your options.',
-  },
-  {
-    q: 'Do you work with clients outside of the local area?',
-    a: 'Yes. Our firm regularly represents clients across multiple states and internationally. We leverage technology for remote consultations and are experienced in managing cross-border matters.',
-  },
-  {
-    q: 'How long does a typical immigration case take?',
-    a: 'Immigration timelines vary significantly depending on the case type and individual circumstances. Some matters can be resolved in weeks, while complex cases may take months to years. We provide clear timeline estimates after evaluating your situation.',
-  },
-  {
-    q: 'Can the firm represent both businesses and individuals?',
-    a: 'Absolutely. We represent sole proprietors, startups, established corporations, and individuals across all our practice areas. Our attorneys tailor their approach to the unique needs of each client.',
-  },
-  {
-    q: 'What should I bring to my first consultation?',
-    a: 'Bring any relevant documents related to your matter — contracts, correspondence, legal notices, identification, immigration documents, court filings, or financial records.',
-  },
-  {
-    q: 'Do you offer payment plans or alternative fee arrangements?',
-    a: 'We offer various fee structures including hourly billing, flat fees for defined matters, and payment plans for qualifying clients. All fee arrangements are discussed transparently at the outset.',
-  },
-];
+const faqKeys = ['1', '2', '3', '4', '5', '6', '7', '8'];
+
 
 export default function FAQ() {
+  const t = useTranslations('faq');
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
@@ -59,7 +29,7 @@ export default function FAQ() {
             >
               <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
               <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-                style={{ fontFamily: 'Inter, sans-serif' }}>FAQ</span>
+                style={{ fontFamily: 'Inter, sans-serif' }}>{t('eyebrow')}</span>
             </motion.div>
 
             <motion.h2
@@ -74,7 +44,7 @@ export default function FAQ() {
                 letterSpacing: '-0.02em',
               }}
             >
-              Common <em className="not-italic text-[#C29A3E]">Questions</em>
+              {t('headingBefore')} <em className="not-italic text-[#C29A3E]">{t('headingAccent')}</em>
             </motion.h2>
 
             <motion.p
@@ -85,8 +55,7 @@ export default function FAQ() {
               className="text-[#4B5563] leading-[1.75] sm:leading-[1.8] mb-5 sm:mb-8"
               style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 16px)' }}
             >
-              We believe in empowering our clients with knowledge. If your question isn&apos;t answered here,
-              our team is always ready to provide personalized guidance.
+              {t('intro')}
             </motion.p>
 
             <motion.button
@@ -103,7 +72,7 @@ export default function FAQ() {
                 fontFamily: 'Inter, sans-serif',
               }}
             >
-              <span className="relative z-10">Ask a Question</span>
+              <span className="relative z-10">{t('cta')}</span>
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ background: 'linear-gradient(135deg, #C29A3E 0%, #9C7A26 100%)' }} />
             </motion.button>
@@ -111,7 +80,7 @@ export default function FAQ() {
 
           {/* Right — accordion */}
           <div className="flex flex-col divide-y divide-[rgba(17,24,39,0.07)]">
-            {faqs.map((faq, i) => (
+            {faqKeys.map((faq, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -125,7 +94,7 @@ export default function FAQ() {
                 >
                   <span className="text-[#14163A] font-medium leading-snug group-hover:text-[#C29A3E] transition-colors duration-300"
                     style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 16px)' }}>
-                    {faq.q}
+                    {t(`q${faq}`)}
                   </span>
                   <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-sm flex items-center justify-center mt-0.5 transition-all duration-300"
                     style={{
@@ -155,7 +124,7 @@ export default function FAQ() {
                       <div className="pb-4 sm:pb-6 pr-8 sm:pr-12">
                         <p className="text-[#4B5563] leading-[1.75] sm:leading-[1.8] border-l-2 border-[#C29A3E] pl-3 sm:pl-4"
                           style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(14px, 1.8vw, 15px)' }}>
-                          {faq.a}
+                          {t(`a${faq}`)}
                         </p>
                       </div>
                     </motion.div>

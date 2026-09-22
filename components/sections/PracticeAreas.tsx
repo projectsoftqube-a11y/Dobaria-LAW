@@ -2,79 +2,28 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/navigation';
 import {
   Globe, FileCheck, BadgeCheck, Shield, Heart, Plane, Briefcase, Home, ArrowRight
 } from 'lucide-react';
 
+// Icons and brand colours stay here; all copy comes from messages.
 const practices = [
-  {
-    icon: Globe,
-    title: 'Immigration Law',
-    description: 'Decades of experience guiding individuals, families, and employers through every stage of U.S. immigration.',
-    tags: ['Visas', 'Green Cards', 'Appeals'],
-    color: '#1B1E49',
-    href: '/practice-areas/immigration-law',
-  },
-  {
-    icon: FileCheck,
-    title: 'Green Cards & Visas',
-    description: 'Family-based and employment-based green cards, consular processing, adjustment of status, and nonimmigrant visas.',
-    tags: ['Family', 'Employment', 'Consular'],
-    color: '#C29A3E',
-    href: '/practice-areas/green-cards-visas',
-  },
-  {
-    icon: BadgeCheck,
-    title: 'Citizenship & Naturalization',
-    description: 'Naturalization, derivative citizenship, and assistance with complex eligibility questions.',
-    tags: ['Eligibility', 'Citizenship', 'Oaths'],
-    color: '#6E7A64',
-    href: '/practice-areas/citizenship-naturalization',
-  },
-  {
-    icon: Shield,
-    title: 'Deportation Defense',
-    description: 'Vigorous representation in removal proceedings before immigration courts and the Board of Immigration Appeals.',
-    tags: ['Removal', 'Hearings', 'Defense'],
-    color: '#1B1E49',
-    href: '/practice-areas/deportation-defense',
-  },
-  {
-    icon: Heart,
-    title: 'Family Law',
-    description: 'Divorce, child custody, support matters, and prenuptial agreements handled with discretion and steady judgment.',
-    tags: ['Divorce', 'Custody', 'Support'],
-    color: '#C29A3E',
-    href: '/practice-areas/family-law',
-  },
-  {
-    icon: Plane,
-    title: 'International Divorce',
-    description: 'Cross-border divorce and custody matters involving foreign jurisdictions and international assets.',
-    tags: ['Cross-Border', 'Dual Citizens', 'Assets'],
-    color: '#6E7A64',
-    href: '/practice-areas/international-divorce',
-  },
-  {
-    icon: Briefcase,
-    title: 'Business Law',
-    description: 'Entity formation, contracts, commercial transactions, and ongoing counsel for closely held businesses.',
-    tags: ['Formation', 'Contracts', 'Advisory'],
-    color: '#1B1E49',
-    href: '/practice-areas/business-law',
-  },
-  {
-    icon: Home,
-    title: 'Real Estate Law',
-    description: 'Residential and commercial real estate transactions, title work, closings, and multi-state matters.',
-    tags: ['Closings', 'Title Work', 'Deeds'],
-    color: '#C29A3E',
-    href: '/practice-areas/real-estate-law',
-  },
+  { icon: Globe, slug: 'immigration-law', color: '#1B1E49' },
+  { icon: FileCheck, slug: 'green-cards-visas', color: '#C29A3E' },
+  { icon: BadgeCheck, slug: 'citizenship-naturalization', color: '#6E7A64' },
+  { icon: Shield, slug: 'deportation-defense', color: '#1B1E49' },
+  { icon: Heart, slug: 'family-law', color: '#C29A3E' },
+  { icon: Plane, slug: 'international-divorce', color: '#6E7A64' },
+  { icon: Briefcase, slug: 'business-law', color: '#1B1E49' },
+  { icon: Home, slug: 'real-estate-law', color: '#C29A3E' },
 ];
 
+
 export default function PracticeAreas() {
+  const t = useTranslations('practiceSection');
+  const tArea = useTranslations('practiceAreas');
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
@@ -97,7 +46,7 @@ export default function PracticeAreas() {
           >
             <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
             <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-              style={{ fontFamily: 'Inter, sans-serif' }}>Our Expertise</span>
+              style={{ fontFamily: 'Inter, sans-serif' }}>{t('eyebrow')}</span>
           </motion.div>
 
           <motion.h2
@@ -112,7 +61,7 @@ export default function PracticeAreas() {
               letterSpacing: '-0.02em',
             }}
           >
-            Comprehensive Legal <em className="not-italic text-[#C29A3E]">Practice Areas</em>
+            {t('headingBefore')} <em className="not-italic text-[#C29A3E]">{t('headingAccent')}</em>
           </motion.h2>
 
           <motion.p
@@ -123,8 +72,7 @@ export default function PracticeAreas() {
             className="text-[#4B5563] leading-[1.75] sm:leading-[1.8]"
             style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 16px)' }}
           >
-            For more than four decades, we have represented individuals, families, and employers across
-            immigration, family, business, and real estate law — with the depth that comes from genuine experience.
+            {t('intro')}
           </motion.p>
         </div>
 
@@ -135,7 +83,7 @@ export default function PracticeAreas() {
             const isHovered = hovered === i;
             return (
               <motion.div
-                key={practice.title}
+                key={practice.slug}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -169,7 +117,7 @@ export default function PracticeAreas() {
                       fontSize: 'clamp(17px, 2.5vw, 20px)',
                       color: isHovered ? '#FFFFFF' : '#14163A',
                     }}>
-                    {practice.title}
+                    {tArea(`${practice.slug}.label`)}
                   </h3>
 
                   <p className="leading-[1.65] sm:leading-[1.7] transition-colors duration-300"
@@ -178,11 +126,11 @@ export default function PracticeAreas() {
                       fontSize: 'clamp(14px, 1.5vw, 15px)',
                       color: isHovered ? 'rgba(255,255,255,0.75)' : '#4B5563',
                     }}>
-                    {practice.description}
+                    {t(`cards.${practice.slug}.description`)}
                   </p>
 
                   <div className="flex flex-wrap gap-1 sm:gap-1.5 mt-auto">
-                    {practice.tags.map(tag => (
+                    {t(`cards.${practice.slug}.tags`).split('|').map(tag => (
                       <span key={tag} className="px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] tracking-[0.06em] sm:tracking-[0.08em] uppercase font-medium rounded-sm transition-all duration-300"
                         style={{
                           fontFamily: 'Inter, sans-serif',
@@ -196,10 +144,10 @@ export default function PracticeAreas() {
                   </div>
                 </div>
 
-                <Link href={practice.href} className="inline-flex items-center gap-1.5 sm:gap-2 py-2.5 sm:py-0 transition-all duration-300"
+                <Link href={`/practice-areas/${practice.slug}`} className="inline-flex items-center gap-1.5 sm:gap-2 py-2.5 sm:py-0 transition-all duration-300"
                   style={{ color: isHovered ? '#DEC067' : '#C29A3E' }}>
                   <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase"
-                    style={{ fontFamily: 'Inter, sans-serif' }}>Learn More</span>
+                    style={{ fontFamily: 'Inter, sans-serif' }}>{t('learnMore')}</span>
                   <ArrowRight size={12} className={`transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
                 </Link>
 

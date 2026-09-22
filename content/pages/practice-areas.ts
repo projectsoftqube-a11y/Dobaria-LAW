@@ -1,5 +1,5 @@
 // content/pages/practice-areas.ts
-export const practiceAreasHub = {
+const en = {
   hero: {
     eyebrow: "Serving Lansdale, Montgomery County & Philadelphia",
     h1: "Practice Areas: Immigration, Family, Business & Real Estate Law",
@@ -60,4 +60,69 @@ export const practiceAreasHub = {
     description:
       "Immigration, green cards, citizenship, deportation defense, family, business & real estate law — trusted counsel in Lansdale & Montgomery County for 45+ years.",
   },
-} as const;
+};
+
+const es: typeof en = {
+  hero: {
+    eyebrow: "Al servicio de Lansdale, el condado de Montgomery y Filadelfia",
+    h1: "Áreas de Práctica: Inmigración, Familia, Negocios y Bienes Raíces",
+    subhead:
+      "Durante más de 45 años, Dobaria Law PC ha representado a personas, familias y empleadores en un conjunto enfocado de áreas de práctica, encabezado por el derecho migratorio y de nacionalidad, y que se extiende a asuntos familiares, corporativos e inmobiliarios.",
+    primaryCta: { label: "Agendar una Consulta", href: "/contact" },
+    secondaryCta: { label: "Llame al 215-362-2478", href: "tel:+12153622478" },
+  },
+  intro: [
+    "Dobaria Law PC es una firma boutique de inmigración en Lansdale, Pensilvania. Desde 1981, nuestro trabajo se ha centrado en los momentos que cambian la vida de las personas: obtener un estatus legal, reunir familias, construir empresas y cerrar la compra de una propiedad. Mantenemos nuestra práctica deliberadamente enfocada para que cada asunto se beneficie de una profundidad real en lugar de una generalización amplia.",
+    "A continuación están las ocho áreas en las que ejercemos. La inmigración es nuestra base y, como se cruza con tanta frecuencia con decisiones familiares y empresariales, podemos asesorar a nuestros clientes a lo largo de todo el arco de una situación y no solo de una parte. Seleccione cualquier área para conocer cómo la abordamos.",
+  ],
+  groups: [
+    {
+      heading: "Derecho Migratorio y de Nacionalidad",
+      areas: [
+        { title: "Ley de Inmigración", body: "Guiamos a personas, familias y empleadores en cada etapa del proceso migratorio de EE. UU., desde las primeras presentaciones hasta apelaciones complejas.", href: "/practice-areas/immigration-law", linkText: "Conozca nuestra práctica migratoria" },
+        { title: "Green Cards y Visas", body: "Green cards por familia y por empleo, trámite consular, ajuste de estatus y toda la gama de visas de no inmigrante.", href: "/practice-areas/green-cards-visas", linkText: "Explore green cards y visas" },
+        { title: "Ciudadanía y Naturalización", body: "Naturalización, ciudadanía derivada y orientación en cuestiones complejas de elegibilidad.", href: "/practice-areas/citizenship-naturalization", linkText: "Conozca más sobre la naturalización" },
+        { title: "Defensa contra la Deportación", body: "Representación en procesos de remoción ante los tribunales de inmigración y la Junta de Apelaciones de Inmigración.", href: "/practice-areas/deportation-defense", linkText: "Conozca la defensa contra la deportación" },
+      ],
+    },
+    {
+      heading: "Derecho Familiar",
+      areas: [
+        { title: "Derecho Familiar", body: "Divorcio, custodia, manutención y acuerdos prenupciales atendidos con discreción y criterio firme.", href: "/practice-areas/family-law", linkText: "Conozca nuestro derecho familiar" },
+        { title: "Divorcio Internacional", body: "Divorcios y asuntos de custodia transfronterizos que involucran jurisdicciones extranjeras, doble ciudadanía y bienes internacionales.", href: "/practice-areas/international-divorce", linkText: "Conozca el divorcio internacional" },
+      ],
+    },
+    {
+      heading: "Derecho Corporativo e Inmobiliario",
+      areas: [
+        { title: "Derecho Corporativo", body: "Constitución de entidades, contratos, transacciones comerciales y asesoría continua para empresas cerradas.", href: "/practice-areas/business-law", linkText: "Conozca nuestro derecho corporativo" },
+        { title: "Derecho Inmobiliario", body: "Asuntos inmobiliarios residenciales y comerciales, incluidos trabajo de títulos, cierres y transacciones multiestatales en dieciocho estados.", href: "/practice-areas/real-estate-law", linkText: "Conozca nuestro derecho inmobiliario" },
+      ],
+    },
+  ],
+  trustBand: ["Más de 45 Años de Asesoría", "Más de 50 Países Atendidos", "8 Idiomas Hablados", "Admitidos en PA, NJ y NY"],
+  helper: {
+    h2: "¿No sabe qué área corresponde a su situación?",
+    body: "Muchos asuntos abarcan más de un área de práctica: un caso migratorio puede involucrar derecho familiar y un negocio puede plantear dudas inmobiliarias. Si no está seguro de dónde encaja su situación, comience con una consulta y lo orientaremos en la dirección correcta.",
+    cta: { label: "Agendar una Consulta", href: "/contact" },
+  },
+  faqs: [
+    { q: "¿Qué áreas del derecho practica Dobaria Law PC?", a: "Nos enfocamos en derecho migratorio y de nacionalidad, y también atendemos derecho familiar, divorcio internacional, derecho corporativo e inmobiliario. La inmigración es nuestra práctica principal." },
+    { q: "¿La firma es principalmente una firma de inmigración?", a: "Sí. El derecho migratorio y de nacionalidad ha sido nuestra base desde 1981, y orienta la forma en que manejamos los asuntos familiares y corporativos relacionados." },
+    { q: "¿Atienden clientes fuera de Lansdale?", a: "We serve Lansdale, Montgomery County, and Philadelphia, and represent immigration clients nationwide. We're licensed in Pennsylvania and New Jersey for other matters." },
+    { q: "¿Qué idiomas habla la firma?", a: "Inglés, español, guyaratí, hindi, alemán, árabe, francés y coreano." },
+    { q: "¿Cómo sé qué área de práctica necesito?", a: "You don't have to know. Book an initial consultation and we'll identify the right approach — including where a matter spans more than one area." },
+  ],
+  finalCta: {
+    h2: "Comience con una consulta",
+    body: "Cuéntenos sobre su asunto y le responderemos dentro de 24 horas hábiles.",
+    cta: { label: "Agendar una Consulta", href: "/contact" },
+  },
+  meta: {
+    title: "Legal Practice Areas in Lansdale, PA | Dobaria Law PC",
+    description:
+      "Inmigración, green cards, ciudadanía, defensa contra la deportación, derecho familiar, corporativo e inmobiliario: asesoría de confianza en Lansdale y el condado de Montgomery por más de 45 años.",
+  },
+};
+
+export const practiceAreasHub = { en, es };

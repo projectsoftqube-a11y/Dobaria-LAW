@@ -1,3 +1,9 @@
+const createNextIntlPlugin = require("next-intl/plugin");
+
+// Points the plugin at the locale config so server components can resolve
+// messages without threading them through every page.
+const withNextIntl = createNextIntlPlugin("./i18n.ts");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
@@ -59,4 +65,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

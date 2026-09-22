@@ -18,7 +18,7 @@ export interface AttorneyBio {
   memberships: string[];
 }
 
-export const attorneyBios: AttorneyBio[] = [
+const en: AttorneyBio[] = [
   {
     slug: "marcia-binder-ibrahim",
     name: "Marcia Binder Ibrahim, Esq.",
@@ -151,3 +151,139 @@ export const attorneyBios: AttorneyBio[] = [
     memberships: [],
   },
 ];
+
+const es: AttorneyBio[] = [
+  {
+    slug: "marcia-binder-ibrahim",
+    name: "Marcia Binder Ibrahim, Esq.",
+    title: "Miembro Fundador y Of Counsel",
+    image: "/images/attorneys/marcia.webp",
+    imageAlt: "Marcia Binder Ibrahim, Miembro Fundador, Dobaria Law PC",
+    meta: {
+      title: "Marcia Binder Ibrahim, Abogada de Inmigración | Lansdale, PA",
+      description:
+        "Marcia Binder Ibrahim es miembro fundador de Dobaria Law PC con más de 35 años en derecho migratorio y familiar de EE. UU. Admitida ante la Corte Suprema de EE. UU.; miembro de AILA por más de 28 años.",
+    },
+    hero: {
+      cta: { label: "Agendar una Consulta", href: "/contact" },
+      phone: "215-362-2478",
+    },
+    narrative: [
+      "Marcia Binder Ibrahim es miembro fundador y abogada senior de la firma, y actualmente se desempeña como Of Counsel. A lo largo de más de treinta y cinco años de ejercicio ha representado a personas, familias y empleadores en asuntos de inmigración y nacionalidad de EE. UU., con una práctica complementaria en derecho familiar que le permite atender ambas áreas en conjunto cuando el estatus de un cliente y su situación familiar están entrelazados.",
+      "Marcia obtuvo su J.D. en la Facultad de Derecho de Villanova University en 1979 y está admitida en Pensilvania y Nueva Jersey, así como ante la Corte Suprema de Estados Unidos, los Tribunales del Segundo y Tercer Circuito y los Tribunales de Distrito de EE. UU. para Nueva Jersey y el Distrito Este de Pensilvania. Copreside el Comité de Inmigración del Colegio de Abogados del Condado de Montgomery, integra su Comité de Derecho Familiar y fue reconocida recientemente por el Capítulo de Filadelfia de la Asociación Americana de Abogados de Inmigración por veintiocho años de membresía.",
+    ],
+    credentials: [
+      "Más de 35 años de ejercicio — miembro fundador de la firma",
+      "Admitida para ejercer ante la Corte Suprema de EE. UU.",
+      "Miembro de la Asociación Americana de Abogados de Inmigración (AILA), más de 28 años",
+      "Copresidenta del Comité de Inmigración, Colegio de Abogados del Condado de Montgomery",
+    ],
+    practiceFocus: [
+      "Derecho Migratorio y de Nacionalidad",
+      "Derecho Familiar",
+      "Peticiones por Familia y por Empleo",
+      "Naturalization",
+      "Trámite Consular",
+      "Apelaciones Federales",
+    ],
+    languages: ["English", "Spanish", "German"],
+    education: ["J.D., Facultad de Derecho de Villanova University (1979)"],
+    admissions: [
+      "Pennsylvania",
+      "Nueva Jersey",
+      "Corte Suprema de EE. UU.",
+      "Tribunales del Segundo y Tercer Circuito",
+      "Tribunal de Distrito de EE. UU. — Distrito de Nueva Jersey",
+      "Tribunal de Distrito de EE. UU. — Distrito Este de Pensilvania",
+    ],
+    memberships: [
+      "Asociación Americana de Abogados de Inmigración (AILA), Capítulo de Filadelfia — 28 años",
+      "Colegio de Abogados del Condado de Montgomery — Copresidencia del Comité de Inmigración",
+      "Colegio de Abogados del Condado de Montgomery — Comité de Derecho Familiar",
+    ],
+  },
+  {
+    slug: "vishal-j-dobaria",
+    name: "Vishal J. Dobaria, Esq.",
+    title: "Abogado Director",
+    image: "/images/attorneys/vishal.webp",
+    imageAlt: "Vishal J. Dobaria, Abogado Director, Dobaria Law PC",
+    meta: {
+      title: "Vishal J. Dobaria, Abogado | Derecho Inmobiliario y Migratorio",
+      description:
+        "Vishal J. Dobaria es Abogado Director en Dobaria Law PC. Más de una década en derecho migratorio, inmobiliario, corporativo y familiar, con experiencia en títulos en 18 estados.",
+    },
+    hero: {
+      cta: { label: "Agendar una Consulta", href: "/contact" },
+      phone: "215-362-2478",
+    },
+    narrative: [
+      "Vishal J. Dobaria es el Abogado Director de la firma y dirige su práctica diaria en derecho migratorio, inmobiliario, corporativo y familiar. Con más de una década de experiencia —incluido su ejercicio como abogado independiente y un periodo en una destacada firma global en Filadelfia— aporta una visión amplia y conectada a asuntos que muchos abogados tratan de forma aislada.",
+      "En su firma anterior, Vishal dirigió la cartera de títulos inmobiliarios que abarcaba dieciocho estados, y sigue representando a compradores, vendedores y prestamistas en transacciones residenciales y comerciales, además de asesorar a empresas en constitución, contratos y acuerdos. Su trabajo migratorio abarca visas, peticiones y solicitudes de naturalización. Criado en el condado de Montgomery, donde aún vive, obtuvo un B.A. de Temple University, un M.A. de Saint Joseph's University y su J.D. de Western Michigan University Cooley Law School.",
+    ],
+    credentials: [
+      "Más de una década de ejercicio — Abogado Director",
+      "Dirigió una cartera de títulos inmobiliarios en 18 estados en una firma global anterior",
+      "Ejerce en derecho migratorio, inmobiliario, corporativo y familiar",
+    ],
+    practiceFocus: [
+      "Ley de Inmigración",
+      "Derecho Inmobiliario",
+      "Derecho Corporativo",
+      "Derecho Familiar",
+      "Títulos y Cierres (18 estados)",
+      "Constitución de Entidades y Contratos",
+    ],
+    languages: ["English", "Gujarati", "Hindi"],
+    education: [
+      "J.D., Western Michigan University Cooley Law School",
+      "M.A., Saint Joseph's University",
+      "B.A., Temple University",
+    ],
+    admissions: ["Pennsylvania", "Nueva Jersey", "Todo el país (asuntos migratorios)"],
+    memberships: [
+      "Asociación Americana de Abogados de Inmigración (AILA)",
+      "Colegio de Abogados del Condado de Montgomery",
+    ],
+  },
+  {
+    slug: "jose-m-lugo",
+    name: "Jose M. Lugo, J.D., Ph.D.",
+    title: "Abogado de Inmigración",
+    image: "/images/attorneys/jose.png",
+    imageAlt: "Jose M. Lugo, Abogado de Inmigración, Dobaria Law PC",
+    meta: {
+      title: "Jose M. Lugo, J.D., Ph.D. — Abogado de Inmigración | Lansdale, PA",
+      description:
+        "Jose M. Lugo, J.D., Ph.D. es abogado de inmigración en Dobaria Law PC. Bilingüe en inglés y español, con enfoque en visas, green cards, asilo, defensa contra la deportación y ciudadanía.",
+    },
+    hero: {
+      cta: { label: "Agendar una Consulta", href: "/contact" },
+      phone: "215-362-2478",
+    },
+    narrative: [
+      "Jose M. Lugo aporta una combinación singular de formación jurídica y académica a la práctica migratoria de la firma, con un Juris Doctor y un doctorado en Ciencias Políticas. Su formación académica sobre el funcionamiento de los gobiernos y los sistemas legales nutre un enfoque práctico y exhaustivo del proceso migratorio, desde la primera presentación hasta la decisión final.",
+      "Bilingüe y con dominio pleno del inglés y el español, Jose se enfoca en ofrecer una representación culturalmente competente a las comunidades que atiende la firma. Su práctica se concentra en derecho migratorio, incluidas visas, green cards, asilo, defensa contra la deportación y asuntos de ciudadanía, guiando a sus clientes en cada paso con una comunicación clara y directa.",
+    ],
+    credentials: [
+      "Juris Doctor (J.D.)",
+      "Doctorado en Ciencias Políticas",
+      "Bilingüe — Inglés y Español",
+      "Representación migratoria culturalmente competente",
+    ],
+    practiceFocus: [
+      "Ley de Inmigración",
+      "Visas",
+      "Green Cards",
+      "Asylum",
+      "Defensa contra la Deportación",
+      "Ciudadanía y Naturalización",
+    ],
+    languages: ["English", "Spanish"],
+    education: ["Juris Doctor (J.D.)", "Doctorado en Ciencias Políticas"],
+    admissions: [],
+    memberships: [],
+  },
+];
+
+export const attorneyBios = { en, es };

@@ -1,28 +1,31 @@
 'use client';
 
 import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
-import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/navigation';
 
-const practiceLinks = [
-  { label: 'Immigration Law', href: '/practice-areas/immigration-law' },
-  { label: 'Green Cards & Visas', href: '/practice-areas/green-cards-visas' },
-  { label: 'Citizenship & Naturalization', href: '/practice-areas/citizenship-naturalization' },
-  { label: 'Deportation Defense', href: '/practice-areas/deportation-defense' },
-  { label: 'Family Law', href: '/practice-areas/family-law' },
-  { label: 'International Divorce', href: '/practice-areas/international-divorce' },
-  { label: 'Business Law', href: '/practice-areas/business-law' },
-  { label: 'Real Estate Law', href: '/practice-areas/real-estate-law' },
+// Slugs only; the labels come from the shared practiceAreas namespace so the
+// footer, the navbar and the enquiry forms cannot drift apart.
+const practiceSlugs = [
+  'immigration-law',
+  'green-cards-visas',
+  'citizenship-naturalization',
+  'deportation-defense',
+  'family-law',
+  'international-divorce',
+  'business-law',
+  'real-estate-law',
 ];
 
 const quickLinks = [
-  { label: 'About the Firm', href: '/about' },
-  { label: 'Our Attorneys', href: '/attorneys' },
-  { label: 'Why Choose Us', href: '/why-choose-us' },
-  { label: 'Client Results', href: '/results' },
-  { label: 'Insights', href: '/insights' },
-  { label: 'Contact Us', href: '/contact' },
-  { label: 'Schedule a Consultation', href: '/schedule-consultation' },
+  { key: 'about', href: '/about' },
+  { key: 'attorneys', href: '/attorneys' },
+  { key: 'whyChooseUs', href: '/why-choose-us' },
+  { key: 'results', href: '/results' },
+  { key: 'insights', href: '/insights' },
+  { key: 'contact', href: '/contact' },
+  { key: 'schedule', href: '/schedule-consultation' },
 ];
 
 /**
@@ -66,6 +69,9 @@ const socials = [
 ].filter(social => social.href);
 
 export default function Footer() {
+  const t = useTranslations('footer');
+  const tArea = useTranslations('practiceAreas');
+
   return (
     <footer style={{ background: '#14163A' }}>
       <div className="h-[1px] w-full"
@@ -76,10 +82,10 @@ export default function Footer() {
         <div className="site-container py-8 sm:py-10 lg:py-14 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-8">
           <div className="text-center sm:text-left">
             <p className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-1 sm:mb-2"
-              style={{ fontFamily: 'Inter, sans-serif' }}>Ready to Begin?</p>
+              style={{ fontFamily: 'Inter, sans-serif' }}>{t('ctaEyebrow')}</p>
             <h3 className="text-white leading-tight font-semibold"
               style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(24px, 5vw, 40px)' }}>
-              Your Legal Journey Starts <em className="not-italic text-[#C29A3E]">Here</em>
+              {t('ctaHeadingBefore')} <em className="not-italic text-[#C29A3E]">{t('ctaHeadingAccent')}</em>
             </h3>
           </div>
           <Link
@@ -93,7 +99,7 @@ export default function Footer() {
               boxShadow: '0 8px 32px rgba(194, 154, 62,0.25)',
             }}
           >
-            <span>Schedule Consultation</span>
+            <span>{t('scheduleConsultation')}</span>
             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
@@ -105,7 +111,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="flex flex-col gap-4 sm:gap-6 sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center" aria-label="Dobaria Law PC — Home">
+            <Link href="/" className="flex items-center" aria-label={t('homeAria')}>
               <Image
                 src="/images/logo-light.svg"
                 alt="Dobaria Law PC"
@@ -117,7 +123,7 @@ export default function Footer() {
 
             <p className="text-[rgba(255,255,255,0.5)] text-[11px] sm:text-[13px] leading-[1.75] sm:leading-[1.8]"
               style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px' }}>
-              Trusted immigration, family, business & real estate counsel serving Lansdale, Montgomery County, and Philadelphia since 1981.
+              {t('blurb')}
             </p>
 
           </div>
@@ -125,14 +131,14 @@ export default function Footer() {
           {/* Practice Areas */}
           <div>
             <h4 className="text-white text-[10px] sm:text-[11px] font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-4 sm:mb-5"
-              style={{ fontFamily: 'Inter, sans-serif' }}>Practice Areas</h4>
+              style={{ fontFamily: 'Inter, sans-serif' }}>{t('practiceAreasHeading')}</h4>
             <div className="flex flex-col gap-2 sm:gap-3">
-              {practiceLinks.map(link => (
-                <Link key={link.label}
-                  href={link.href}
+              {practiceSlugs.map(slug => (
+                <Link key={slug}
+                  href={`/practice-areas/${slug}`}
                   className="inline-block text-[rgba(255,255,255,0.5)] text-[11px] sm:text-[12px] luxury-link hover:text-[#C29A3E] transition-colors duration-300 w-fit py-2.5 sm:py-0.5"
                   style={{ fontFamily: 'Inter, sans-serif' }}>
-                  {link.label}
+                  {tArea(`${slug}.label`)}
                 </Link>
               ))}
             </div>
@@ -141,14 +147,14 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h4 className="text-white text-[10px] sm:text-[11px] font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-4 sm:mb-5"
-              style={{ fontFamily: 'Inter, sans-serif' }}>Quick Links</h4>
+              style={{ fontFamily: 'Inter, sans-serif' }}>{t('quickLinksHeading')}</h4>
             <div className="flex flex-col gap-2 sm:gap-3">
               {quickLinks.map(link => (
-                <Link key={link.label}
+                <Link key={link.key}
                   href={link.href}
                   className="inline-block text-[rgba(255,255,255,0.5)] text-[11px] sm:text-[12px] luxury-link hover:text-[#C29A3E] transition-colors duration-300 w-fit py-2.5 sm:py-0.5"
                   style={{ fontFamily: 'Inter, sans-serif' }}>
-                  {link.label}
+                  {t(`quick.${link.key}`)}
                 </Link>
               ))}
             </div>
@@ -157,13 +163,13 @@ export default function Footer() {
           {/* Get in touch */}
           <div className="sm:col-span-2 lg:col-span-1">
             <h4 className="text-white text-[10px] sm:text-[11px] font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-4 sm:mb-5"
-              style={{ fontFamily: 'Inter, sans-serif' }}>Get In Touch</h4>
+              style={{ fontFamily: 'Inter, sans-serif' }}>{t('getInTouchHeading')}</h4>
 
             <div className="flex flex-col gap-2 sm:gap-3">
               {[
                 { icon: Phone, text: '215-362-2478', href: 'tel:+12153622478' },
                 { icon: Mail, text: 'notices@dobarialaw.com', href: 'mailto:notices@dobarialaw.com' },
-                { icon: MapPin, text: '2031 N. Broad Street, Unit 129, Lansdale, PA 19446', href: 'https://www.google.com/maps/search/?api=1&query=2031+N.+Broad+Street+Unit+129+Lansdale+PA+19446', external: true },
+                { icon: MapPin, text: t('address'), href: 'https://www.google.com/maps/search/?api=1&query=2031+N.+Broad+Street+Unit+129+Lansdale+PA+19446', external: true },
               ].map(item => (
                 <a key={item.text} href={item.href}
                   {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
@@ -207,20 +213,20 @@ export default function Footer() {
         <div className="site-container py-4 sm:py-5">
           <p className="text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px] text-left sm:text-center mb-3 max-w-3xl sm:mx-auto leading-relaxed"
             style={{ fontFamily: 'Inter, sans-serif' }}>
-            Attorney Advertising. Prior results do not guarantee a similar outcome. The information on this website is for general information purposes only.
+            {t('advertising')}
           </p>
           <div className="footer-legal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
             <p className="text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px]"
               style={{ fontFamily: 'Inter, sans-serif' }}>
-              &copy; {new Date().getFullYear()} Dobaria Law PC. All rights reserved.
+              {t('copyright', { year: new Date().getFullYear() })}
             </p>
             <div className="footer-legal-links flex items-center gap-4 sm:gap-5">
               {[
-                { label: 'Privacy Policy', href: '/privacy-policy' },
-                { label: 'Terms of Use', href: '/terms' },
-                { label: 'Disclaimer', href: '/disclaimer' },
+                { label: t('privacyPolicy'), href: '/privacy-policy' },
+                { label: t('termsOfUse'), href: '/terms' },
+                { label: t('disclaimer'), href: '/disclaimer' },
               ].map(link => (
-                <a key={link.label}
+                <a key={link.href}
                   href={link.href}
                   className="inline-block py-2.5 sm:py-1 text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px] hover:text-[#C29A3E] transition-colors duration-300"
                   style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -229,7 +235,7 @@ export default function Footer() {
               ))}
             </div>
             <p className="text-[rgba(255,255,255,0.3)] text-[10px] sm:text-[11px]">
-              Design and developed by <a href="https://softqubes.com" target="_blank" rel="noopener noreferrer" className="inline-block py-1.5 text-[#C29A3E] hover:underline">Softqubes Technologies</a>
+              {t('credit')} <a href="https://softqubes.com" target="_blank" rel="noopener noreferrer" className="inline-block py-1.5 text-[#C29A3E] hover:underline">Softqubes Technologies</a>
             </p>
           </div>
         </div>

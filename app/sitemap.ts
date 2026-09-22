@@ -37,7 +37,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/disclaimer", priority: 0.2, changeFrequency: "yearly" },
   ];
 
-  const posts = blogPosts.map((p) => p.slug);
+  // Slugs are identical in both languages.
+  const posts = blogPosts.en.map((p) => p.slug);
 
   return [
     ...staticRoutes.map((r) => ({

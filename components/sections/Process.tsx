@@ -4,54 +4,25 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MessageCircle, Search, Lightbulb, Scale, CheckCircle } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/navigation';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Copy lives in messages; only the icon and step order stay here.
+// Copy lives in messages; the step number, icon and colour stay here.
 const steps = [
-  {
-    number: '01',
-    icon: MessageCircle,
-    title: 'Initial Consultation',
-    description: 'Begin with a confidential consultation where we listen intently to your situation and provide an honest assessment of your legal matter.',
-    duration: '30–60 min',
-    color: '#1B1E49',
-  },
-  {
-    number: '02',
-    icon: Search,
-    title: 'Case Evaluation',
-    description: 'Our team conducts a thorough analysis of your case, reviewing all documents, identifying key legal issues, and researching applicable precedents.',
-    duration: '3–5 Days',
-    color: '#C29A3E',
-  },
-  {
-    number: '03',
-    icon: Lightbulb,
-    title: 'Strategy Development',
-    description: 'We craft a tailored legal strategy aligned with your specific goals, presenting clear options, timelines, and a transparent breakdown of the path forward.',
-    duration: '1–2 Weeks',
-    color: '#6E7A64',
-  },
-  {
-    number: '04',
-    icon: Scale,
-    title: 'Active Representation',
-    description: 'Our attorneys execute with precision — filing documents, negotiating on your behalf, and advocating steadily in all necessary forums.',
-    duration: 'Ongoing',
-    color: '#1B1E49',
-  },
-  {
-    number: '05',
-    icon: CheckCircle,
-    title: 'Resolution & Beyond',
-    description: 'We guide you through the final resolution and remain available for any follow-up matters. Your success is our metric of excellence.',
-    duration: 'Final Stage',
-    color: '#C29A3E',
-  },
+  { number: '01', icon: MessageCircle, key: 's1', color: '#1B1E49' },
+  { number: '02', icon: Search, key: 's2', color: '#C29A3E' },
+  { number: '03', icon: Lightbulb, key: 's3', color: '#6E7A64' },
+  { number: '04', icon: Scale, key: 's4', color: '#1B1E49' },
+  { number: '05', icon: CheckCircle, key: 's5', color: '#C29A3E' },
 ];
 
+
+
 export default function Process() {
+  const t = useTranslations('process');
   const sectionRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
@@ -89,7 +60,7 @@ export default function Process() {
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="w-8 h-[1px] bg-[#C29A3E]" />
           <span className="text-[#C29A3E] text-[14px] font-semibold tracking-[0.25em] uppercase"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}>Our Legal Process</span>
+            style={{ fontFamily: 'Montserrat, sans-serif' }}>{t('eyebrow')}</span>
           <span className="w-8 h-[1px] bg-[#C29A3E]" />
         </div>
 
@@ -99,13 +70,12 @@ export default function Process() {
             fontSize: 'clamp(40px, 7vw, 56px)',
             letterSpacing: '0.05em',
           }}>
-          How We Work <em className="not-italic text-[#C29A3E]">For You</em>
+          {t('headingBefore')} <em className="not-italic text-[#C29A3E]">{t('headingAccent')}</em>
         </h2>
 
         <p className="text-gray-400 leading-[1.8]"
           style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '16px' }}>
-          Our proven five-step process ensures clarity, transparency, and results at every
-          stage of your legal journey. Each milestone is designed to protect your interests.
+          {t('intro')}
         </p>
       </div>
 
@@ -129,7 +99,7 @@ export default function Process() {
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                     {/* Step Number and Title */}
                     <h3 className="font-semibold leading-tight text-white text-xl lg:text-2xl" style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.05em' }}>
-                      {step.number}. {step.title}
+                      {step.number}. {t(`${step.key}Title`)}
                     </h3>
                     
                     {/* Duration Badge */}
@@ -142,12 +112,12 @@ export default function Process() {
                         border: '1px solid rgba(194, 154, 62,0.3)',
                       }}
                     >
-                      {step.duration}
+                      {t(`${step.key}Duration`)}
                     </span>
                   </div>
 
                   <p className="leading-[1.75] text-gray-300 text-sm lg:text-base" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    {step.description}
+                    {t(`${step.key}Desc`)}
                   </p>
                 </div>
 
@@ -175,7 +145,7 @@ export default function Process() {
             boxShadow: '0 12px 40px rgba(194, 154, 62,0.3)',
           }}
         >
-          <span className="relative z-10">Begin Your Consultation</span>
+          <span className="relative z-10">{t('cta')}</span>
           <div className="absolute inset-0 transform scale-x-0 origin-left transition-transform duration-500 ease-out group-hover:scale-x-100"
             style={{ background: 'linear-gradient(135deg, #1B1E49 0%, #2A2F63 100%)' }} />
         </Link>

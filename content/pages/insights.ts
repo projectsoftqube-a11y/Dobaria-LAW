@@ -1,5 +1,10 @@
 // content/pages/insights.ts
-export const insightsContent = {
+//
+// Locale-keyed page content. Components read `insightsContent[locale]`.
+// The article list itself lives in content/insights/index.ts; only the page
+// furniture is here.
+
+const en = {
   hero: {
     eyebrow: "Legal Insights",
     h1: "Plain-Language Guidance From Our Attorneys",
@@ -7,24 +12,40 @@ export const insightsContent = {
       "Articles on the immigration, family, business, and real estate changes that matter most to clients in Lansdale, Montgomery County, and beyond.",
   },
   categories: ["Immigration", "Family Law", "Business", "Real Estate"],
-  posts: [
-    { slug: "h1b-2026-cap-season", title: "H-1B Cap Season 2026: What Employers and Applicants Need to Know", category: "Immigration" },
-    { slug: "green-card-process-timeline", title: "How Long Does the Green Card Process Take? A 2026 Timeline", category: "Immigration" },
-    { slug: "international-custody-cases", title: "International Custody Disputes: How Cross-Border Cases Work", category: "Family Law" },
-    { slug: "forming-an-llc-in-pa", title: "How to Form an LLC in Pennsylvania: A Step-by-Step Guide", category: "Business" },
-    { slug: "deportation-defense-guide", title: "Deportation Defense: What to Do If You or a Loved One Faces Removal", category: "Immigration" },
-    { slug: "eb5-investor-visa-guide", title: "The EB-5 Investor Visa, Explained", category: "Immigration" },
-  ],
+  allCategories: "All",
+  readMore: "Read Article",
+  readTimeSuffix: "min read",
   cta: {
     h2: "Have a question about your own matter?",
-    primaryCta: {
-      label: "Schedule a Consultation",
-      href: "/contact",
-    },
+    primaryCta: { label: "Schedule a Consultation", href: "/contact" },
   },
   meta: {
     title: "Legal Insights & Immigration Blog | Dobaria Law PC",
     description:
       "Plain-language guidance on immigration, family, business & real estate law from the attorneys at Dobaria Law PC in Lansdale, PA. Read our latest insights.",
   },
-} as const;
+};
+
+const es: typeof en = {
+  hero: {
+    eyebrow: "Publicaciones Legales",
+    h1: "Orientación en Lenguaje Claro de Nuestros Abogados",
+    subhead:
+      "Artículos sobre los cambios en inmigración, derecho familiar, corporativo e inmobiliario que más importan a nuestros clientes en Lansdale, el condado de Montgomery y más allá.",
+  },
+  categories: ["Inmigración", "Derecho Familiar", "Negocios", "Bienes Raíces"],
+  allCategories: "Todas",
+  readMore: "Leer Artículo",
+  readTimeSuffix: "min de lectura",
+  cta: {
+    h2: "¿Tiene una pregunta sobre su propio asunto?",
+    primaryCta: { label: "Agendar una Consulta", href: "/contact" },
+  },
+  meta: {
+    title: "Publicaciones Legales y Blog de Inmigración | Dobaria Law PC",
+    description:
+      "Orientación en lenguaje claro sobre derecho migratorio, familiar, corporativo e inmobiliario, de los abogados de Dobaria Law PC en Lansdale, PA.",
+  },
+};
+
+export const insightsContent = { en, es };

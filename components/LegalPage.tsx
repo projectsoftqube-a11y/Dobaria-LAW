@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, ShieldAlert, ArrowUp, Lock, ScrollText, Scale } from "lucide-react";
 import Link from "next/link";
@@ -43,6 +44,7 @@ export default function LegalPage({
   breadcrumbLabel,
   breadcrumbHref,
 }: LegalPageProps) {
+  const t = useTranslations("legalPage");
   const Icon = iconMap[icon];
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? "");
   const [progress, setProgress] = useState(0);
@@ -156,7 +158,7 @@ export default function LegalPage({
             {/* Table of contents */}
             <aside className="hidden lg:block sticky top-28">
               <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#C29A3E] mb-5">
-                On this page
+                {t("k2")}
               </p>
               <nav className="flex flex-col gap-1 border-l border-gray-200">
                 {sections.map((s, i) => {
@@ -277,13 +279,13 @@ export default function LegalPage({
                         href="/contact"
                         className="inline-flex items-center gap-2 bg-[#C29A3E] hover:bg-[#9C7A26] text-white px-6 py-3 rounded-sm text-xs font-semibold tracking-widest uppercase transition-colors"
                       >
-                        Schedule a Consultation
+                        {t("k1")}
                       </Link>
                       <Link
                         href="/"
                         className="inline-flex items-center gap-2 border border-white/20 hover:border-white/50 text-white px-6 py-3 rounded-sm text-xs font-semibold tracking-widest uppercase transition-colors"
                       >
-                        Back to Home
+                        {t("k3")}
                       </Link>
                     </div>
                   </div>

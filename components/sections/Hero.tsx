@@ -3,10 +3,12 @@
 import { useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, type Variants } from 'framer-motion';
 import { ArrowRight, Shield, Award, Globe } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/navigation';
 import Image from 'next/image';
 
 export default function Hero() {
+  const t = useTranslations('hero');
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -103,7 +105,7 @@ export default function Hero() {
             <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
             <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
               style={{ fontFamily: 'Inter, sans-serif' }}>
-              Legal Excellence Since 1981
+              {t('eyebrow')}
             </span>
           </motion.div>
 
@@ -121,15 +123,15 @@ export default function Hero() {
               fontWeight: 400,
             }}
           >
-            <span className="text-[#14163A] block">Immigration, Family{' '}</span>
+            <span className="text-[#14163A] block">{t('headlineLine1')}{' '}</span>
             <span className="block" style={{
               background: 'linear-gradient(135deg, #C29A3E 0%, #9C7A26 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-            }}>&amp; Business{' '}</span>
-            <span className="text-[#14163A] block">Counsel</span>
-            <span className="sr-only"> — Trusted for Over 45 Years</span>
+            }}>{t('headlineLine2')}{' '}</span>
+            <span className="text-[#14163A] block">{t('headlineLine3')}</span>
+            <span className="sr-only">{t('headlineSr')}</span>
           </motion.h1>
 
           <motion.p
@@ -140,7 +142,7 @@ export default function Hero() {
             className="text-[#4B5563] leading-[1.75] sm:leading-[1.8] max-w-[480px]"
             style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2.5vw, 16px)' }}
           >
-            Dobaria Law PC delivers strategic legal counsel for individuals, families, entrepreneurs, and employers navigating immigration, family, business, and real estate matters. From our Lansdale office, we proudly serve clients throughout Montgomery County, the Greater Philadelphia region, and across the United States for immigration matters.
+            {t('body')}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -160,7 +162,7 @@ export default function Hero() {
                 fontFamily: 'Inter, sans-serif',
               }}
             >
-              <span className="relative z-10">Schedule Consultation</span>
+              <span className="relative z-10">{t('ctaPrimary')}</span>
               <ArrowRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
                 style={{ background: 'linear-gradient(135deg, #C29A3E 0%, #9C7A26 100%)' }} />
@@ -171,7 +173,7 @@ export default function Hero() {
               className="group flex items-center gap-2 sm:gap-3 px-5 sm:px-7 py-3 sm:py-4 text-[#14163A] text-[10px] sm:text-[12px] font-semibold tracking-[0.1em] sm:tracking-[0.12em] uppercase transition-all duration-300 border border-[rgba(17,24,39,0.15)] hover:border-[#C29A3E]"
               style={{ borderRadius: '2px', fontFamily: 'Inter, sans-serif' }}
             >
-              <span>Explore Practice Areas</span>
+              <span>{t('ctaSecondary')}</span>
               <ArrowRight size={14} className="text-[#C29A3E] group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </motion.div>
@@ -196,7 +198,7 @@ export default function Hero() {
                 style={{ boxShadow: '0 40px 80px rgba(17,24,39,0.12), 0 20px 40px rgba(17,24,39,0.08)' }}>
                 <Image
                   src="/images/hero-bg.webp"
-                  alt="Dobaria Law PC partners providing professional legal counsel"
+                  alt={t('imageAlt')}
                   width={480}
                   height={600}
                   priority
@@ -228,8 +230,8 @@ export default function Hero() {
                   <Shield size={14} className="text-[#C29A3E]" />
                 </div>
                 <div>
-                  <p className="text-[#14163A] text-xs font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>Trusted Counsel</p>
-                  <p className="text-[#4B5563] text-[10px]" style={{ fontFamily: 'Inter, sans-serif' }}>45+ Years Experience</p>
+                  <p className="text-[#14163A] text-xs font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>{t('badgeTrustedTitle')}</p>
+                  <p className="text-[#4B5563] text-[10px]" style={{ fontFamily: 'Inter, sans-serif' }}>{t('badgeTrustedSub')}</p>
                 </div>
               </div>
             </motion.div>
@@ -246,8 +248,8 @@ export default function Hero() {
                   <Award size={14} className="text-white" />
                 </div>
                 <div>
-                  <p className="text-[#14163A] text-xs font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>Award Recognized</p>
-                  <p className="text-[#4B5563] text-[10px]" style={{ fontFamily: 'Inter, sans-serif' }}>Top Legal Practice</p>
+                  <p className="text-[#14163A] text-xs font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>{t('badgeAwardTitle')}</p>
+                  <p className="text-[#4B5563] text-[10px]" style={{ fontFamily: 'Inter, sans-serif' }}>{t('badgeAwardSub')}</p>
                 </div>
               </div>
             </motion.div>
@@ -265,8 +267,8 @@ export default function Hero() {
                   <Globe size={14} className="text-white" />
                 </div>
                 <div>
-                  <p className="text-[#14163A] text-xs font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>Global Reach</p>
-                  <p className="text-[#4B5563] text-[10px]" style={{ fontFamily: 'Inter, sans-serif' }}>International Clients</p>
+                  <p className="text-[#14163A] text-xs font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>{t('badgeGlobalTitle')}</p>
+                  <p className="text-[#4B5563] text-[10px]" style={{ fontFamily: 'Inter, sans-serif' }}>{t('badgeGlobalSub')}</p>
                 </div>
               </div>
             </motion.div>
@@ -282,7 +284,7 @@ export default function Hero() {
         className="hero-scroll absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <span className="text-[#4B5563] text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-          style={{ fontFamily: 'Inter, sans-serif' }}>Scroll</span>
+          style={{ fontFamily: 'Inter, sans-serif' }}>{t('scroll')}</span>
         <div className="w-[1px] h-10 sm:h-12 overflow-hidden bg-[rgba(17,24,39,0.1)]">
           <motion.div
             className="w-full h-1/2 bg-[#C29A3E]"

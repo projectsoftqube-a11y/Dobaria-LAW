@@ -233,7 +233,7 @@ export async function POST(req: Request) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+    return NextResponse.json({ errorKey: "invalidRequest" }, { status: 400 });
   }
 
   // ---- Honeypot ----
@@ -248,7 +248,7 @@ export async function POST(req: Request) {
   // ---- Rate limiting ----
   if (isRateLimited(clientIp(req))) {
     return NextResponse.json(
-      { error: "Too many submissions. Please wait a few minutes or call the office." },
+      { errorKey: "rateLimited" },
       { status: 429 }
     );
   }
@@ -262,20 +262,22 @@ export async function POST(req: Request) {
   const source = (body.source || "Website form").trim();
 
   // ---- Server-side validation ----
+  // Message KEYS, not prose — the client renders them through its own locale,
+  // so a Spanish visitor never receives an English validation error.
   const errors: Record<string, string> = {};
-  if (!firstName) errors.firstName = "First name is required.";
-  if (!lastName) errors.lastName = "Last name is required.";
-  if (!email) errors.email = "Email is required.";
-  else if (!EMAIL_RE.test(email)) errors.email = "Please enter a valid email.";
-  if (!practice) errors.practice = "Please select a matter type.";
-  if (!message) errors.message = "Please describe your matter.";
-  else if (message.length < 10) errors.message = "Please add a little more detail.";
+  if (!firstName) errors.firstName = "firstNameRequired";
+  if (!lastName) errors.lastName = "lastNameRequired";
+  if (!email) errors.email = "emailRequired";
+  else if (!EMAIL_RE.test(email)) errors.email = "emailInvalid";
+  if (!practice) errors.practice = "practiceRequired";
+  if (!message) errors.message = "messageRequired";
+  else if (message.length < 10) errors.message = "messageTooShort";
 
   // Phone is optional, but reject a partial number so the firm never gets an
   // un-callable lead.
   if (phone) {
     const digits = phone.replace(/[^0-9]/g, "").replace(/^1/, "");
-    if (digits.length !== 10) errors.phone = "Please enter a complete 10-digit phone number.";
+    if (digits.length !== 10) errors.phone = "phoneIncomplete";
   }
 
   if (Object.keys(errors).length > 0) {
@@ -298,7 +300,7 @@ export async function POST(req: Request) {
   if (!MAIL_TO || (!useGraph && !smtpReady)) {
     console.error("Contact form: no mail transport is configured (missing env vars).");
     return NextResponse.json(
-      { error: "Email service is not configured yet. Please call the office or try again later." },
+      { errorKey: "notConfigured" },
       { status: 503 }
     );
   }
@@ -407,7 +409,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json(
-      { error: "We couldn't send your message. Please call the office or try again later." },
+      { errorKey: "sendFailed" },
       { status: 502 }
     );
   }

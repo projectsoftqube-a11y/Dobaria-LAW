@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export interface Metric {
   value: number;
@@ -11,11 +12,12 @@ export interface Metric {
   prefix?: string;
 }
 
-const defaultMetrics: Metric[] = [
-  { value: 45, suffix: '+', label: 'Years of Trusted Counsel', description: 'Serving clients since 1981' },
-  { value: 50, suffix: '+', label: 'Countries Served', description: 'Clients from around the world' },
-  { value: 8, suffix: '', label: 'Languages Spoken', description: 'Multilingual legal team' },
-  { value: 3, suffix: '', label: 'States Admitted', description: 'PA · NJ · NY' },
+// Labels resolve from messages at render time; only the figures live here.
+const defaultMetricShapes = [
+  { value: 45, suffix: '+', key: 'm1' },
+  { value: 50, suffix: '+', key: 'm2' },
+  { value: 8, suffix: '', key: 'm3' },
+  { value: 3, suffix: '', key: 'm4' },
 ];
 
 function useCountUp(target: number, duration: number = 2000, start: boolean = false) {
@@ -78,9 +80,19 @@ function MetricItem({ metric, index, inView }: { metric: Metric; index: number; 
 }
 
 export default function TrustMetrics({ customMetrics }: { customMetrics?: Metric[] }) {
+  const t = useTranslations('trustMetrics');
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-  const activeMetrics = customMetrics || defaultMetrics;
+  // Callers may still pass fully-formed metrics; otherwise build them from the
+  // figures above plus the translated label and description.
+  const activeMetrics: Metric[] =
+    customMetrics ||
+    defaultMetricShapes.map(({ value, suffix, key }) => ({
+      value,
+      suffix,
+      label: t(`${key}Label`),
+      description: t(`${key}Desc`),
+    }));
 
   useEffect(() => {
     const observer = new IntersectionObserver(

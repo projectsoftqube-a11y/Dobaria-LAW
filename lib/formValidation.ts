@@ -31,17 +31,21 @@ export const EMPTY_ENQUIRY: EnquiryForm = {
   company: "",
 };
 
-/** Practice areas offered in the "matter type" selector. */
+/**
+ * Practice areas offered in the "matter type" selector, as slugs. The visible
+ * label is resolved from the shared `practiceAreas` namespace, so the selector,
+ * the navbar and the footer can never drift apart.
+ */
 export const PRACTICE_OPTIONS = [
-  "Immigration Law",
-  "Green Cards & Visas",
-  "Citizenship & Naturalization",
-  "Deportation Defense",
-  "Family Law",
-  "International Divorce",
-  "Business Law",
-  "Real Estate Law",
-  "Other",
+  "immigration-law",
+  "green-cards-visas",
+  "citizenship-naturalization",
+  "deportation-defense",
+  "family-law",
+  "international-divorce",
+  "business-law",
+  "real-estate-law",
+  "other",
 ] as const;
 
 /** Visible fields, in the order they appear in every form. */
@@ -61,25 +65,29 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  *
  * Every field except phone is required; phone is optional but must be a
  * complete US number when supplied, so a half-typed number cannot be sent.
+ *
+ * Returns message KEYS rather than English text. The form renders them through
+ * the `form.errors` namespace, so the same rules produce the right language on
+ * both sides — and the API route can return the same keys for its own checks.
  */
 export function validateEnquiry(form: EnquiryForm): Record<string, string> {
   const errors: Record<string, string> = {};
 
-  if (!form.firstName.trim()) errors.firstName = "First name is required";
-  if (!form.lastName.trim()) errors.lastName = "Last name is required";
+  if (!form.firstName.trim()) errors.firstName = "firstNameRequired";
+  if (!form.lastName.trim()) errors.lastName = "lastNameRequired";
 
-  if (!form.email.trim()) errors.email = "Email is required";
-  else if (!EMAIL_RE.test(form.email.trim())) errors.email = "Please enter a valid email";
+  if (!form.email.trim()) errors.email = "emailRequired";
+  else if (!EMAIL_RE.test(form.email.trim())) errors.email = "emailInvalid";
 
   if (form.phone.trim() && !isValidUSPhone(form.phone)) {
-    errors.phone = "Please enter a complete 10-digit phone number";
+    errors.phone = "phoneIncomplete";
   }
 
-  if (!form.practice.trim()) errors.practice = "Please select a matter type";
+  if (!form.practice.trim()) errors.practice = "practiceRequired";
 
-  if (!form.message.trim()) errors.message = "Please describe your matter";
+  if (!form.message.trim()) errors.message = "messageRequired";
   else if (form.message.trim().length < 10) {
-    errors.message = "Please add a little more detail";
+    errors.message = "messageTooShort";
   }
 
   return errors;

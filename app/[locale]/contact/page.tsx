@@ -1,0 +1,589 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Phone, MapPin, Clock, Globe, ArrowRight, CheckCircle, Mail as MailIcon } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/sections/Footer";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { legalServiceSchema, breadcrumbSchema, faqPageSchema } from "@/lib/schema";
+import { useTranslations } from "next-intl";
+import { formatUSPhone } from "@/lib/phone";
+import {
+  EMPTY_ENQUIRY,
+  PRACTICE_OPTIONS,
+  validateEnquiry,
+  toContactPayload,
+  focusFirstError,
+} from "@/lib/formValidation";
+
+
+
+
+export default function ContactPage() {
+  const t = useTranslations("contactPage");
+  const tf = useTranslations("form");
+  const tc = useTranslations("common");
+  const tArea = useTranslations("practiceAreas");
+
+  // Same copy the accordion renders, reused for the FAQ structured data.
+  const contactFaqs = [
+    { q: t("q1"), a: t("a1") },
+    { q: t("q2"), a: t("a2") },
+    { q: t("q3"), a: t("a3"), phone: "215-362-2478" },
+    { q: t("q4"), a: t("a4") },
+  ];
+
+  const [form, setForm] = useState({ ...EMPTY_ENQUIRY });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+    if (errors[name]) setErrors(e => ({ ...e, [name]: "" }));
+  };
+
+
+  /** Validate, publish the messages, and hand them back for focus handling. */
+  const validateForm = () => {
+    const newErrors = validateEnquiry(form);
+    setErrors(newErrors);
+    return newErrors;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitError("");
+
+    const found = validateForm();
+    if (Object.keys(found).length > 0) {
+      focusFirstError(found, "contact-page");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(toContactPayload(form, "Contact page")),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        if (data.errors) {
+          setErrors(data.errors);
+          focusFirstError(data.errors, "contact-page");
+        }
+        setSubmitError(tf(`errors.${data.errorKey || "generic"}`));
+        return;
+      }
+      setSubmitted(true);
+      setForm({ ...EMPTY_ENQUIRY });
+    } catch {
+      setSubmitError(tf("errors.network"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+      <main className="min-h-screen bg-[#F8F6F2]">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([{ name: tc("home"), path: "/" }, { name: t("breadcrumb"), path: "/contact" }])) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(contactFaqs)) }} />
+        <Navbar />
+
+      {/* Hero Section - Premium Dark */}
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-gradient-to-b from-[#0B0F17] to-[#1A2435]">
+        {/* Grid Texture */}
+        <div 
+          className="absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage: "linear-gradient(rgba(255,255,255,0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.7) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        ></div>
+
+        {/* Gold Radial Glow */}
+        <div 
+          className="absolute -top-32 right-0 w-96 h-96 rounded-full pointer-events-none"
+          style={{
+            background: "radial-gradient(circle, #C29A3E 0%, transparent 65%)",
+            opacity: 0.1,
+          }}
+        ></div>
+
+        {/* Watermark Icon */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-white/[0.025] pointer-events-none hidden xl:block">
+          <MailIcon size={500} strokeWidth={0.5} />
+        </div>
+
+        <div className="site-container relative z-10">
+          <Breadcrumbs
+            items={[
+              { name: tc("home"), href: "/" },
+              { name: t("breadcrumb"), href: "/contact" },
+            ]}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mt-12 max-w-3xl"
+          >
+            {/* Eyebrow with inline gold line */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex items-center gap-3 mb-6"
+            >
+              <span className="w-8 h-[1px] bg-[#C29A3E]" />
+              <span className="text-[#C29A3E] uppercase tracking-widest text-[11px] font-semibold">
+                {t('eyebrow')}
+              </span>
+            </motion.div>
+
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-['Bebas_Neue',sans-serif] text-white mb-6 leading-[1.1]"
+              style={{ fontSize: "clamp(42px, 7vw, 84px)" }}
+            >
+              {t('h1')}
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-gray-400 text-[16px] leading-relaxed mb-10 max-w-xl"
+            >
+              {t('intro')}
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <a
+                href="#form"
+                className="inline-flex items-center justify-center px-8 py-3 bg-[#C29A3E] text-white font-semibold hover:bg-[#C29A3E]/90 transition-colors text-base rounded-sm"
+              >
+                {t('ctaSendMessage')}
+              </a>
+              <a
+                href="tel:+12153622478"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3 border border-white/20 text-white font-semibold hover:bg-white/5 transition-colors text-base rounded-sm"
+              >
+                <Phone className="w-5 h-5" />
+                {t('ctaCall')}
+              </a>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Contact Form & Info Section */}
+      <section className="py-16 sm:py-20 lg:py-28 bg-white">
+        <div className="site-container">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+            
+            {/* Left - Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="h-full"
+            >
+              <div className="flex h-full flex-col rounded-lg border border-gray-100 bg-white shadow-[0_4px_30px_-12px_rgba(17,24,39,0.12)] overflow-hidden">
+                {/* Header band */}
+                <div className="relative bg-gradient-to-br from-[#0B0F17] to-[#1B1E49] px-7 py-8 sm:px-8 sm:py-9">
+                  <div
+                    className="absolute inset-0 opacity-[0.05]"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(rgba(255,255,255,0.8) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.8) 1px,transparent 1px)",
+                      backgroundSize: "40px 40px",
+                    }}
+                  />
+                  <div className="relative">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="w-6 h-[1px] bg-[#C29A3E]" />
+                      <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">
+                        Contact Info
+                      </span>
+                    </div>
+                    <h2
+                      className="text-white leading-snug"
+                      style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "clamp(30px,4vw,44px)", letterSpacing: "-0.01em" }}
+                    >
+                      Lansdale Office
+                    </h2>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="flex flex-1 flex-col divide-y divide-gray-100">
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=2031+N.+Broad+Street+Unit+129+Lansdale+PA+19446"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-start gap-4 px-7 py-5 sm:px-8 hover:bg-[#F8F6F2] transition-colors"
+                  >
+                    <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#C29A3E]/10">
+                      <MapPin size={16} className="text-[#C29A3E]" />
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="text-[#6B7280] text-[11px] font-semibold tracking-wider uppercase mb-1">{t('labelAddress')}</span>
+                      <span className="text-[#14163A] text-[15px] leading-relaxed group-hover:text-[#C29A3E] transition-colors">
+                        2031 N. Broad Street, Unit 129<br />Lansdale, PA 19446
+                      </span>
+                      <span className="text-[#C29A3E] text-[12px] font-semibold mt-1.5 inline-flex items-center gap-1">
+                        {t('openInMaps')} <ArrowRight size={11} />
+                      </span>
+                    </span>
+                  </a>
+
+                  <div className="grid sm:grid-cols-2 sm:divide-x divide-gray-100">
+                    <a
+                      href="tel:+12153622478"
+                      className="group flex items-start gap-4 px-7 py-5 sm:px-8 hover:bg-[#F8F6F2] transition-colors"
+                    >
+                      <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#C29A3E]/10">
+                        <Phone size={16} className="text-[#C29A3E]" />
+                      </span>
+                      <span className="flex flex-col">
+                        <span className="text-[#6B7280] text-[11px] font-semibold tracking-wider uppercase mb-1">{t('labelPhone')}</span>
+                        <span className="text-[#14163A] text-[15px] font-semibold group-hover:text-[#C29A3E] transition-colors">
+                          215-362-2478
+                        </span>
+                      </span>
+                    </a>
+
+                    <a
+                      href="mailto:notices@dobarialaw.com"
+                      className="group flex items-start gap-4 px-7 py-5 sm:px-8 border-t sm:border-t-0 border-gray-100 hover:bg-[#F8F6F2] transition-colors"
+                    >
+                      <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#C29A3E]/10">
+                        <MailIcon size={16} className="text-[#C29A3E]" />
+                      </span>
+                      <span className="flex flex-col min-w-0">
+                        <span className="text-[#6B7280] text-[11px] font-semibold tracking-wider uppercase mb-1">{t('labelEmail')}</span>
+                        <span className="text-[#14163A] text-[15px] font-semibold break-words group-hover:text-[#C29A3E] transition-colors">
+                          notices@dobarialaw.com
+                        </span>
+                      </span>
+                    </a>
+                  </div>
+
+                  <div className="flex items-start gap-4 px-7 py-5 sm:px-8">
+                    <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#C29A3E]/10">
+                      <Clock size={16} className="text-[#C29A3E]" />
+                    </span>
+                    <div className="flex flex-col">
+                      <span className="text-[#6B7280] text-[11px] font-semibold tracking-wider uppercase mb-1">{t('labelHours')}</span>
+                      <span className="text-[#14163A] text-[15px] leading-relaxed">
+                        {t('hours')}
+                      </span>
+                      <span className="text-gray-500 text-[14px]">{t('hoursClosed')}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 items-start gap-4 px-7 py-5 sm:px-8">
+                    <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#C29A3E]/10">
+                      <Globe size={16} className="text-[#C29A3E]" />
+                    </span>
+                    <div className="flex flex-col">
+                      <span className="text-[#6B7280] text-[11px] font-semibold tracking-wider uppercase mb-2">{t('labelLanguages')}</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {["langEnglish", "langSpanish", "langGujarati", "langHindi", "langGerman", "langArabic", "langFrench", "langKorean"].map((lang) => (
+                          <span
+                            key={lang}
+                            className="rounded-full bg-[#F8F6F2] border border-gray-200 px-2.5 py-1 text-[12px] text-[#14163A]"
+                          >
+                            {t(lang)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer note */}
+                <div className="bg-[#F8F6F2] px-7 py-4 sm:px-8 border-t border-gray-100">
+                  <p className="text-gray-600 text-[13px] leading-relaxed">
+                    {t('intro')}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right - Form */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              id="form"
+            >
+              <div className="bg-gradient-to-br from-white to-[#F8F6F2] border border-gray-100 rounded-lg p-8 sm:p-10 shadow-lg">
+                {submitted ? (
+                  <div className="text-center py-12 flex flex-col items-center gap-4">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#C29A3E] to-[#9C7A26] flex items-center justify-center">
+                      <CheckCircle size={28} className="text-white" />
+                    </div>
+                    <h3 className="text-[#1B1E49] text-2xl font-semibold" style={{ fontFamily: "Bebas Neue, sans-serif" }}>
+                      {tf('thankYouTitle')}
+                    </h3>
+                    <p className="text-gray-600 text-[16px] leading-relaxed max-w-sm">
+                      We've received your message and will contact you within 24 business hours.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+                    <h2 className="text-[#1B1E49] text-xl font-semibold mb-2">{t('sendUsAMessage')}</h2>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="contact-page-firstName" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                          {tf('firstName')} *
+                        </label>
+                        <input
+                          id="contact-page-firstName"
+                          name="firstName"
+                          aria-invalid={!!errors.firstName}
+                          aria-describedby={errors.firstName ? "contact-page-firstName-error" : undefined}
+                          type="text"
+                          value={form.firstName}
+                          onChange={handleChange}
+                          placeholder={tf('phFirstNameAlt')}
+                          className={`w-full px-4 py-3 text-sm rounded-sm font-sans transition-all border ${
+                            errors.firstName ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
+                          } focus:outline-none`}
+                        />
+                        {errors.firstName && <p id="contact-page-firstName-error" role="alert" className="text-red-500 text-[12px]">{tf(`errors.${errors.firstName}`)}</p>}
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="contact-page-lastName" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                          {tf('lastName')} *
+                        </label>
+                        <input
+                          id="contact-page-lastName"
+                          name="lastName"
+                          aria-invalid={!!errors.lastName}
+                          aria-describedby={errors.lastName ? "contact-page-lastName-error" : undefined}
+                          type="text"
+                          value={form.lastName}
+                          onChange={handleChange}
+                          placeholder={tf('phLastName')}
+                          className={`w-full px-4 py-3 text-sm rounded-sm font-sans transition-all border ${
+                            errors.lastName ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
+                          } focus:outline-none`}
+                        />
+                        {errors.lastName && <p id="contact-page-lastName-error" role="alert" className="text-red-500 text-[12px]">{tf(`errors.${errors.lastName}`)}</p>}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="contact-page-email" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                          {tf('email')} *
+                        </label>
+                        <input
+                          id="contact-page-email"
+                          name="email"
+                          aria-invalid={!!errors.email}
+                          aria-describedby={errors.email ? "contact-page-email-error" : undefined}
+                          type="email"
+                          value={form.email}
+                          onChange={handleChange}
+                          placeholder={tf('phEmailAlt')}
+                          className={`w-full px-4 py-3 text-sm rounded-sm font-sans transition-all border ${
+                            errors.email ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
+                          } focus:outline-none`}
+                        />
+                        {errors.email && <p id="contact-page-email-error" role="alert" className="text-red-500 text-[12px]">{tf(`errors.${errors.email}`)}</p>}
+                      </div>
+
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="contact-page-phone" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                          {tf('phone')}
+                        </label>
+                        <input
+                          id="contact-page-phone"
+                          name="phone"
+                          aria-invalid={!!errors.phone}
+                          aria-describedby={errors.phone ? "contact-page-phone-error" : undefined}
+                          type="tel"
+                          inputMode="tel"
+                          autoComplete="tel"
+                          value={form.phone}
+                          onChange={(e) => {
+                            setForm((f) => ({ ...f, phone: formatUSPhone(e.target.value) }));
+                            if (errors.phone) setErrors((er) => ({ ...er, phone: "" }));
+                          }}
+                          placeholder={tf('phPhone')}
+                          maxLength={14}
+                          className={`w-full px-4 py-3 text-sm rounded-sm font-sans transition-all border ${
+                            errors.phone ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
+                          } focus:outline-none`}
+                        />
+                        {errors.phone && <p id="contact-page-phone-error" role="alert" className="text-red-500 text-[12px]">{tf(`errors.${errors.phone}`)}</p>}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="contact-page-practice" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                        {tf('matterType')} *
+                      </label>
+                      <select
+                        id="contact-page-practice"
+                        name="practice"
+                        aria-invalid={!!errors.practice}
+                        aria-describedby={errors.practice ? "contact-page-practice-error" : undefined}
+                        value={form.practice}
+                        onChange={handleChange}
+                        className={`w-full px-4 py-3 pr-10 text-sm rounded-sm font-sans transition-all border cursor-pointer appearance-none bg-no-repeat ${
+                          errors.practice ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
+                        } focus:outline-none`}
+                        style={{ backgroundImage: `url('data:image/svg+xml;utf8,<svg fill="%23111827" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')`, backgroundPosition: 'right 8px center', backgroundSize: '20px' }}
+                      >
+                        <option value="">{tf('phChoosePractice')}</option>
+                        {PRACTICE_OPTIONS.map((opt) => (
+                          <option key={opt} value={tArea(`${opt}.label`)}>{tArea(`${opt}.label`)}</option>
+                        ))}
+                      </select>
+                      {errors.practice && <p id="contact-page-practice-error" role="alert" className="text-red-500 text-[12px]">{tf(`errors.${errors.practice}`)}</p>}
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="contact-page-message" className="text-[13px] font-semibold uppercase tracking-wider text-[#14163A]">
+                        {tf('message')} *
+                      </label>
+                      <textarea
+                        id="contact-page-message"
+                        name="message"
+                        aria-invalid={!!errors.message}
+                        aria-describedby={errors.message ? "contact-page-message-error" : undefined}
+                        value={form.message}
+                        onChange={handleChange}
+                        rows={4}
+                        placeholder={tf('phMessage')}
+                        className={`w-full px-4 py-3 text-sm rounded-sm font-sans transition-all border resize-none ${
+                          errors.message ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-200 bg-white focus:border-[#C29A3E] focus:ring-1 focus:ring-[#C29A3E]"
+                        } focus:outline-none`}
+                      />
+                      {errors.message && <p id="contact-page-message-error" role="alert" className="text-red-500 text-[12px]">{tf(`errors.${errors.message}`)}</p>}
+                    </div>
+
+                    {/* Honeypot — hidden from people, filled in by bots. */}
+                    <input
+                      type="text"
+                      name="company"
+                      value={form.company}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="hidden"
+                    />
+
+                    {submitError && (
+                      <p role="alert" className="text-red-600 text-[13px]">{submitError}</p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full py-3 bg-[#C29A3E] text-white font-semibold hover:bg-[#C29A3E]/90 disabled:opacity-50 transition-colors text-base rounded-sm mt-2"
+                    >
+                      {loading ? tf('sending') : tf('submit')}
+                    </button>
+
+                    <p className="text-gray-500 text-[12px] text-center">
+                      {tf('privacyNote')}
+                    </p>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section - Common Questions */}
+      <section className="py-16 sm:py-20 lg:py-28 bg-[#F8F6F2]">
+        <div className="site-container">
+          <div className="grid lg:grid-cols-[340px_1fr] gap-12 items-start">
+
+            {/* Left Sticky Column */}
+            <div className="lg:sticky lg:top-28">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="w-6 h-[1px] bg-[#C29A3E]" />
+                <span className="text-[#C29A3E] text-[11px] font-semibold tracking-[0.25em] uppercase">{t('faqEyebrow')}</span>
+              </div>
+              <h2
+                className="text-[#14163A] leading-snug mb-4"
+                style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "clamp(32px,4vw,52px)", letterSpacing: "-0.01em" }}
+              >
+                {t('faqTitle')}
+              </h2>
+              <p className="text-[#6B7280] text-[15px] leading-relaxed mb-6">
+                {t('faqIntro')}
+              </p>
+              <a
+                href="#form"
+                className="inline-flex items-center gap-2 text-[#C29A3E] text-xs font-bold uppercase tracking-wider hover:gap-3 transition-all duration-200"
+              >
+                Send a Message <ArrowRight size={14} />
+              </a>
+            </div>
+
+            {/* Right Accordion */}
+            <div className="bg-white rounded-xl border border-gray-100 shadow-[0_4px_30px_-8px_rgba(17,24,39,0.08)] p-8 sm:p-10">
+              <Accordion type="single" collapsible className="w-full">
+                {contactFaqs.map((faq, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`faq-${i}`}
+                    className="border-b border-gray-100 last:border-0"
+                  >
+                    <AccordionTrigger className="text-left text-[16px] font-serif font-semibold text-[#1B1E49] py-5 hover:text-[#C29A3E] hover:no-underline transition-colors [&[data-state=open]]:text-[#C29A3E]">
+                      {faq.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-[#4B5563] text-[16px] leading-[1.75] pb-5">
+                      {faq.a}
+                      {faq.phone && (
+                        <a
+                          href="tel:+12153622478"
+                          className="block mt-2 pl-4 font-semibold text-[#14163A] hover:text-[#C29A3E] transition-colors"
+                        >
+                          {faq.phone}
+                        </a>
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+}

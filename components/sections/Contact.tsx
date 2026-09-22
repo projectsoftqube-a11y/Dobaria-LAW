@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { formatUSPhone } from '@/lib/phone';
 import {
   EMPTY_ENQUIRY,
@@ -13,31 +14,14 @@ import {
   focusFirstError,
 } from '@/lib/formValidation';
 
-const contactInfo = [
-  {
-    icon: MapPin,
-    label: 'Office Address',
-    value: '2031 N. Broad Street, Unit 129\nLansdale, PA 19446',
-  },
-  {
-    icon: Phone,
-    label: 'Phone',
-    value: '215-362-2478',
-  },
-  {
-    icon: Mail,
-    label: 'Email',
-    value: 'notices@dobarialaw.com',
-  },
-  {
-    icon: Clock,
-    label: 'Office Hours',
-    value: 'Mon–Fri: 9:00 AM – 5:30 PM\nSat-Sun: Closed',
-  },
-];
+
 
 
 export default function Contact() {
+  const t = useTranslations('contactSection');
+  const tf = useTranslations('form');
+  const tArea = useTranslations('practiceAreas');
+
   const [form, setForm] = useState({
     ...EMPTY_ENQUIRY,
   });
@@ -83,13 +67,13 @@ export default function Contact() {
           setErrors(data.errors);
           focusFirstError(data.errors, "home-contact");
         }
-        setSubmitError(data.error || "Something went wrong. Please try again.");
+        setSubmitError(tf(`errors.${data.errorKey || "generic"}`));
         return;
       }
       setSubmitted(true);
       setForm({ ...EMPTY_ENQUIRY });
     } catch {
-      setSubmitError("We couldn't send your message. Please call the office or try again.");
+      setSubmitError(tf("errors.network"));
     } finally {
       setLoading(false);
     }
@@ -116,7 +100,7 @@ export default function Contact() {
           >
             <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
             <span className="text-[#C29A3E] text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase"
-              style={{ fontFamily: 'Inter, sans-serif' }}>Get in Touch</span>
+              style={{ fontFamily: 'Inter, sans-serif' }}>{t('eyebrow')}</span>
             <span className="w-6 sm:w-8 h-[1px] bg-[#C29A3E]" />
           </motion.div>
 
@@ -132,7 +116,7 @@ export default function Contact() {
               letterSpacing: '-0.02em',
             }}
           >
-            Begin Your Legal <em className="not-italic text-[#C29A3E]">Consultation</em> Today
+            {t('headingBefore')} <em className="not-italic text-[#C29A3E]">{t('headingAccent')}</em> {t('headingAfter')}
           </motion.h2>
 
           <motion.p
@@ -143,7 +127,7 @@ export default function Contact() {
             className="text-[#4B5563] leading-[1.75] sm:leading-[1.8]"
             style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 16px)' }}
           >
-            Take the first step toward resolution. Our team will review your matter and respond within 24 hours.
+            {t('intro')}
           </motion.p>
         </div>
 
@@ -165,7 +149,7 @@ export default function Contact() {
               <div className="relative h-[220px] sm:h-[300px] lg:absolute lg:inset-0 lg:h-full">
                 <Image
                   src="/images/philadelphia-skyline.webp"
-                  alt="Philadelphia skyline at dusk"
+                  alt={t('imageAlt')}
                   width={941}
                   height={1672}
                   priority={false}
@@ -180,15 +164,15 @@ export default function Contact() {
               <div className="relative lg:absolute lg:bottom-6 lg:left-6 lg:right-6 p-5 sm:p-6 backdrop-blur-md bg-[#0B0F17]/75 border-t lg:border border-[rgba(194, 154, 62,0.3)] rounded-none lg:rounded-sm flex flex-col gap-5">
                 
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-semibold text-white" style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.05em' }}>Contact Information</h3>
-                  <span className="px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.1em] uppercase text-[#C29A3E] bg-[#C29A3E]/10 rounded-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>Lansdale, PA</span>
+                  <h3 className="text-xl font-semibold text-white" style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.05em' }}>{t('cardTitle')}</h3>
+                  <span className="px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.1em] uppercase text-[#C29A3E] bg-[#C29A3E]/10 rounded-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>{t('cardBadge')}</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-white/90">
                   
                   {/* Address */}
                   <div className="flex flex-col gap-1">
-                    <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Office Address</p>
+                    <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>{t('labelAddress')}</p>
                     <a
                       href="https://www.google.com/maps/search/?api=1&query=2031+N.+Broad+Street+Unit+129+Lansdale+PA+19446"
                       target="_blank"
@@ -202,21 +186,21 @@ export default function Contact() {
 
                   {/* Phone */}
                   <div className="flex flex-col gap-1">
-                    <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Phone</p>
+                    <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>{t('labelPhone')}</p>
                     <a href="tel:+12153622478" className="text-sm leading-relaxed hover:text-[#C29A3E] transition-colors" style={{ fontFamily: 'Montserrat, sans-serif' }}>215-362-2478</a>
                   </div>
 
                   {/* Email */}
                   <div className="flex flex-col gap-1">
-                    <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Email</p>
+                    <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>{t('labelEmail')}</p>
                     <a href="mailto:notices@dobarialaw.com" className="text-sm leading-relaxed break-words hover:text-[#C29A3E] transition-colors" style={{ fontFamily: 'Montserrat, sans-serif' }}>notices@dobarialaw.com</a>
                   </div>
 
                   {/* Hours */}
                   <div className="flex flex-col gap-1">
-                    <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>Office Hours</p>
+                    <p className="text-[#C29A3E] text-[10px] font-semibold tracking-[0.1em] uppercase" style={{ fontFamily: 'Montserrat, sans-serif' }}>{t('labelHours')}</p>
                     <p className="text-sm leading-relaxed" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Mon–Fri: 9:00 AM – 5:30 PM<br />Sat–Sun: Closed
+                      {t('hours')}<br />{t('hoursWeekend')}
                     </p>
                   </div>
 
@@ -224,7 +208,7 @@ export default function Contact() {
 
                 <div className="pt-4 border-t border-white/10">
                   <p className="text-white/60 text-[11px] leading-relaxed" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    We ensure a timely response to every inquiry.
+                    {t('timelyResponse')}
                   </p>
                 </div>
 
@@ -249,11 +233,11 @@ export default function Contact() {
                   </div>
                   <h3 className="text-[#14163A] font-semibold mb-2 sm:mb-3"
                     style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(24px, 4vw, 28px)' }}>
-                    Message Received
+                    {tf('successTitle')}
                   </h3>
                   <p className="text-[#4B5563] text-[12px] sm:text-sm leading-relaxed max-w-[320px] mx-auto"
                     style={{ fontFamily: 'Inter, sans-serif' }}>
-                    Thank you for reaching out. A member of our team will contact you within 24 hours.
+                    {tf('successBody')}
                   </p>
                 </div>
               </div>
@@ -264,7 +248,7 @@ export default function Contact() {
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div className="flex flex-col gap-1 sm:gap-1.5">
                     <label htmlFor="home-contact-firstName" className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
-                      style={{ fontFamily: 'Inter, sans-serif' }}>First Name *</label>
+                      style={{ fontFamily: 'Inter, sans-serif' }}>{tf('firstName')} *</label>
                     <input
                       id="home-contact-firstName"
                       name="firstName"
@@ -273,15 +257,15 @@ export default function Contact() {
                       value={form.firstName}
                       onChange={handleChange}
                       required
-                      placeholder="John"
+                      placeholder={tf('phFirstName')}
                       className={`premium-input ${errors.firstName ? "border-red-500" : ""}`}
                       style={{ padding: '10px 14px' }}
                     />
-                    {errors.firstName && <p id="home-contact-firstName-error" role="alert" className="text-red-500 text-[11px] mt-1">{errors.firstName}</p>}
+                    {errors.firstName && <p id="home-contact-firstName-error" role="alert" className="text-red-500 text-[11px] mt-1">{tf(`errors.${errors.firstName}`)}</p>}
                   </div>
                   <div className="flex flex-col gap-1 sm:gap-1.5">
                     <label htmlFor="home-contact-lastName" className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
-                      style={{ fontFamily: 'Inter, sans-serif' }}>Last Name *</label>
+                      style={{ fontFamily: 'Inter, sans-serif' }}>{tf('lastName')} *</label>
                     <input
                       id="home-contact-lastName"
                       name="lastName"
@@ -290,18 +274,18 @@ export default function Contact() {
                       value={form.lastName}
                       onChange={handleChange}
                       required
-                      placeholder="Doe"
+                      placeholder={tf('phLastName')}
                       className={`premium-input ${errors.lastName ? "border-red-500" : ""}`}
                       style={{ padding: '10px 14px' }}
                     />
-                    {errors.lastName && <p id="home-contact-lastName-error" role="alert" className="text-red-500 text-[11px] mt-1">{errors.lastName}</p>}
+                    {errors.lastName && <p id="home-contact-lastName-error" role="alert" className="text-red-500 text-[11px] mt-1">{tf(`errors.${errors.lastName}`)}</p>}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1 sm:gap-1.5">
                     <label htmlFor="home-contact-email" className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
-                      style={{ fontFamily: 'Inter, sans-serif' }}>Email Address *</label>
+                      style={{ fontFamily: 'Inter, sans-serif' }}>{tf('emailAddress')} *</label>
                     <input
                       id="home-contact-email"
                       name="email"
@@ -311,16 +295,16 @@ export default function Contact() {
                       value={form.email}
                       onChange={handleChange}
                       required
-                      placeholder="john@example.com"
+                      placeholder={tf('phEmail')}
                       className={`premium-input ${errors.email ? "border-red-500" : ""}`}
                       style={{ padding: '10px 14px' }}
                     />
-                    {errors.email && <p id="home-contact-email-error" role="alert" className="text-red-500 text-[11px] mt-1">{errors.email}</p>}
+                    {errors.email && <p id="home-contact-email-error" role="alert" className="text-red-500 text-[11px] mt-1">{tf(`errors.${errors.email}`)}</p>}
                   </div>
 
                   <div className="flex flex-col gap-1 sm:gap-1.5">
                     <label htmlFor="home-contact-phone" className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
-                      style={{ fontFamily: 'Inter, sans-serif' }}>Phone Number</label>
+                      style={{ fontFamily: 'Inter, sans-serif' }}>{tf('phone')}</label>
                     <input
                       id="home-contact-phone"
                       name="phone"
@@ -334,18 +318,18 @@ export default function Contact() {
                         setForm(f => ({ ...f, phone: formatUSPhone(e.target.value) }));
                         if (errors.phone) setErrors(er => ({ ...er, phone: "" }));
                       }}
-                      placeholder="(555) 123-4567"
+                      placeholder={tf('phPhone')}
                       maxLength={14}
                       className={`premium-input ${errors.phone ? "border-red-500" : ""}`}
                       style={{ padding: '10px 14px' }}
                     />
-                    {errors.phone && <p id="home-contact-phone-error" role="alert" className="text-red-500 text-[11px] mt-1">{errors.phone}</p>}
+                    {errors.phone && <p id="home-contact-phone-error" role="alert" className="text-red-500 text-[11px] mt-1">{tf(`errors.${errors.phone}`)}</p>}
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1 sm:gap-1.5">
                   <label htmlFor="home-contact-practice" className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
-                    style={{ fontFamily: 'Inter, sans-serif' }}>Practice Area *</label>
+                    style={{ fontFamily: 'Inter, sans-serif' }}>{tf('practiceArea')} *</label>
                   <select
                     id="home-contact-practice"
                     name="practice"
@@ -356,15 +340,15 @@ export default function Contact() {
                     className={`premium-input ${errors.practice ? "border-red-500" : ""}`}
                     style={{ padding: '10px 14px 10px 14px', paddingRight: '40px', appearance: 'none', cursor: 'pointer', backgroundImage: `url('data:image/svg+xml;utf8,<svg fill="%234B5563" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center', backgroundSize: '20px' }}
                   >
-                    <option value="">Select a practice area</option>
-                    {PRACTICE_OPTIONS.map(p => <option key={p} value={p}>{p}</option>)}
+                    <option value="">{tf('phSelectPractice')}</option>
+                    {PRACTICE_OPTIONS.map(p => <option key={p} value={tArea(`${p}.label`)}>{tArea(`${p}.label`)}</option>)}
                   </select>
-                  {errors.practice && <p id="home-contact-practice-error" role="alert" className="text-red-500 text-[11px] mt-1">{errors.practice}</p>}
+                  {errors.practice && <p id="home-contact-practice-error" role="alert" className="text-red-500 text-[11px] mt-1">{tf(`errors.${errors.practice}`)}</p>}
                 </div>
 
                 <div className="flex flex-col gap-1 sm:gap-1.5">
                   <label htmlFor="home-contact-message" className="text-[9px] sm:text-[11px] font-semibold tracking-[0.08em] sm:tracking-[0.1em] uppercase text-[#14163A]"
-                    style={{ fontFamily: 'Inter, sans-serif' }}>Brief Description *</label>
+                    style={{ fontFamily: 'Inter, sans-serif' }}>{tf('briefDescription')} *</label>
                   <textarea
                     id="home-contact-message"
                     name="message"
@@ -374,11 +358,11 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={4}
-                    placeholder="Please briefly describe your legal matter..."
+                    placeholder={tf('phMessage')}
                     className={`premium-input resize-none ${errors.message ? "border-red-500" : ""}`}
                     style={{ padding: '10px 14px' }}
                   />
-                  {errors.message && <p id="home-contact-message-error" role="alert" className="text-red-500 text-[11px] mt-1">{errors.message}</p>}
+                  {errors.message && <p id="home-contact-message-error" role="alert" className="text-red-500 text-[11px] mt-1">{tf(`errors.${errors.message}`)}</p>}
                 </div>
 
                 {/* Honeypot — hidden from people, filled in by bots. */}
@@ -395,7 +379,7 @@ export default function Contact() {
 
                 <p className="text-[#4B5563] text-[10px] sm:text-[11px] leading-relaxed"
                   style={{ fontFamily: 'Inter, sans-serif' }}>
-                  All communications are protected by attorney-client privilege and kept strictly confidential.
+                  {tf('privilegeNote')}
                 </p>
 
                 {submitError && (
@@ -417,7 +401,7 @@ export default function Contact() {
                   }}
                 >
                   <span className="relative z-10">
-                    {loading ? 'Submitting...' : 'Submit Consultation Request'}
+                    {loading ? tf('submitting') : tf('submitConsultation')}
                   </span>
                   {!loading && <ArrowRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform duration-300" />}
                   {!loading && (

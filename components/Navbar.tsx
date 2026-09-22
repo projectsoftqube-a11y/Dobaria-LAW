@@ -17,48 +17,62 @@ import {
   Briefcase,
   Home as HomeIcon,
 } from "lucide-react";
-import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/navigation";
 
-const navLinks = [
-  { label: "Practice Areas", href: "/practice-areas", hasDropdown: true, menu: "practice" as const },
-  { label: "Attorneys", href: "/attorneys", hasDropdown: true, menu: "attorneys" as const },
-  { label: "About", href: "/about" },
-  { label: "Insights", href: "/insights" },
-  { label: "Contact", href: "/contact" },
+type NavLink = {
+  key: "practiceAreas" | "attorneys" | "about" | "insights" | "contact";
+  href: string;
+  hasDropdown?: boolean;
+  menu?: "practice" | "attorneys";
+};
+
+const navLinks: NavLink[] = [
+  { key: "practiceAreas", href: "/practice-areas", hasDropdown: true, menu: "practice" as const },
+  { key: "attorneys", href: "/attorneys", hasDropdown: true, menu: "attorneys" as const },
+  { key: "about", href: "/about" },
+  { key: "insights", href: "/insights" },
+  { key: "contact", href: "/contact" },
 ];
 
-const practiceDropdownData = [
+type PracticeGroup = {
+  categoryKey: "categoryImmigration" | "categoryFamily" | "categoryBusiness";
+  items: { slug: string; icon: LucideIcon }[];
+};
+
+const practiceDropdownData: PracticeGroup[] = [
   {
-    category: "Immigration",
+    categoryKey: "categoryImmigration",
     items: [
-      { label: "Immigration Law", desc: "Petitions, waivers & consular processing", href: "/practice-areas/immigration-law", icon: Plane },
-      { label: "Green Cards & Visas", desc: "Family & employment-based status", href: "/practice-areas/green-cards-visas", icon: IdCard },
-      { label: "Citizenship & Naturalization", desc: "Become a U.S. citizen", href: "/practice-areas/citizenship-naturalization", icon: Landmark },
-      { label: "Deportation Defense", desc: "Removal defense & appeals", href: "/practice-areas/deportation-defense", icon: ShieldAlert },
+      { slug: "immigration-law", icon: Plane },
+      { slug: "green-cards-visas", icon: IdCard },
+      { slug: "citizenship-naturalization", icon: Landmark },
+      { slug: "deportation-defense", icon: ShieldAlert },
     ],
   },
   {
-    category: "Family",
+    categoryKey: "categoryFamily",
     items: [
-      { label: "Family Law", desc: "Divorce, custody & support", href: "/practice-areas/family-law", icon: Users },
-      { label: "International Divorce", desc: "Cross-border family matters", href: "/practice-areas/international-divorce", icon: HeartCrack },
+      { slug: "family-law", icon: Users },
+      { slug: "international-divorce", icon: HeartCrack },
     ],
   },
   {
-    category: "Business & Property",
+    categoryKey: "categoryBusiness",
     items: [
-      { label: "Business Law", desc: "Formation, contracts & counsel", href: "/practice-areas/business-law", icon: Briefcase },
-      { label: "Real Estate Law", desc: "Closings & title, 18 states", href: "/practice-areas/real-estate-law", icon: HomeIcon },
+      { slug: "business-law", icon: Briefcase },
+      { slug: "real-estate-law", icon: HomeIcon },
     ],
   },
 ];
 
-const attorneysDropdownData = [
-  { label: "Vishal J. Dobaria, Esq.", role: "Managing Attorney", href: "/attorneys/vishal-j-dobaria", img: "/images/attorneys/vishal.webp" },
-  { label: "Marcia Binder Ibrahim, Esq.", role: "Founding Member & Of Counsel", href: "/attorneys/marcia-binder-ibrahim", img: "/images/attorneys/marcia.webp" },
-  { label: "Jose M. Lugo, J.D., Ph.D.", role: "Immigration Attorney", href: "/attorneys/jose-m-lugo", img: "/images/attorneys/jose.png" },
+// Names are not translated; only the role beneath them is.
+const attorneysDropdownData: { label: string; slug: string; img: string }[] = [
+  { label: "Vishal J. Dobaria, Esq.", slug: "vishal-j-dobaria", img: "/images/attorneys/vishal.webp" },
+  { label: "Marcia Binder Ibrahim, Esq.", slug: "marcia-binder-ibrahim", img: "/images/attorneys/marcia.webp" },
+  { label: "Jose M. Lugo, J.D., Ph.D.", slug: "jose-m-lugo", img: "/images/attorneys/jose.png" },
 ];
 
 export default function Navbar() {
@@ -67,6 +81,9 @@ export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<null | "practice" | "attorneys">(null);
   const [mobileSection, setMobileSection] = useState<null | "practice" | "attorneys">(null);
   const pathname = usePathname();
+  const t = useTranslations("nav");
+  const tArea = useTranslations("practiceAreas");
+  const tRole = useTranslations("attorneyRoles");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -108,7 +125,7 @@ export default function Navbar() {
       >
         <div className="site-container flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center group" aria-label="Dobaria Law PC — Home">
+          <Link href="/" className="flex items-center group" aria-label={t("homeAria")}>
             <Image
               src="/images/logo-dark.svg"
               alt="Dobaria Law PC"
@@ -131,9 +148,9 @@ export default function Navbar() {
 
                 return (
                   <div
-                    key={link.label}
+                    key={link.key}
                     className="relative py-2"
-                    onMouseEnter={() => setOpenMenu(link.menu)}
+                    onMouseEnter={() => setOpenMenu(link.menu ?? null)}
                     onMouseLeave={() => setOpenMenu(null)}
                   >
                     <Link
@@ -143,7 +160,7 @@ export default function Navbar() {
                       }`}
                       style={{ fontFamily: "Inter, sans-serif" }}
                     >
-                      <span className="nav-link-text uppercase font-medium">{link.label}</span>
+                      <span className="nav-link-text uppercase font-medium">{t(link.key)}</span>
                       <ChevronDown
                         size={12}
                         className={`transition-transform duration-300 flex-shrink-0 ${
@@ -169,8 +186,8 @@ export default function Navbar() {
                               <div className="p-2.5 flex flex-col">
                                 {attorneysDropdownData.map((att) => (
                                   <Link
-                                    key={att.href}
-                                    href={att.href}
+                                    key={att.slug}
+                                    href={`/attorneys/${att.slug}`}
                                     onClick={() => setOpenMenu(null)}
                                     className="group flex items-center gap-3.5 px-3 py-2.5 rounded-lg hover:bg-[#F8F6F2] transition-colors duration-200"
                                   >
@@ -181,7 +198,7 @@ export default function Navbar() {
                                       <span className="text-[#1B1E49] text-[13.5px] font-semibold leading-snug group-hover:text-[#C29A3E] transition-colors truncate">
                                         {att.label}
                                       </span>
-                                      <span className="text-[#9A9CAB] text-[11.5px] leading-snug truncate">{att.role}</span>
+                                      <span className="text-[#9A9CAB] text-[11.5px] leading-snug truncate">{tRole(att.slug)}</span>
                                     </span>
                                   </Link>
                                 ))}
@@ -191,7 +208,7 @@ export default function Navbar() {
                                 onClick={() => setOpenMenu(null)}
                                 className="flex items-center justify-between px-5 py-3 border-t border-black/[0.05] text-[#1B1E49] hover:text-[#C29A3E] text-[12px] font-semibold tracking-wide transition-colors"
                               >
-                                <span>Meet the full team</span>
+                                <span>{t("meetTeam")}</span>
                                 <ArrowRight size={13} />
                               </Link>
                             </div>
@@ -203,8 +220,8 @@ export default function Navbar() {
                                   const Icon = item.icon;
                                   return (
                                     <Link
-                                      key={item.href}
-                                      href={item.href}
+                                      key={item.slug}
+                                      href={`/practice-areas/${item.slug}`}
                                       onClick={() => setOpenMenu(null)}
                                       className="group flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#F8F6F2] transition-colors duration-200"
                                     >
@@ -213,9 +230,9 @@ export default function Navbar() {
                                       </span>
                                       <span className="flex flex-col min-w-0">
                                         <span className="text-[#1B1E49] text-[13.5px] font-semibold leading-snug group-hover:text-[#C29A3E] transition-colors">
-                                          {item.label}
+                                          {tArea(`${item.slug}.label`)}
                                         </span>
-                                        <span className="text-[#9A9CAB] text-[11.5px] leading-snug truncate">{item.desc}</span>
+                                        <span className="text-[#9A9CAB] text-[11.5px] leading-snug truncate">{tArea(`${item.slug}.desc`)}</span>
                                       </span>
                                     </Link>
                                   );
@@ -226,7 +243,7 @@ export default function Navbar() {
                                 onClick={() => setOpenMenu(null)}
                                 className="flex items-center justify-between px-5 py-3 border-t border-black/[0.05] text-[#1B1E49] hover:text-[#C29A3E] text-[12px] font-semibold tracking-wide transition-colors"
                               >
-                                <span>View all practice areas</span>
+                                <span>{t("viewAllPracticeAreas")}</span>
                                 <ArrowRight size={13} />
                               </Link>
                             </div>
@@ -240,14 +257,14 @@ export default function Navbar() {
 
               return (
                 <Link
-                  key={link.label}
+                  key={link.key}
                   href={link.href}
                   className={`luxury-link font-semibold transition-colors duration-300 ${
                     isActive ? "text-[#C29A3E]" : "text-[#1B1E49] hover:text-[#C29A3E]"
                   }`}
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  <span className="nav-link-text uppercase font-medium">{link.label}</span>
+                  <span className="nav-link-text uppercase font-medium">{t(link.key)}</span>
                 </Link>
               );
             })}
@@ -268,7 +285,7 @@ export default function Navbar() {
               className="px-6 py-3 bg-[#1B1E49] hover:bg-[#C29A3E] text-white rounded-[4px] transition-colors duration-300 font-bold"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
-              <span className="cta-button-text uppercase font-medium">Schedule Consultation</span>
+              <span className="cta-button-text uppercase font-medium">{t("scheduleConsultation")}</span>
             </Link>
           </div>
 
@@ -276,7 +293,7 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="xl:hidden w-10 h-10 flex items-center justify-center text-[#1B1E49]"
-            aria-label="Toggle navigation menu"
+            aria-label={t("toggleMenu")}
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -294,7 +311,7 @@ export default function Navbar() {
             className="fixed top-0 left-0 right-0 bottom-0 z-40 glass flex flex-col"
           >
             <div className="flex items-center justify-between px-6 pt-6 pb-8 border-b border-[rgba(17,24,39,0.08)]">
-              <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center" aria-label="Dobaria Law PC — Home">
+              <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center" aria-label={t("homeAria")}>
                 <Image
                   src="/images/logo-dark.svg"
                   alt="Dobaria Law PC"
@@ -303,7 +320,7 @@ export default function Navbar() {
                   className="h-14 w-auto"
                 />
               </Link>
-              <button onClick={() => setMobileOpen(false)} aria-label="Close menu">
+              <button onClick={() => setMobileOpen(false)} aria-label={t("closeMenu")}>
                 <X size={22} className="text-[#1B1E49]" />
               </button>
             </div>
@@ -313,15 +330,15 @@ export default function Navbar() {
                   const isAttorneysMenu = link.menu === "attorneys";
                   const isSectionOpen = mobileSection === link.menu;
                   return (
-                    <div key={link.label} className="flex flex-col">
+                    <div key={link.key} className="flex flex-col">
                       <button
                         type="button"
-                        onClick={() => setMobileSection((s) => (s === link.menu ? null : link.menu))}
+                        onClick={() => setMobileSection((s) => (s === link.menu ? null : link.menu ?? null))}
                         aria-expanded={isSectionOpen}
                         className="w-full text-left text-[#1B1E49] text-2xl font-medium tracking-tight border-b border-[rgba(17,24,39,0.06)] pb-4 flex justify-between items-center"
                         style={{ fontFamily: "Bebas Neue, sans-serif" }}
                       >
-                        <span>{link.label}</span>
+                        <span>{t(link.key)}</span>
                         <ChevronDown
                           size={20}
                           className={`text-[#C29A3E] transition-transform duration-300 ${isSectionOpen ? "rotate-180" : ""}`}
@@ -342,8 +359,8 @@ export default function Navbar() {
                               <div className="pl-4 pt-4 flex flex-col gap-2 border-l border-[#C29A3E]/20">
                                 {attorneysDropdownData.map((att) => (
                                   <Link
-                                    key={att.href}
-                                    href={att.href}
+                                    key={att.slug}
+                                    href={`/attorneys/${att.slug}`}
                                     onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-3 py-1.5"
                                   >
@@ -352,7 +369,7 @@ export default function Navbar() {
                                     </span>
                                     <span className="flex flex-col">
                                       <span className="text-[#1B1E49] text-sm font-semibold leading-snug">{att.label}</span>
-                                      <span className="text-[#8A8D9F] text-[11px] leading-snug">{att.role}</span>
+                                      <span className="text-[#8A8D9F] text-[11px] leading-snug">{tRole(att.slug)}</span>
                                     </span>
                                   </Link>
                                 ))}
@@ -360,22 +377,22 @@ export default function Navbar() {
                             ) : (
                               <div className="pl-4 pt-4 flex flex-col gap-4 border-l border-[#C29A3E]/20">
                                 {practiceDropdownData.map((category) => (
-                                  <div key={category.category} className="flex flex-col gap-2">
+                                  <div key={category.categoryKey} className="flex flex-col gap-2">
                                     <span className="text-[#C29A3E] text-xs font-bold tracking-wider uppercase">
-                                      {category.category}
+                                      {t(category.categoryKey)}
                                     </span>
                                     <div className="flex flex-col gap-1 pl-1">
                                       {category.items.map((item) => {
                                         const Icon = item.icon;
                                         return (
                                           <Link
-                                            key={item.href}
-                                            href={item.href}
+                                            key={item.slug}
+                                            href={`/practice-areas/${item.slug}`}
                                             onClick={() => setMobileOpen(false)}
                                             className="flex items-center gap-2.5 text-left text-gray-600 text-sm font-medium hover:text-[#1B1E49] py-1.5"
                                           >
                                             <Icon size={15} strokeWidth={1.9} className="text-[#C29A3E] flex-shrink-0" />
-                                            <span>{item.label}</span>
+                                            <span>{tArea(`${item.slug}.label`)}</span>
                                           </Link>
                                         );
                                       })}
@@ -392,7 +409,7 @@ export default function Navbar() {
                 }
                 return (
                   <motion.div
-                    key={link.label}
+                    key={link.key}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.06 }}
@@ -403,7 +420,7 @@ export default function Navbar() {
                       className="block text-left text-[#1B1E49] text-2xl font-medium tracking-tight border-b border-[rgba(17,24,39,0.06)] pb-4"
                       style={{ fontFamily: "Bebas Neue, sans-serif" }}
                     >
-                      {link.label}
+                      {t(link.key)}
                     </Link>
                   </motion.div>
                 );
@@ -423,7 +440,7 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className="block w-full py-4 text-sm font-semibold tracking-wider text-[#F8F6F2] bg-[#1B1E49] hover:bg-[#C29A3E] transition-all duration-300 rounded-[6px] text-center"
               >
-                Schedule Consultation
+                {t("scheduleConsultation")}
               </Link>
             </div>
           </motion.div>
