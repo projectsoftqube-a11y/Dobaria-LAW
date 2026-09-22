@@ -75,7 +75,7 @@ const sections: LegalSection[] = [
     content: (
       <p>
         You may request that we update or delete information you&apos;ve submitted by contacting us at{" "}
-        <a href="mailto:notice@dobarialaw.com">notice@dobarialaw.com</a>.
+        <a href="mailto:notices@dobarialaw.com">notices@dobarialaw.com</a>.
       </p>
     ),
   },
